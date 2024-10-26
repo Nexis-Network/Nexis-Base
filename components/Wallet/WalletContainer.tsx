@@ -3,6 +3,7 @@
 
 import React, { useEffect, useRef } from "react"
 import { ConnectButton as RainbowkitConnectButton } from "@rainbow-me/rainbowkit"
+import { WalletAddress, WalletBalance } from "@turbo-eth/core-wagmi"
 import { Copy, ExternalLink } from "lucide-react"
 
 import { Avatar } from "@/components/ui/avatar"
@@ -53,14 +54,16 @@ export const WalletContainer: React.FC = () => {
           loading="lazy"
           referrerPolicy="no-referrer"
           sandbox="allow-same-origin allow-scripts allow-downloads allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-popups-to-escape-sandbox allow-presentation allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
-          className="absolute inset-0 size-full border-none"
+          className="absolute inset-0 h-full w-full border-none"
         ></iframe>
       </div>
       <div className="relative z-50 flex h-full flex-col border-y border-[#242424] bg-black/10 text-black">
         <div className="flex flex-1 items-center justify-end p-4">
           <div className="text-right">
             <p className="text-sm">Net Worth</p>
-            <h3 className="text-3xl font-bold">$0.00</h3>
+            <h3 className="text-3xl font-bold">
+              <WalletBalance />
+            </h3>
             <Button
               variant="outline"
               size="sm"
@@ -72,7 +75,7 @@ export const WalletContainer: React.FC = () => {
         </div>
         <div className="flex">
           <CardContent className="flex w-1/2 items-center space-x-4 p-4">
-            <div className="z-10 flex size-24 items-center justify-center">
+            <div className="z-10 flex h-6 w-6 items-center justify-center">
               <svg
                 width="100%"
                 height="100%"
@@ -133,11 +136,7 @@ export const WalletContainer: React.FC = () => {
                   return (
                     <div>
                       <h2 className="text-2xl font-bold text-black">
-                        {connected ? (
-                          <WalletEnsName fallbackName={account.address} />
-                        ) : (
-                          "Not Connected"
-                        )}
+                        {connected ? <WalletEnsName /> : "Not Connected"}
                       </h2>
                       <div className="mt-1 flex items-center">
                         {connected ? (
@@ -156,10 +155,10 @@ export const WalletContainer: React.FC = () => {
                               size="icon"
                               className="ml-2 text-black"
                             >
-                              <Copy className="size-4" />
+                              <Copy className="h-4 w-4" />
                             </Button>
                             <Button variant="ghost" size="icon">
-                              <ExternalLink className="size-4" />
+                              <ExternalLink className="h-4 w-4" />
                             </Button>
                           </>
                         ) : (
