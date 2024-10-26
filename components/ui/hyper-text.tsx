@@ -1,21 +1,21 @@
-"use client";
+"use client"
 
-import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, Variants } from "framer-motion";
+import { useEffect, useRef, useState } from "react"
+import { AnimatePresence, motion, Variants } from "framer-motion"
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
 
 interface HyperTextProps {
-  text: string;
-  duration?: number;
-  framerProps?: Variants;
-  className?: string;
-  animateOnLoad?: boolean;
+  text: string
+  duration?: number
+  framerProps?: Variants
+  className?: string
+  animateOnLoad?: boolean
 }
 
-const alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+const alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")
 
-const getRandomInt = (max: number) => Math.floor(Math.random() * max);
+const getRandomInt = (max: number) => Math.floor(Math.random() * max)
 
 export default function HyperText({
   text,
@@ -28,49 +28,46 @@ export default function HyperText({
   className,
   animateOnLoad = true,
 }: HyperTextProps) {
-  const [displayText, setDisplayText] = useState(text.split(""));
-  const [trigger, setTrigger] = useState(false);
-  const interations = useRef(0);
-  const isFirstRender = useRef(true);
+  const [displayText, setDisplayText] = useState(text.split(""))
+  const [trigger, setTrigger] = useState(false)
+  const interations = useRef(0)
+  const isFirstRender = useRef(true)
 
   const triggerAnimation = () => {
-    interations.current = 0;
-    setTrigger(true);
-  };
+    interations.current = 0
+    setTrigger(true)
+  }
 
   useEffect(() => {
-    const interval = setInterval(
-      () => {
-        if (!animateOnLoad && isFirstRender.current) {
-          clearInterval(interval);
-          isFirstRender.current = false;
-          return;
-        }
-        if (interations.current < text.length) {
-          setDisplayText((t) =>
-            t.map((l, i) =>
-              l === " "
-                ? l
-                : i <= interations.current
-                  ? text[i]
-                  : alphabets[getRandomInt(26)],
-            ),
-          );
-          interations.current = interations.current + 0.1;
-        } else {
-          setTrigger(false);
-          clearInterval(interval);
-        }
-      },
-      duration / (text.length * 10),
-    );
+    const interval = setInterval(() => {
+      if (!animateOnLoad && isFirstRender.current) {
+        clearInterval(interval)
+        isFirstRender.current = false
+        return
+      }
+      if (interations.current < text.length) {
+        setDisplayText((t) =>
+          t.map((l, i) =>
+            l === " "
+              ? l
+              : i <= interations.current
+              ? text[i]
+              : alphabets[getRandomInt(26)]
+          )
+        )
+        interations.current = interations.current + 0.1
+      } else {
+        setTrigger(false)
+        clearInterval(interval)
+      }
+    }, duration / (text.length * 10))
     // Clean up interval on unmount
-    return () => clearInterval(interval);
-  }, [text, duration, trigger, animateOnLoad]);
+    return () => clearInterval(interval)
+  }, [text, duration, trigger, animateOnLoad])
 
   return (
     <div
-      className="overflow-hidden py-2 flex cursor-default scale-100"
+      className="flex scale-100 cursor-default overflow-hidden py-2"
       onMouseEnter={triggerAnimation}
     >
       <AnimatePresence mode="wait">
@@ -85,5 +82,5 @@ export default function HyperText({
         ))}
       </AnimatePresence>
     </div>
-  );
+  )
 }
