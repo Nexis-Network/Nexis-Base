@@ -71,6 +71,7 @@
     "@rainbow-me/rainbowkit": "2.0.6",
     "@t3-oss/env-nextjs": "^0.4.0",
     "@tanstack/react-query": "^5.32.1",
+    "@turbo-eth/core-wagmi": "0.0.0-beta.8",
     "abitype": "^0.9.6",
     "arweave": "^1.14.0",
     "arweave-account": "^1.4.0",

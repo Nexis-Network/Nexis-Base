@@ -1,9 +1,10 @@
 import { ReactNode } from "react"
 
-import Banner from "@/components/Banner"
-import CustomCursor from "@/components/CustomCursor"
+import { NetworkStatus } from "@/components/blockchain/network-status"
+import { WalletConnect } from "@/components/blockchain/wallet-connect"
 import { Footer } from "@/components/Footer/Foot/Footer"
 import { Header } from "@/components/Header/Header"
+import { SiteHeader } from "@/components/layout/site-header"
 import { NavigationMenu } from "@/components/NavMenu/NavigationMenu"
 
 interface RootLayoutProps {
@@ -19,7 +20,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <main className="flex-1">{children}</main>
       </div>
       <Footer />
-      <CustomCursor />
     </>
   )
 }

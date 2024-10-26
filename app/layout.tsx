@@ -2,15 +2,20 @@ import "@/styles/app.css"
 import "@/styles/globals.css"
 
 import { ReactNode } from "react"
+import { Inter } from "next/font/google"
 import { env } from "@/env.mjs"
 
 import { siteConfig } from "@/config/site"
-import { fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
 import { Toaster } from "@/components/ui/toaster"
 import RootProvider from "@/components/providers/root-provider"
 
 const url = env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+})
 
 export const metadata = {
   metadataBase: new URL(url),
@@ -37,18 +42,11 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <>
-      <html lang="en" suppressHydrationWarning>
-        <body
-          className={cn(
-            "min-h-screen bg-background font-sans antialiased",
-            fontSans.variable
-          )}
-        >
-          <RootProvider>{children}</RootProvider>
-          <Toaster />
-        </body>
-      </html>
-    </>
+    <html lang="en" className={cn(inter.variable, "font-sans")}>
+      <body className={cn("min-h-screen bg-background font-sans antialiased")}>
+        <RootProvider>{children}</RootProvider>
+        <Toaster />
+      </body>
+    </html>
   )
 }

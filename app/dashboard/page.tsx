@@ -13,7 +13,7 @@ export default function PageDashboard() {
   return (
     <motion.div
       animate="show"
-      className="flex h-full w-full items-center justify-center lg:py-8"
+      className="flex size-full items-center justify-center lg:py-8"
       initial="hidden"
       variants={FADE_DOWN_ANIMATION_VARIANTS}
       viewport={{ once: true }}
@@ -27,14 +27,14 @@ export default function PageDashboard() {
                 hi 👋 <WalletEnsName />
               </span>
             </h3>
-            <span className="font-light">
+            <div className="font-light">
               <WalletAddress className="mt-5 block text-xl font-light" />
-              <div className="mt-4">
-                <span className="text-3xl font-light">
-                  Balance: <WalletBalance decimals={7} /> ETH
-                </span>
-              </div>
-            </span>
+            </div>
+            <div className="mt-4">
+              <span className="text-3xl font-light">
+                Balance: <WalletBalance decimals={7} /> ETH
+              </span>
+            </div>
           </div>
         </div>
       </IsWalletConnected>
