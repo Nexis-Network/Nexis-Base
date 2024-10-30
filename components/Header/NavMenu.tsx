@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from "react"
 
-import ChatToggle from "@/components/ChatToggle"
-import LiveChat from "@/components/LiveChat"
+import ChatToggle from "@/components/chat/ChatToggle"
+import LiveChat from "@/components/chat/LiveChat"
 
 import { ConnectionButton } from "./ConnectionButton"
 import { Logo } from "./Logo"

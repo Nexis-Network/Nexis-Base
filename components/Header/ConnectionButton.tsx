@@ -5,7 +5,6 @@ import { ConnectButton as RainbowKitConnectButton } from "@rainbow-me/rainbowkit
 
 import { CardSpotlight } from "@/components/ui/card-spotlight"
 import HyperText from "@/components/ui/hyper-text"
-import { WalletEnsName } from "@/components/blockchain/wallet-ens-name"
 
 // Import the SVG
 import Icon from "./Icon"
@@ -50,22 +49,22 @@ export const ConnectionButton: React.FC<ConnectionButtonProps> = ({
                 />
                 <span className="absolute inset-0 z-0">
                   <span
-                    className={`absolute left-0 top-0 size-2 border-l-2 border-t-2 border-[#CBFF00]/30 ${
+                    className={`absolute left-0 top-0 h-2 w-2 border-l-2 border-t-2 border-[#CBFF00]/30 ${
                       isHovered ? "animate-border-top-left" : ""
                     }`}
                   ></span>
                   <span
-                    className={`absolute right-0 top-0 size-2 border-r-2 border-t-2 border-[#CBFF00]/30 ${
+                    className={`absolute right-0 top-0 h-2 w-2 border-r-2 border-t-2 border-[#CBFF00]/30 ${
                       isHovered ? "animate-border-top-right" : ""
                     }`}
                   ></span>
                   <span
-                    className={`absolute bottom-0 left-0 size-2 border-b-2 border-l-2 border-[#CBFF00]/30 ${
+                    className={`absolute bottom-0 left-0 border-b-2 border-l-2 border-[#CBFF00]/30 ${
                       isHovered ? "animate-border-bottom-left" : ""
                     }`}
                   ></span>
                   <span
-                    className={`absolute bottom-0 right-0 size-2 border-b-2 border-r-2 border-[#CBFF00]/30 ${
+                    className={`absolute bottom-0 right-0 border-b-2 border-r-2 border-[#CBFF00]/30 ${
                       isHovered ? "animate-border-bottom-right" : ""
                     }`}
                   ></span>

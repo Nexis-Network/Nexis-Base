@@ -8,9 +8,9 @@ Below are the steps to create a new integration.
 
 1. Copy the integration folder template from `/integrations/starter` and add your integration code, adhering to the file structure patterns evident in this folder.
 
-2. Duplicate the integration page from `/app/(general)/integration/starter` and populate it with your integration pages' code.
+2. Duplicate the integration page from `/app/home/integration/starter` and populate it with your integration pages' code.
 
-3. Locate any API endpoints associated with your integration in the `/api` folder within the page folder of your integration. An example API endpoint can be found at `/app/(general)/integration/starter/api/hello-world/route.ts`. These API endpoints should follow the new [Route Handlers](https://nextjs.org/docs/app/building-your-application/routing/router-handlers) patterns of Next.js 13.
+3. Locate any API endpoints associated with your integration in the `/api` folder within the page folder of your integration. An example API endpoint can be found at `/app/home/integration/starter/api/hello-world/route.ts`. These API endpoints should follow the new [Route Handlers](https://nextjs.org/docs/app/building-your-application/routing/router-handlers) patterns of Next.js 13.
 
 4. Enter the data related to your integration in `/data/turbo-integrations.ts`. Here, add a new object with the name, description, image, and URL of your integration.
 

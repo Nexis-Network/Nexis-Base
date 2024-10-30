@@ -1,8 +1,6 @@
-import { Metadata } from "next"
-import { useAccount } from "wagmi"
+import type { Metadata } from "next"
 
-import { PythChart } from "@/components/CryptoChart/pyth-chart"
-import { TransactionHistory } from "@/components/TransactionHistory"
+import ScrollBanner from "@/components/ScrollBanner"
 import { WalletContainer } from "@/components/Wallet/WalletContainer"
 import Web3DashboardTable from "@/components/WalletDetails"
 
@@ -15,6 +13,7 @@ export default function Dashboard() {
   return (
     <div className="space-y-0">
       <WalletContainer />
+      <ScrollBanner />
       <Web3DashboardTable />
     </div>
   )

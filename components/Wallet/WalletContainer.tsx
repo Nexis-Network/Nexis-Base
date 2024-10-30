@@ -1,12 +1,12 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
 "use client"
 
-import React, { useEffect, useRef } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { ConnectButton as RainbowkitConnectButton } from "@rainbow-me/rainbowkit"
 import { WalletAddress, WalletBalance } from "@turbo-eth/core-wagmi"
 import { Copy, ExternalLink } from "lucide-react"
+import Moralis from "moralis"
 
-import { Avatar } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { WalletEnsName } from "@/components/blockchain/wallet-ens-name"
@@ -15,6 +15,7 @@ import styles from "./WalletContainer.module.css"
 
 export const WalletContainer: React.FC = () => {
   const splineContainerRef = useRef<HTMLDivElement>(null)
+  const [netWorth, setNetWorth] = useState<string | null>(null)
 
   useEffect(() => {
     const script = document.createElement("script")
@@ -44,6 +45,49 @@ export const WalletContainer: React.FC = () => {
       document.body.removeChild(script)
     }
   }, [])
+
+  useEffect(() => {
+    const fetchNetWorth = async (address: string) => {
+      try {
+        await Moralis.start({
+          apiKey: process.env.MORALIS_API_KEY,
+        })
+        const response = await (
+          Moralis.EvmApi.wallets as unknown as {
+            getWalletNetWorth: (params: any) => Promise<any>
+          }
+        ).getWalletNetWorth({
+          excludeSpam: true,
+          excludeUnverifiedContracts: true,
+          address: address,
+        })
+
+        setNetWorth(response.raw.total_networth_usd)
+      } catch (e) {
+        console.error("Error fetching net worth:", e)
+        setNetWorth(null)
+      }
+    }
+
+    const fetchData = async () => {
+      try {
+        const addressElement = WalletAddress({} as any)
+        const address =
+          typeof addressElement === "string"
+            ? addressElement
+            : addressElement?.props?.children
+
+        if (address && typeof address === "string") {
+          await fetchNetWorth(address)
+        }
+      } catch (error) {
+        console.error("Error fetching wallet address or net worth:", error)
+      }
+    }
+
+    fetchData().catch(console.error)
+  }, []) // Add dependencies if needed
+
   return (
     <div
       className={`${styles.WalletContainer} relative z-0 mb-0 h-[400px] w-full overflow-hidden`}
@@ -62,7 +106,7 @@ export const WalletContainer: React.FC = () => {
           <div className="text-right">
             <p className="text-sm">Net Worth</p>
             <h3 className="text-3xl font-bold">
-              <WalletBalance />
+              {netWorth ? `$${parseFloat(netWorth).toFixed(2)}` : "Loading..."}
             </h3>
             <Button
               variant="outline"

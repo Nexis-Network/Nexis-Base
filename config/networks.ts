@@ -1,50 +1,74 @@
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 // Networks
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-import { http } from "wagmi"
+import { env } from "@/env.mjs"
+import { Chain, ChainProviderFn, configureChains } from "wagmi"
 import {
   arbitrum,
-  arbitrumSepolia,
-  base,
-  baseSepolia,
-  gnosis,
-  gnosisChiado,
-  hardhat,
+  arbitrumGoerli as arbitrumGoerliNoIcon,
+  goerli as goerliNoIcon,
   mainnet,
   optimism,
-  optimismSepolia,
   polygon,
-  polygonMumbai,
-  sepolia,
-} from "wagmi/chains"
+  sepolia as sepoliaNoIcon,
+} from "viem/chains"
+import { alchemyProvider } from "wagmi/providers/alchemy"
+import { infuraProvider } from "wagmi/providers/infura"
+import { publicProvider } from "wagmi/providers/public"
 
-export const chains = [
-  mainnet,
-  optimism,
-  arbitrum,
-  polygon,
-  gnosis,
-  hardhat,
-  base,
-  baseSepolia,
-  polygonMumbai,
-  mainnet,
-  sepolia,
-  polygonMumbai,
-  gnosisChiado,
-  optimismSepolia,
-  arbitrumSepolia,
-] as const
+const goerli = {
+  ...goerliNoIcon,
+  iconUrl: "/icons/NetworkEthereumTest.svg",
+}
+const sepolia = {
+  ...sepoliaNoIcon,
+  iconUrl: "/icons/NetworkEthereumTest.svg",
+}
+const arbitrumGoerli = {
+  ...arbitrumGoerliNoIcon,
+  iconUrl: "/icons/NetworkArbitrumTest.svg",
+}
 
-export const transports = {
-  [mainnet.id]: http(),
-  [sepolia.id]: http(),
-  [polygonMumbai.id]: http(),
-  [gnosisChiado.id]: http(),
-  [hardhat.id]: http(),
-  [optimism.id]: http(),
-  [arbitrum.id]: http(),
-  [polygon.id]: http(),
-  [gnosis.id]: http(),
-  [base.id]: http(),
-} as const
+export const ETH_CHAINS_TEST = [sepolia]
+
+export const ETH_CHAINS_PROD = [mainnet, optimism, arbitrum, polygon]
+export const ETH_CHAINS_DEV =
+  env.NEXT_PUBLIC_PROD_NETWORKS_DEV === "true"
+    ? [...ETH_CHAINS_PROD, ...ETH_CHAINS_TEST]
+    : [...ETH_CHAINS_TEST]
+
+export const CHAINS: Chain[] =
+  process.env.NODE_ENV === "production" ? ETH_CHAINS_PROD : ETH_CHAINS_DEV
+
+const PROVIDERS: ChainProviderFn<Chain>[] = []
+
+if (env.NEXT_PUBLIC_ALCHEMY_API_KEY) {
+  if (!env.NEXT_PUBLIC_ALCHEMY_API_KEY)
+    throw new Error("NEXT_PUBLIC_ALCHEMY_API_KEY is not defined")
+  PROVIDERS.push(
+    alchemyProvider({
+      apiKey: env.NEXT_PUBLIC_ALCHEMY_API_KEY,
+    })
+  )
+}
+
+if (env.NEXT_PUBLIC_INFURA_API_KEY) {
+  if (!env.NEXT_PUBLIC_INFURA_API_KEY)
+    throw new Error("NEXT_PUBLIC_INFURA_API_KEY is not defined")
+  PROVIDERS.push(
+    infuraProvider({
+      apiKey: env.NEXT_PUBLIC_INFURA_API_KEY,
+    })
+  )
+}
+
+// Fallback to public provider
+// Only include public provider if no other providers are available.
+if (PROVIDERS.length === 0 || env.NEXT_PUBLIC_USE_PUBLIC_PROVIDER === "true") {
+  PROVIDERS.push(publicProvider())
+}
+
+export const { chains, publicClient, webSocketPublicClient } = configureChains(
+  CHAINS,
+  PROVIDERS
+)

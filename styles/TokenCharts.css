@@ -1,0 +1,8 @@
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+  stroke: rgba(255, 255, 255, 0.1);
+}
+
+.recharts-wrapper {
+  background-color: rgba(255, 255, 255, 0.05);
+}

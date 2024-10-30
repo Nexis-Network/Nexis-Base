@@ -2,42 +2,56 @@
 
 import "@rainbow-me/rainbowkit/styles.css"
 
-import { type ReactNode } from "react"
-import { env } from "@/env.mjs"
+import type { ReactNode } from "react"
 import {
+  connectorsForWallets,
   darkTheme,
-  getDefaultConfig,
   lightTheme,
   RainbowKitProvider,
 } from "@rainbow-me/rainbowkit"
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import { WagmiProvider } from "wagmi"
+import {
+  coinbaseWallet,
+  injectedWallet,
+  metaMaskWallet,
+  rainbowWallet,
+  walletConnectWallet,
+} from "@rainbow-me/rainbowkit/wallets"
+import { createConfig, WagmiConfig } from "wagmi"
 
-import { chains, transports } from "@/config/networks"
+import { chains, publicClient, webSocketPublicClient } from "@/config/networks"
 import { siteConfig } from "@/config/site"
 import { useColorMode } from "@/lib/state/color-mode"
 
-const wagmiConfig = getDefaultConfig({
-  appName: siteConfig.title,
-  projectId: env.NEXT_PUBLIC_WC_PROJECT_ID,
-  chains,
-  transports,
-  ssr: true,
-})
+const connectors = connectorsForWallets([
+  {
+    groupName: "Recommended",
+    wallets: [
+      injectedWallet({ chains }),
+      metaMaskWallet({ chains }),
+      rainbowWallet({ chains }),
+      coinbaseWallet({ chains, appName: siteConfig.name }),
+      walletConnectWallet({ chains }),
+    ],
+  },
+])
 
-const queryClient = new QueryClient()
+const wagmiConfig = createConfig({
+  autoConnect: true,
+  connectors,
+  publicClient,
+  webSocketPublicClient,
+})
 
 export function RainbowKit({ children }: { children: ReactNode }) {
   const [colorMode] = useColorMode()
   return (
-    <WagmiProvider config={wagmiConfig}>
-      <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider
-          theme={colorMode == "dark" ? darkTheme() : lightTheme()}
-        >
-          {children}
-        </RainbowKitProvider>
-      </QueryClientProvider>
-    </WagmiProvider>
+    <WagmiConfig config={wagmiConfig}>
+      <RainbowKitProvider
+        chains={chains}
+        theme={colorMode === "dark" ? darkTheme() : lightTheme()}
+      >
+        {children}
+      </RainbowKitProvider>
+    </WagmiConfig>
   )
 }

@@ -30,10 +30,10 @@ export default function BlockchainActions() {
           WITHDRAW
         </Button>
         <div className="pointer-events-none absolute inset-0 z-0 h-full py-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-          <div className="absolute left-0 top-0 h-4 w-4 border-l-2 border-t-2 border-lime-300"></div>
-          <div className="absolute right-0 top-0 h-4 w-4 border-r-2 border-t-2 border-lime-300"></div>
-          <div className="absolute bottom-0 left-0 h-4 w-4 border-b-2 border-l-2 border-lime-300"></div>
-          <div className="absolute bottom-0 right-0 h-4 w-4 border-b-2 border-r-2 border-lime-300"></div>
+          <div className="absolute left-0 top-0 size-4 border-l-2 border-t-2 border-lime-300" />
+          <div className="absolute right-0 top-0 size-4 border-r-2 border-t-2 border-lime-300" />
+          <div className="absolute bottom-0 left-0 size-4 border-b-2 border-l-2 border-lime-300" />
+          <div className="absolute bottom-0 right-0 size-4 border-b-2 border-r-2 border-lime-300" />
         </div>
       </motion.div>
       <motion.div className="group relative h-full">
@@ -44,10 +44,10 @@ export default function BlockchainActions() {
           STAKE
         </Button>
         <div className="pointer-events-none absolute inset-0 z-0 h-full py-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-          <div className="absolute left-0 top-0 h-4 w-4 border-l-2 border-t-2 border-lime-300"></div>
-          <div className="absolute right-0 top-0 h-4 w-4 border-r-2 border-t-2 border-lime-300"></div>
-          <div className="absolute bottom-0 left-0 h-4 w-4 border-b-2 border-l-2 border-lime-300"></div>
-          <div className="absolute bottom-0 right-0 h-4 w-4 border-b-2 border-r-2 border-lime-300"></div>
+          <div className="absolute left-0 top-0 size-4 border-l-2 border-t-2 border-lime-300" />
+          <div className="absolute right-0 top-0 size-4 border-r-2 border-t-2 border-lime-300" />
+          <div className="absolute bottom-0 left-0 size-4 border-b-2 border-l-2 border-lime-300" />
+          <div className="absolute bottom-0 right-0 size-4 border-b-2 border-r-2 border-lime-300" />
         </div>
       </motion.div>
     </div>

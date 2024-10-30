@@ -1,19 +1,28 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 "use client"
 
+import crypto from "crypto"
 import { useEffect, useState } from "react"
-import { WalletAddress, WalletBalance } from "@turbo-eth/core-wagmi"
+import {
+  EvmChain,
+  EvmWalletHistoryErc20Transfer,
+  EvmWalletHistoryNftTransfer,
+  EvmWalletHistoryTransaction,
+} from "@moralisweb3/common-evm-utils"
 import { motion } from "framer-motion"
-import { getTransaction, getTransactionCount } from "viem/actions"
-import { useAccount, useNetwork, usePublicClient } from "wagmi"
+import Moralis from "moralis"
+import { useAccount, useNetwork } from "wagmi"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-type Transaction = {
-  hash: `0x${string}`
-  from: `0x${string}`
-  to: `0x${string}` | null
-  value: bigint
-  // Add other fields as needed
+type Transaction =
+  | EvmWalletHistoryErc20Transfer
+  | EvmWalletHistoryNftTransfer
+  | EvmWalletHistoryTransaction
+
+type MoralisResponse = {
+  result: Transaction[]
+  hasNext: boolean
 }
 
 export function TransactionHistory() {
@@ -22,7 +31,6 @@ export function TransactionHistory() {
   const [hasMore, setHasMore] = useState(true)
   const { address } = useAccount()
   const { chain } = useNetwork()
-  const publicClient = usePublicClient()
 
   useEffect(() => {
     if (address) {
@@ -36,26 +44,16 @@ export function TransactionHistory() {
     if (!address || !chain) return
 
     try {
-      const transactionCount = await publicClient.getTransactionCount({
-        address,
+      const response = await Moralis.EvmApi.wallets.getWalletHistory({
+        address: address,
+        chain: EvmChain.create(chain.id),
+        limit: 10,
+        cursor:
+          page > 1 && transactions.length > 0
+            ? getTransactionHash(transactions[transactions.length - 1])
+            : undefined,
       })
-      const startBlock = Math.max(0, transactionCount - page * 10)
-      const endBlock = Math.min(transactionCount, startBlock + 10)
-
-      const txPromises = []
-      for (let i = startBlock; i < endBlock; i++) {
-        txPromises.push(
-          publicClient.getTransaction({ hash: `0x${i.toString(16)}` })
-        )
-      }
-
-      const txResults = await Promise.all(txPromises)
-      const validTransactions = txResults.filter(
-        (tx): tx is Transaction => tx !== null
-      )
-
-      setTransactions(validTransactions)
-      setHasMore(endBlock < transactionCount)
+      setTransactions(response.result as Transaction[])
     } catch (error) {
       console.error("Error fetching transactions:", error)
     }
@@ -70,7 +68,7 @@ export function TransactionHistory() {
     >
       <Card className="w-full">
         <CardHeader className="flex h-[40px] items-center border-b border-[#1A1B20] bg-[#16171A] px-6 py-0">
-          <div className="size-full grid grid-cols-7 gap-4">
+          <div className="grid size-full grid-cols-7 gap-4">
             <CardTitle className="flex items-center text-sm font-medium">
               Tx Hash
             </CardTitle>
@@ -98,7 +96,11 @@ export function TransactionHistory() {
           {transactions.length > 0 ? (
             transactions.map((tx) => (
               <motion.div
-                key={isTransactionWithHash(tx) ? tx.hash : crypto.randomUUID()}
+                key={
+                  isTransactionWithHash(tx)
+                    ? tx.transactionHash
+                    : crypto.randomUUID()
+                }
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.3 }}
@@ -106,7 +108,9 @@ export function TransactionHistory() {
               >
                 <p>
                   {isTransactionWithHash(tx)
-                    ? tx.hash.slice(0, 6) + "..." + tx.hash.slice(-4)
+                    ? tx.transactionHash.slice(0, 6) +
+                      "..." +
+                      tx.transactionHash.slice(-4)
                     : "N/A"}
                 </p>
                 <p>
@@ -132,7 +136,7 @@ export function TransactionHistory() {
                     <img
                       src={tx.tokenLogo}
                       alt={tx.tokenName}
-                      className="size-4 ml-2"
+                      className="ml-2 size-4"
                     />
                   )}
                 </div>
@@ -186,18 +190,26 @@ export function TransactionHistory() {
 // Add these type guard functions at the end of the file
 function isTransactionWithHash(
   tx: Transaction
-): tx is Transaction & { hash: `0x${string}` } {
-  return "hash" in tx && typeof tx.hash === "string"
+): tx is Transaction & { transactionHash: string } {
+  return "transactionHash" in tx && typeof tx.transactionHash === "string"
 }
 
 function isTransactionWithFrom(
   tx: Transaction
-): tx is Transaction & { from: `0x${string}` } {
+): tx is Transaction & { from: string } {
   return "from" in tx && typeof tx.from === "string"
 }
 
 function isTransactionWithTo(
   tx: Transaction
-): tx is Transaction & { to: `0x${string}` | null } {
+): tx is Transaction & { to: string } {
   return "to" in tx && typeof tx.to === "string"
+}
+
+// Update the type guard function at the end of the file
+function getTransactionHash(tx: Transaction): string | undefined {
+  if ("transactionHash" in tx && typeof tx.transactionHash === "string") {
+    return tx.transactionHash
+  }
+  return undefined
 }

@@ -1,14 +1,14 @@
-import { defineConfig } from "@wagmi/cli"
-import { react } from "@wagmi/cli/plugins"
-import { erc20Abi } from "viem"
+import { defineConfig } from '@wagmi/cli'
+import { react } from '@wagmi/cli/plugins'
+import { erc20ABI } from 'wagmi'
 
 export default defineConfig({
-  out: "lib/generated/blockchain.ts",
+  out: 'lib/blockchain.ts',
   contracts: [
     {
-      name: "erc20",
-      abi: erc20Abi,
+      name: 'erc20',
+      abi: erc20ABI,
     },
   ],
-  plugins: [react()],
+  plugins: [react()], 
 })

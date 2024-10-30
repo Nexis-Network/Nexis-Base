@@ -1,6 +1,5 @@
-import { ReactNode } from "react"
+import type { ReactNode } from "react"
 
-import Banner from "@/components/Banner"
 import CustomCursor from "@/components/CustomCursor"
 import { Footer } from "@/components/Footer/Foot/Footer"
 import { Header } from "@/components/Header/Header"

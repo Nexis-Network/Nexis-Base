@@ -2,79 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
-/*
-  Use HSL values for theming with format `X X% X%`
-  Note: do not include opacity value.
- */
+
 @layer base {
   :root {
-    /* Default background color of <body />...etc */
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
 
-    /* <Card /> */
-    --card: 0 0% 98%;
-    --card-foreground: 0 0% 3.9%;
+    --card: 0 0% 4%;
+    --card-foreground: 0 0% 100%;
 
-    /* <Dropdown />, <HoverCard />, <Popover /> */
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
+    --popover: 0 0% 4%;
+    --popover-foreground: 0 0% 100%;
 
-    /* Primary colors for <Button /> and <CTA /> */
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
+    --primary: 78 100% 54%;
+    --primary-foreground: 0 0% 4%;
 
-    /* Secondary colors for <Button /> and <CTA /> */
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
+    --secondary: 0 0% 4%;
+    --secondary-foreground: 0 0% 100%;
 
-    /* <TabsList />, <Skeleton /> and <Switch /> */
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
+    --muted: 0 0% 14%;
+    --muted-foreground: 0 0% 63%;
 
-    /* For accents such as hover effects on <Dropdown />, <SelectItem />...etc */
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
+    --accent: 0 0% 14%;
+    --accent-foreground: 0 0% 100%;
 
-    /* For destructive actions such as delete on <Button variant="destructive" /> */
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 89.8%; /* Default border color */
-    --input: 0 0% 89.8%; /* Border color for inputs. <Input />, <Select /> and <Textarea /> */
-    --ring: 0 0% 3.9%; /* For focus ring */
+    --border: 0 0% 14%;
+    --input: 0 0% 14%;
+    --ring: 78 100% 54%;
 
-    --radius: 0.5rem; /* Border radius for <Card />, <Input />, <Button />...etc */
-  }
-
-  .dark {
-    --background: 0 0% 7.5%;
-    --foreground: 0 0% 98%;
-
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
+    --radius: 0.5rem;
   }
 }
 
@@ -84,6 +43,58 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
   }
+}
+
+/* Add these styles to your existing global.css file */
+
+.cursor-wrapper {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  will-change: transform;
+}
+
+.default-cursor,
+.cursor,
+.inner-cursor {
+  position: absolute;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  transition: all 0.1s ease;
+}
+
+.default-cursor {
+  width: 2px;  /* Reduced from 8px to 2px (75% decrease) */
+  height: 2px; /* Reduced from 8px to 2px (75% decrease) */
+  background-color: var(--malachite-green, #6be688);
+  opacity: 1;
+}
+
+.default-cursor.hidden {
+  opacity: 0;
+}
+
+.cursor {
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--malachite-green, #6be688);
+  opacity: 0.5;
+}
+
+.inner-cursor {
+  width: 4px;
+  height: 4px;
+  background-color: var(--malachite-green, #6be688);
+}
+
+.cursor.clicking,
+.inner-cursor.clicking {
+  transform: translate(-50%, -50%) rotate(45deg) scale(0.9);
+}
+
+.cursor.hovering,
+.inner-cursor.hovering {
+  transform: translate(-50%, -50%) rotate(45deg) scale(1.5);
 }

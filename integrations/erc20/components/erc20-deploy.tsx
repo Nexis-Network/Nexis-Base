@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { FieldValues, useForm } from "react-hook-form"
-import { usePublicClient, useWalletClient } from "wagmi"
+import { useClient, useWalletClient } from "wagmi"
 
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
@@ -21,7 +21,7 @@ export function DeployERC20Contract() {
   const name = watch("name")
   const symbol = watch("symbol")
 
-  const publicClient = usePublicClient()
+  const publicClient = useClient()
   const { data: walletClient } = useWalletClient()
 
   const onSubmit = async (data: FieldValues) => {

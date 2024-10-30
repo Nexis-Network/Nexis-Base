@@ -32,7 +32,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "**/*.js",
-    "*.cjs"
+    "*.cjs",
+    "next.config.mjs"
   ],
-  "exclude": ["node_modules", ".next", ".vscode", "generated"]
+  "exclude": ["node_modules", ".next", ".vscode", "generated", "**/vscode/**"]
 }

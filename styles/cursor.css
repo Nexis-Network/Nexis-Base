@@ -1,0 +1,45 @@
+.cursor-wrapper {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  will-change: transform;
+  background-color: white !important;
+}
+
+.default-cursor,
+.cursor,
+.inner-cursor {
+  position: absolute;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  transition: transform 0.1s ease;
+  background-color: white;
+  z-index: 99999;
+}
+
+.default-cursor {
+  width: 8px;
+  height: 8px;
+  background-color: white;
+  z-index: 99999;
+}
+
+.cursor {
+  width: 40px;
+  height: 40px;
+  border: 2px solid white;
+  z-index: 99999;
+}
+
+.inner-cursor {
+  width: 4px;
+  height: 4px;
+  background-color: white;
+  z-index: 99999;
+}
+
+.cursor.clicking,
+.inner-cursor.clicking {
+  transform: translate(-50%, -50%) rotate(45deg) scale(0.9);
+}

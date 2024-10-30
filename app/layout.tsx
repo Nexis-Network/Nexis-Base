@@ -1,7 +1,7 @@
 import "@/styles/app.css"
 import "@/styles/globals.css"
 
-import { ReactNode } from "react"
+import type { ReactNode } from "react"
 import { Inter } from "next/font/google"
 import { env } from "@/env.mjs"
 

@@ -2,7 +2,7 @@
 
 import { FormEvent, useState } from "react"
 import { deployContract, waitForTransactionReceipt } from "viem/actions"
-import { usePublicClient, useWalletClient } from "wagmi"
+import { useClient, useWalletClient } from "wagmi"
 
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
@@ -21,7 +21,7 @@ export function ERC721Deploy() {
   const [name, setName] = useState<string>("")
   const [symbol, setSymbol] = useState<string>("")
 
-  const publicClient = usePublicClient()
+  const publicClient = useClient()
   const { data: walletClient } = useWalletClient()
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {

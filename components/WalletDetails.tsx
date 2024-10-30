@@ -99,7 +99,7 @@ const Web3DashboardTable: React.FC = () => {
       <IsWalletDisconnected>
         <div className="h-7 w-20 animate-pulse rounded-md bg-[#171717]"></div>
       </IsWalletDisconnected>
-      {showIcon && <NexisIcon className="size-5 ml-2" />}
+      {showIcon && <NexisIcon className="ml-2 h-5 w-5" />}
     </div>
   )
 
