@@ -1,18 +1,16 @@
-import React from "react"
+import type { FC } from "react"
 
 const links = [
   "Home",
   "Documentation",
   "Guides",
-  "Help",
-  "Contact Sales",
+  "Community",
   "Blog",
-  "Changelog",
-  "Pricing",
-  "Enterprise",
+  "Telegram",
+  "X",
 ]
 
-export const FooterLinks: React.FC = () => {
+export const FooterLinks: FC = () => {
   return (
     <nav className="flex flex-auto flex-wrap gap-10 leading-none">
       <img
@@ -24,7 +22,7 @@ export const FooterLinks: React.FC = () => {
       {links.map((link) => (
         <a
           key={link}
-          href="#"
+          href={`/${link.toLowerCase()}`}
           className="hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
         >
           {link}

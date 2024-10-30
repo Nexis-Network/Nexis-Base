@@ -1,6 +1,6 @@
 import { useMemo } from "react"
 import { providers } from "ethers"
-import { type HttpTransport } from "viem"
+import type { HttpTransport } from "viem"
 import { usePublicClient, type PublicClient } from "wagmi"
 
 export function publicClientToProvider(publicClient: PublicClient) {

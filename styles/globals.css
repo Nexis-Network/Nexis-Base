@@ -43,58 +43,26 @@
   }
   body {
     @apply bg-background text-foreground;
+    cursor: none;
   }
 }
 
 /* Add these styles to your existing global.css file */
 
-.cursor-wrapper {
-  pointer-events: none;
-  position: fixed;
-  inset: 0;
-  z-index: 99999;
-  will-change: transform;
+.circle {
+    border: 2px solid white;
+    border-radius: 50%;
+    box-shadow: 0 0 10px white;
+    pointer-events: none;
+    position: fixed;
+    top: -10rem;
+    left: -10rem;
+    height: 2rem;
+    width: 2rem;
+    transition: transform 0.4s, background 0.4s;
 }
 
-.default-cursor,
-.cursor,
-.inner-cursor {
-  position: absolute;
-  border-radius: 50%;
-  transform: translate(-50%, -50%) rotate(45deg);
-  transition: all 0.1s ease;
-}
-
-.default-cursor {
-  width: 2px;  /* Reduced from 8px to 2px (75% decrease) */
-  height: 2px; /* Reduced from 8px to 2px (75% decrease) */
-  background-color: var(--malachite-green, #6be688);
-  opacity: 1;
-}
-
-.default-cursor.hidden {
-  opacity: 0;
-}
-
-.cursor {
-  width: 40px;
-  height: 40px;
-  border: 2px solid var(--malachite-green, #6be688);
-  opacity: 0.5;
-}
-
-.inner-cursor {
-  width: 4px;
-  height: 4px;
-  background-color: var(--malachite-green, #6be688);
-}
-
-.cursor.clicking,
-.inner-cursor.clicking {
-  transform: translate(-50%, -50%) rotate(45deg) scale(0.9);
-}
-
-.cursor.hovering,
-.inner-cursor.hovering {
-  transform: translate(-50%, -50%) rotate(45deg) scale(1.5);
+.circle.big {
+    background: white;
+    transform: scale(2);
 }

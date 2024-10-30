@@ -80,6 +80,7 @@ const Web3DashboardTable: React.FC = () => {
     }
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const runFetch = async () => {
       try {
@@ -91,15 +92,15 @@ const Web3DashboardTable: React.FC = () => {
     void runFetch()
   }, [address])
 
-  const renderCellContent = (value: string, showIcon: boolean = false) => (
+  const renderCellContent = (value: string, showIcon = false) => (
     <div className="flex items-center">
       <IsWalletConnected>
         <HyperText text={value || "N/A"} animateOnLoad={false} />
       </IsWalletConnected>
       <IsWalletDisconnected>
-        <div className="h-7 w-20 animate-pulse rounded-md bg-[#171717]"></div>
+        <div className="h-7 w-20 animate-pulse rounded-md bg-[#171717]" />
       </IsWalletDisconnected>
-      {showIcon && <NexisIcon className="ml-2 h-5 w-5" />}
+      {showIcon && <NexisIcon className="ml-2 size-5" />}
     </div>
   )
 

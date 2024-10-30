@@ -1,11 +1,12 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
 "use client"
 
-import React, { useEffect, useRef, useState } from "react"
-import { ConnectButton as RainbowkitConnectButton } from "@rainbow-me/rainbowkit"
+import { useEffect, useRef, useState } from "react"
+import type { ConnectButton as RainbowkitConnectButton } from "@rainbow-me/rainbowkit"
 import { WalletAddress, WalletBalance } from "@turbo-eth/core-wagmi"
 import { Copy, ExternalLink } from "lucide-react"
 import Moralis from "moralis"
+import { useAccount } from "wagmi"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -14,6 +15,8 @@ import { WalletEnsName } from "@/components/blockchain/wallet-ens-name"
 import styles from "./WalletContainer.module.css"
 
 export const WalletContainer: React.FC = () => {
+  const { address } = useAccount()
+
   const splineContainerRef = useRef<HTMLDivElement>(null)
   const [netWorth, setNetWorth] = useState<string | null>(null)
 
@@ -47,19 +50,15 @@ export const WalletContainer: React.FC = () => {
   }, [])
 
   useEffect(() => {
-    const fetchNetWorth = async (address: string) => {
+    const fetchNetWorth = async (walletAddress: string) => {
       try {
         await Moralis.start({
           apiKey: process.env.MORALIS_API_KEY,
         })
-        const response = await (
-          Moralis.EvmApi.wallets as unknown as {
-            getWalletNetWorth: (params: any) => Promise<any>
-          }
-        ).getWalletNetWorth({
+        const response = await Moralis.EvmApi.wallets.getWalletNetWorth({
           excludeSpam: true,
           excludeUnverifiedContracts: true,
-          address: address,
+          address: walletAddress,
         })
 
         setNetWorth(response.raw.total_networth_usd)
@@ -69,24 +68,10 @@ export const WalletContainer: React.FC = () => {
       }
     }
 
-    const fetchData = async () => {
-      try {
-        const addressElement = WalletAddress({} as any)
-        const address =
-          typeof addressElement === "string"
-            ? addressElement
-            : addressElement?.props?.children
-
-        if (address && typeof address === "string") {
-          await fetchNetWorth(address)
-        }
-      } catch (error) {
-        console.error("Error fetching wallet address or net worth:", error)
-      }
+    if (address) {
+      fetchNetWorth(address).catch(console.error)
     }
-
-    fetchData().catch(console.error)
-  }, []) // Add dependencies if needed
+  }, [address])
 
   return (
     <div
@@ -98,15 +83,21 @@ export const WalletContainer: React.FC = () => {
           loading="lazy"
           referrerPolicy="no-referrer"
           sandbox="allow-same-origin allow-scripts allow-downloads allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-popups-to-escape-sandbox allow-presentation allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
-          className="absolute inset-0 h-full w-full border-none"
-        ></iframe>
+          className="absolute inset-0 size-full border-none"
+          title="Spline Design"
+        />
       </div>
       <div className="relative z-50 flex h-full flex-col border-y border-[#242424] bg-black/10 text-black">
         <div className="flex flex-1 items-center justify-end p-4">
           <div className="text-right">
             <p className="text-sm">Net Worth</p>
             <h3 className="text-3xl font-bold">
-              {netWorth ? `$${parseFloat(netWorth).toFixed(2)}` : "Loading..."}
+              {netWorth
+                ? `$${
+                    // biome-ignore lint/style/useNumberNamespace: <explanation>
+                    parseFloat(netWorth).toFixed(2)
+                  }`
+                : "Loading..."}
             </h3>
             <Button
               variant="outline"
@@ -119,14 +110,16 @@ export const WalletContainer: React.FC = () => {
         </div>
         <div className="flex">
           <CardContent className="flex w-1/2 items-center space-x-4 p-4">
-            <div className="z-10 flex h-6 w-6 items-center justify-center">
+            <div className="z-10 flex size-6 items-center justify-center">
               <svg
                 width="100%"
                 height="100%"
                 viewBox="0 0 358 358"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                aria-labelledby="walletIconTitle"
               >
+                <title id="walletIconTitle">Wallet Icon</title>
                 <rect
                   x="1"
                   y="1"
@@ -165,72 +158,22 @@ export const WalletContainer: React.FC = () => {
               </svg>
             </div>
             <div className="flex-1">
-              <RainbowkitConnectButton.Custom>
-                {({
-                  account,
-                  chain,
-                  openAccountModal,
-                  openChainModal,
-                  openConnectModal,
-                  mounted,
-                }) => {
-                  const ready = mounted
-                  const connected = ready && account && chain
-
-                  return (
-                    <div>
-                      <h2 className="text-2xl font-bold text-black">
-                        {connected ? <WalletEnsName /> : "Not Connected"}
-                      </h2>
-                      <div className="mt-1 flex items-center">
-                        {connected ? (
-                          <>
-                            <Button
-                              onClick={openAccountModal}
-                              variant="outline"
-                              size="sm"
-                              className=" text-black"
-                            >
-                              {account.address.slice(0, 6)}...
-                              {account.address.slice(-6)}
-                            </Button>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="ml-2 text-black"
-                            >
-                              <Copy className="h-4 w-4" />
-                            </Button>
-                            <Button variant="ghost" size="icon">
-                              <ExternalLink className="h-4 w-4" />
-                            </Button>
-                          </>
-                        ) : (
-                          <Button
-                            onClick={openConnectModal}
-                            variant="outline"
-                            size="sm"
-                          >
-                            Connect Wallet
-                          </Button>
-                        )}
-                      </div>
-                    </div>
-                  )
-                }}
-              </RainbowkitConnectButton.Custom>
+              <WalletAddress />
             </div>
           </CardContent>
           <div className="flex w-1/2 flex-col justify-end">
             <div className={styles.zkDataContainer}>
+              {/* biome-ignore lint/suspicious/noCommentText: <explanation> */}
               <span className="text-black">/// zK data. </span>
               for any AI.
             </div>
             <div className={styles.zkDataContainer}>
+              {/* biome-ignore lint/suspicious/noCommentText: <explanation> */}
               <span className="text-black">/// zK data. </span>
               for any AI.
             </div>
             <div className={styles.zkDataContainer}>
+              {/* biome-ignore lint/suspicious/noCommentText: <explanation> */}
               <span className="text-black">/// zK data. </span>
               for any AI.
             </div>

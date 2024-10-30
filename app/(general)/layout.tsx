@@ -16,8 +16,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <Header />
         <NavigationMenu />
         <main className="flex-1">{children}</main>
+        <Footer />
       </div>
-      <Footer />
       <CustomCursor />
     </>
   )
