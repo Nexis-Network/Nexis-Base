@@ -97,8 +97,14 @@ const CustomCursor = () => {
       document.removeEventListener("mousemove", moveCursor)
       document.removeEventListener("mouseover", handleMouseOver)
       document.removeEventListener("mouseout", handleMouseOut)
-      document.body.removeChild(cursorOuter)
-      document.body.removeChild(cursorInner)
+      
+      // Check if cursors are still in the body before removing them
+      if (document.body.contains(cursorOuter)) {
+        document.body.removeChild(cursorOuter)
+      }
+      if (document.body.contains(cursorInner)) {
+        document.body.removeChild(cursorInner)
+      }
     }
   }, [])
 

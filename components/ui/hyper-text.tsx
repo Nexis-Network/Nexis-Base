@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { AnimatePresence, motion, Variants } from "framer-motion"
+import { AnimatePresence, motion, type Variants } from "framer-motion"
 
 import { cn } from "@/lib/utils"
 
@@ -38,6 +38,7 @@ export default function HyperText({
     setTrigger(true)
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const interval = setInterval(() => {
       if (!animateOnLoad && isFirstRender.current) {

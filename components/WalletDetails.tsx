@@ -1,6 +1,8 @@
+/* eslint-disable react/jsx-no-comment-textnodes */
 "use client"
 
-import React, { useEffect, useState } from "react"
+import type React from "react"
+import { useEffect, useState } from "react"
 import axios from "axios"
 import { useAccount } from "wagmi"
 
@@ -17,23 +19,9 @@ import BlockchainActions from "@/components/blockchain/send-receive-buttons"
 import NexisIcon from "@/components/NexisIcon"
 import { IsWalletConnected } from "@/components/shared/is-wallet-connected"
 import { IsWalletDisconnected } from "@/components/shared/is-wallet-disconnected"
+import { VersionTasksArgs } from "@/integrations/gelato/graphql/graphql/generated/graphql"
 
-// Update this type to match your Prisma schema
-type NexisHolderData = {
-  walletAddress: string
-  purchaseAmount: number
-  totalNZT: number
-  valueTGE: number
-  unlockTGE: number
-  vestingPeriod: number
-  vestingStyle: string
-  vestingStart: Date
-  vestingEnd: Date
-  percentGain: number
-  estDailyUnlock: number
-}
-
-interface DashboardData {
+type DashboardData = {
   totalNZT: string
   unlockedNZT: string
   vestedNZT: string
@@ -44,7 +32,6 @@ interface DashboardData {
   totalValue: string
 }
 
-// Default placeholder data
 const placeholderData: DashboardData = {
   totalNZT: "N/A",
   unlockedNZT: "N/A",
@@ -57,135 +44,181 @@ const placeholderData: DashboardData = {
 }
 
 const Web3DashboardTable: React.FC = () => {
-  const { address } = useAccount()
+  const { address, isConnected } = useAccount()
   const [displayData, setDisplayData] = useState<DashboardData>(placeholderData)
 
-  const fetchNexisHolderData = async () => {
-    if (!address) return
-    try {
-      const response = await axios.get(`/api/nexis-holder?address=${address}`)
-      const holderData: NexisHolderData = response.data
-      setDisplayData({
-        totalNZT: holderData.totalNZT.toString(),
-        unlockedNZT: holderData.unlockTGE.toString(),
-        vestedNZT: (holderData.totalNZT - holderData.unlockTGE).toString(),
-        estDailyUnlock: holderData.estDailyUnlock.toString(),
-        vestingPeriod: `${holderData.vestingPeriod} months`,
-        delegatedNZT: "Calculation needed",
-        nodeLicenses: "Calculation needed",
-        totalValue: (holderData.totalNZT * holderData.valueTGE).toFixed(2),
-      })
-    } catch (error) {
-      console.error("Error fetching Nexis holder data:", error)
-    }
-  }
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    const runFetch = async () => {
+    const fetchData = async () => {
+      if (!address || !isConnected) return
       try {
-        await fetchNexisHolderData()
+        const response = await axios.get(`/api/nexis-holder?address=${address}`)
+        const holderData = response.data
+        setDisplayData({
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+          totalNZT: holderData.total_nzt?.toString() || "N/A",
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+          unlockedNZT: holderData.unlocked_nzt?.toString() || "N/A",
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+          vestedNZT: holderData.vested_nzt?.toString() || "N/A",
+          estDailyUnlock: holderData.est_daily_unlock
+            ? String(holderData.est_daily_unlock)
+            : "N/A",
+          vestingPeriod: holderData.vesting_period
+            ? String(holderData.vesting_period)
+            : "N/A",
+          delegatedNZT: holderData.delegated_nzt
+            ? String(holderData.delegated_nzt)
+            : "N/A",
+          nodeLicenses: String(holderData.node_licenses),
+          totalValue: String(holderData.total_value),
+        })
       } catch (error) {
-        console.error("Error in fetchNexisHolderData:", error)
+        console.error("Error fetching data:", error)
+        // Handle error, e.g., show a notification or set default values
       }
     }
-    void runFetch()
-  }, [address])
 
-  const renderCellContent = (value: string, showIcon = false) => (
-    <div className="flex items-center">
-      <IsWalletConnected>
-        <HyperText text={value || "N/A"} animateOnLoad={false} />
-      </IsWalletConnected>
-      <IsWalletDisconnected>
-        <div className="h-7 w-20 animate-pulse rounded-md bg-[#171717]" />
-      </IsWalletDisconnected>
-      {showIcon && <NexisIcon className="ml-2 size-5" />}
-    </div>
-  )
+    void fetchData()
+  }, [address, isConnected])
+
+  const renderCellContent = (
+    content: string | number,
+    isHighlighted = false
+  ) => {
+    return (
+      <span
+        className={isHighlighted ? "font-bold text-secondary-foreground" : ""}
+      >
+        {content}
+      </span>
+    )
+  }
 
   return (
-    <div className="w-full border-b border-b-[#242424] bg-black text-white">
-      <Table className="border-collapse">
-        <TableHeader>
-          <TableRow className="border-b border-[#242424] bg-[#0a0a0a]">
-            <TableHead className="w-1/2 p-0 font-mono text-white">
-              <div className="p-4">
-                <span className="text-base">WALLET DETAILS</span>
-              </div>
-            </TableHead>
-            <TableHead className="h-full w-1/2 p-0">
-              <BlockchainActions />
-            </TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          <TableRow className="border-b border-[#242424]">
-            <TableCell className="w-1/2 border-r border-[#242424] pl-4 font-medium">
-              <HyperText text="Total Value" animateOnLoad={true} />
-            </TableCell>
-            <TableCell className="w-1/2 pl-4">
-              {renderCellContent(`$${displayData.totalValue}`)}
-            </TableCell>
-          </TableRow>
-          <TableRow className="border-b border-[#242424]">
-            <TableCell className="w-1/2 border-r border-[#242424] pl-4 font-medium">
-              <HyperText text="Total NZT Owned" animateOnLoad={true} />
-            </TableCell>
-            <TableCell className="w-1/2 pl-4">
-              {renderCellContent(displayData.totalNZT, true)}
-            </TableCell>
-          </TableRow>
-          <TableRow className="border-b border-[#242424]">
-            <TableCell className="w-1/2 border-r border-[#242424] pl-4 font-medium">
-              <HyperText text="Claimable" animateOnLoad={true} />
-            </TableCell>
-            <TableCell className="w-1/2 pl-4">
-              {renderCellContent(displayData.unlockedNZT)}
-            </TableCell>
-          </TableRow>
-          <TableRow className="border-b border-[#242424]">
-            <TableCell className="w-1/2 border-r border-[#242424] pl-4 font-medium">
-              <HyperText text="Total Vested NZT" animateOnLoad={true} />
-            </TableCell>
-            <TableCell className="w-1/2 pl-4">
-              {renderCellContent(displayData.vestedNZT)}
-            </TableCell>
-          </TableRow>
-          <TableRow className="border-b border-[#242424]">
-            <TableCell className="w-1/2 border-r border-[#242424] pl-4 font-medium">
-              <HyperText text="Est. Daily Unlocked NZT" animateOnLoad={true} />
-            </TableCell>
-            <TableCell className="w-1/2 pl-4">
-              {renderCellContent(displayData.estDailyUnlock)}
-            </TableCell>
-          </TableRow>
-          <TableRow className="border-b border-[#242424]">
-            <TableCell className="w-1/2 border-r border-[#242424] pl-4 font-medium">
-              <HyperText text="Vesting Period" animateOnLoad={true} />
-            </TableCell>
-            <TableCell className="w-1/2 pl-4">
-              {renderCellContent(displayData.vestingPeriod)}
-            </TableCell>
-          </TableRow>
-          <TableRow className="border-b border-[#242424]">
-            <TableCell className="w-1/2 border-r border-[#242424] pl-4 font-medium">
-              <HyperText text="Delegated NZT" animateOnLoad={true} />
-            </TableCell>
-            <TableCell className="w-1/2 pl-4">
-              {renderCellContent(displayData.delegatedNZT)}
-            </TableCell>
-          </TableRow>
-          <TableRow className="border-b border-[#242424]">
-            <TableCell className="w-1/2 border-r border-[#242424] pl-4 font-medium">
-              <HyperText text="Node Licenses Owned" animateOnLoad={true} />
-            </TableCell>
-            <TableCell className="w-1/2 pl-4">
-              {renderCellContent(displayData.nodeLicenses)}
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
+    <div className="overflow-x-auto">
+      <IsWalletConnected>
+        <div>
+          <Table className="min-w-full border-b border-[#242424]">
+            <TableHeader className="border-collapse border-b border-[#242424] bg-[#0a0a0a]">
+              <TableRow>
+                <TableCell colSpan={2} className="p-0">
+                  <div className="flex w-full items-center justify-between px-4 py-2">
+                    <div className="text-base">
+                      <div className="w-full font-mono text-base text-white">
+                        {/* biome-ignore lint/suspicious/noCommentText: This comment is used to denote wallet details section */}
+                        <span className="text-base">/// WALLET DETAILS</span>
+                      </div>
+                    </div>
+                    <div className="w-1/2">
+                      <BlockchainActions />
+                    </div>
+                  </div>
+                </TableCell>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow className="border-b border-[#242424]">
+                <TableCell className="w-1/2 border-r border-[#242424] pl-4 font-medium">
+                  <HyperText text="Total Value" animateOnLoad={true} />
+                </TableCell>
+                <TableCell className="w-1/2 pl-4">
+                  {renderCellContent(`$${displayData.totalValue}`)}
+                </TableCell>
+              </TableRow>
+              {/* Total NZT Row */}
+              <TableRow className="border-b border-[#242424]">
+                <TableCell className="w-1/2 border-r border-[#242424] pl-4 font-medium">
+                  <HyperText text="Total NZT" animateOnLoad={true} />
+                </TableCell>
+                <TableCell className="w-1/2 pl-4">
+                  {renderCellContent(`${displayData.totalNZT}`)}
+                </TableCell>
+              </TableRow>
+
+              {/* Unlocked NZT Row */}
+              <TableRow className="border-b border-[#242424]">
+                <TableCell className="w-1/2 border-r border-[#242424] pl-4 font-medium">
+                  <HyperText text="Unlocked NZT" animateOnLoad={true} />
+                </TableCell>
+                <TableCell className="w-1/2 pl-4">
+                  {renderCellContent(`${displayData.unlockedNZT}`)}
+                </TableCell>
+              </TableRow>
+              {/* Total NZT Row */}
+              <TableRow className="border-b border-[#242424]">
+                <TableCell className="w-1/2 border-r border-[#242424] pl-4 font-medium">
+                  <HyperText text="Total NZT" animateOnLoad={true} />
+                </TableCell>
+                <TableCell className="w-1/2 pl-4">
+                  {renderCellContent(`${displayData.totalNZT}`)}
+                </TableCell>
+              </TableRow>
+
+              {/* Unlocked NZT Row */}
+              <TableRow className="border-b border-[#242424]">
+                <TableCell className="w-1/2 border-r border-[#242424] pl-4 font-medium">
+                  <HyperText text="Unlocked NZT" animateOnLoad={true} />
+                </TableCell>
+                <TableCell className="w-1/2 pl-4">
+                  {renderCellContent(`${displayData.unlockedNZT}`)}
+                </TableCell>
+              </TableRow>
+              {/* Total NZT Row */}
+              <TableRow className="border-b border-[#242424]">
+                <TableCell className="w-1/2 border-r border-[#242424] pl-4 font-medium">
+                  <HyperText text="Total NZT" animateOnLoad={true} />
+                </TableCell>
+                <TableCell className="w-1/2 pl-4">
+                  {renderCellContent(`${displayData.totalNZT}`)}
+                </TableCell>
+              </TableRow>
+
+              {/* Unlocked NZT Row */}
+              <TableRow className="border-b border-[#242424]">
+                <TableCell className="w-1/2 border-r border-[#242424] pl-4 font-medium">
+                  <HyperText text="Unlocked NZT" animateOnLoad={true} />
+                </TableCell>
+                <TableCell className="w-1/2 pl-4">
+                  {renderCellContent(`${displayData.unlockedNZT}`)}
+                </TableCell>
+              </TableRow>
+              {/* Total NZT Row */}
+              <TableRow className="border-b border-[#242424]">
+                <TableCell className="w-1/2 border-r border-[#242424] pl-4 font-medium">
+                  <HyperText text="Total NZT" animateOnLoad={true} />
+                </TableCell>
+                <TableCell className="w-1/2 pl-4">
+                  {renderCellContent(`${displayData.totalNZT}`)}
+                </TableCell>
+              </TableRow>
+
+              {/* Unlocked NZT Row */}
+              <TableRow className="border-b border-[#242424]">
+                <TableCell className="w-1/2 border-r border-[#242424] pl-4 font-medium">
+                  <HyperText text="Unlocked NZT" animateOnLoad={true} />
+                </TableCell>
+                <TableCell className="w-1/2 pl-4">
+                  {renderCellContent(`${displayData.unlockedNZT}`)}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </div>
+      </IsWalletConnected>
+      <IsWalletDisconnected>
+        <div>
+          <div className="flex justify-center">
+            <div
+              style={{ transform: "scale(0.25)", transformOrigin: "center" }}
+            >
+              <NexisIcon />
+            </div>
+          </div>
+          <h2 className="text-center text-xl font-semibold">
+            Please connect your wallet to view your dashboard.
+          </h2>
+        </div>
+      </IsWalletDisconnected>
     </div>
   )
 }

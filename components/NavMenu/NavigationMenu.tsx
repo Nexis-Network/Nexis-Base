@@ -15,11 +15,11 @@ interface NavigationItem {
 
 const navigationItems: NavigationItem[] = [
   { label: "<A/> OVERVIEW", href: "/" },
-  { label: "<A/> TOKENOMICS", href: "/Tokenomic" },
-  { label: "<A/> AIRDROP", href: "/Airdrop" },
-  { label: "<A/> NODES", href: "/Nodes" },
-  { label: "<A/> TOKEN", href: "/Token" },
-  { label: "<A/> BRIDGE", href: "/Bridge" },
+  { label: "<A/> TOKENOMICS", href: "/tokenomics" },
+  { label: "<A/> AIRDROP", href: "/airdrop" },
+  { label: "<A/> NODES", href: "/nodes" },
+  { label: "<A/> TOKEN", href: "/token" },
+  { label: "<A/> BRIDGE", href: "/bridge" },
 ]
 
 export function NavigationMenu() {
@@ -34,11 +34,11 @@ export function NavigationMenu() {
   return (
     <nav className="flex w-full flex-col items-start self-center overflow-hidden whitespace-nowrap border-b border-[hsla(0,0%,100%,0.1)] bg-neutral-950 leading-none text-zinc-500 bg-blend-normal">
       <ul className="flex w-[950px] max-w-full flex-wrap items-stretch justify-between bg-blend-normal">
-        {navigationItems.map((item, index) => (
+        {navigationItems.map((item) => (
           <li
-            key={index}
+            key={item.href}
             className={`group relative shrink-0 grow basis-auto ${
-              index !== navigationItems.length - 1
+              item.href !== navigationItems[navigationItems.length - 1].href
                 ? 'after:absolute after:right-0 after:top-1/3 after:h-1/3 after:w-px after:bg-white/50 after:content-[""]'
                 : ""
             }`}

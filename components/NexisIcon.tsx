@@ -1,3 +1,4 @@
+// biome-ignore lint/style/useImportType: <explanation>
 import React from "react"
 
 interface NexisIconProps {
@@ -5,7 +6,8 @@ interface NexisIconProps {
 }
 
 const NexisIcon: React.FC<NexisIconProps> = ({ className }) => (
-  <svg
+  // biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
+<svg
     className={className}
     width="358"
     height="358"

@@ -9,8 +9,7 @@ import Moralis from "moralis"
 import { useAccount } from "wagmi"
 
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { WalletEnsName } from "@/components/blockchain/wallet-ens-name"
+import { CardContent } from "@/components/ui/card"
 
 import styles from "./WalletContainer.module.css"
 

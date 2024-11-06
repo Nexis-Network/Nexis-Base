@@ -17,7 +17,6 @@ export const Footer: React.FC = () => {
       </div>
       <div className="mt-5 flex w-full flex-wrap gap-10 py-1.5 pr-1.5 text-zinc-500 bg-blend-normal max-md:max-w-full">
         <FooterLinks />
-        <LegalLink />
       </div>
     </footer>
   )

@@ -187,6 +187,7 @@
     "prettier-plugin-tailwindcss": "^0.2.8",
     "prisma": "^4.16.2",
     "shadcn-cli": "^0.0.6",
+    "ts-node": "^10.9.1",
     "typescript": "5.0.4"
   },
   "next-unused": {

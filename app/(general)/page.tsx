@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 
+import BlogCardCarousel from "@/components/blog/blogCarousel"
 import ScrollBanner from "@/components/ScrollBanner"
 import { WalletContainer } from "@/components/Wallet/WalletContainer"
 import Web3DashboardTable from "@/components/WalletDetails"
@@ -15,6 +16,7 @@ export default function Dashboard() {
       <WalletContainer />
       <ScrollBanner />
       <Web3DashboardTable />
+      <BlogCardCarousel />
     </div>
   )
 }
