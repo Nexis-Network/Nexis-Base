@@ -33,23 +33,23 @@ const ScrollBanner: React.FC = () => {
   ]
 
   return (
-    <div className="relative h-[45px] w-full overflow-hidden border-b border-[#242424] bg-black font-mono">
+    <div className="relative h-[30px] w-full overflow-hidden border-b border-[#242424] bg-black font-mono text-xs">
       <motion.div
-        className="absolute inset-y-1/2 left-0 flex whitespace-nowrap"
+        className="absolute inset-y-0 left-0 flex whitespace-nowrap"
         animate={{
           x: [0, -1200], // Adjust this value based on the total width of your content
         }}
         transition={{
           x: {
-            repeat: Infinity,
+            repeat: Number.POSITIVE_INFINITY,
             repeatType: "loop",
             duration: 30, // Adjust the duration to control the speed
             ease: "linear",
           },
         }}
       >
-        {bannerItems.map((item, index) => (
-          <React.Fragment key={index}>
+        {bannerItems.map((item) => (
+          <React.Fragment key={item.title}>
             <div className="flex items-center">
               <p className="text-base uppercase leading-4 text-[#8AE06C]">
                 {item.title}
@@ -61,7 +61,7 @@ const ScrollBanner: React.FC = () => {
                 {item.description}
               </p>
             </div>
-            {index < bannerItems.length - 1 && (
+            {bannerItems.indexOf(item) < bannerItems.length - 1 && (
               <div className="mx-8" /> // Add space between items
             )}
           </React.Fragment>

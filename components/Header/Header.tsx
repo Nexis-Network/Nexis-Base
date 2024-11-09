@@ -1,7 +1,5 @@
-import React from "react"
+import type React from "react"
 
-import { ConnectButton } from "./ConnectionButton"
-import { Logo } from "./Logo"
 import { NavMenu } from "./NavMenu"
 
 export const Header: React.FC = () => {

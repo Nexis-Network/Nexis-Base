@@ -1,23 +1,121 @@
+/* eslint-disable tailwindcss/no-custom-classname */
 "use client"
 
-import React, { useState } from "react"
+import type React from "react"
+import { useState } from "react"
 import { ConnectButton as RainbowKitConnectButton } from "@rainbow-me/rainbowkit"
+import styled from "styled-components"
 
-import { CardSpotlight } from "@/components/ui/card-spotlight"
-import HyperText from "@/components/ui/hyper-text"
-
-// Import the SVG
-import Icon from "./Icon"
-
-interface ConnectionButtonProps {
-  className?: string
-}
-
-export const ConnectionButton: React.FC<ConnectionButtonProps> = ({
+export const ConnectionButton: React.FC<{ className?: string }> = ({
   className,
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-  const [isHovered, setIsHovered] = useState(false)
+
+  const StyledWrapper = styled.div`
+    [class*="btn-glitch-"] {
+      display: inline-block;
+      font-family: "VT323", monospace;
+      border: 1px solid rgb(212, 254, 45, 0.5);
+      color: rgb(212, 254, 45, 0.5);
+      padding: 7.5px 9.75px;
+      min-width: 131.25px;
+      line-height: 1.125em;
+      white-space: nowrap;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 11.25px;
+      font-size: 0.75em;
+
+      .text,
+      .decoration {
+        display: inline-block;
+      }
+
+      .decoration {
+        display: inline-block;
+        float: right;
+      }
+
+      &:hover,
+      &:focus {
+        animation-name: glitch;
+        animation-duration: 0.2s;
+        background-color: rgb(212, 254, 45);
+        color: black;
+        border: 1px solid rgb(212, 254, 45);
+
+        .text-decoration {
+          animation-name: blink;
+          animation-duration: 0.1s;
+          animation-iteration-count: infinite;
+        }
+
+        .decoration {
+          animation-name: blink;
+          animation-duration: 0.1s;
+          animation-iteration-count: infinite;
+        }
+      }
+
+      &:active {
+        background: none;
+        color: yellow;
+
+        .text-decoration {
+          animation-name: none;
+        }
+
+        .decoration {
+          animation-name: none;
+        }
+
+        :before,
+        :after {
+          display: none;
+        }
+      }
+    }
+
+    @keyframes glitch {
+      25% {
+        background-color: red;
+        transform: translateX(-7.5px);
+        letter-spacing: 7.5px;
+      }
+
+      35% {
+        background-color: green;
+        transform: translate(7.5px);
+      }
+
+      59% {
+        opacity: 0;
+      }
+
+      60% {
+        background-color: blue;
+        transform: translate(-7.5px);
+        filter: blur(3.75px);
+      }
+
+      100% {
+        background-color: yellow;
+        blur: (3.75px);
+      }
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+
+    @keyframes shrink {
+      100% {
+        width: 7.5%;
+      }
+    }
+  `
 
   return (
     <RainbowKitConnectButton.Custom>
@@ -27,110 +125,55 @@ export const ConnectionButton: React.FC<ConnectionButtonProps> = ({
         openAccountModal,
         openChainModal,
         openConnectModal,
+        mounted,
       }) => {
-        const connected = !!account && !!chain
+        const connected = mounted && account && chain
+
+        if (!connected) {
+          return (
+            <StyledWrapper>
+              {/* biome-ignore lint/a11y/useValidAnchor: <explanation> */}
+              <a
+                href="#"
+                className="btn-glitch-fill"
+                onClick={openConnectModal}
+              >
+                <span className="text">{"// Connect"}</span>
+                <span className="text-decoration"> _</span>
+                <span className="decoration">⇒</span>
+              </a>
+            </StyledWrapper>
+          )
+        }
 
         return (
           <div className="relative">
-            {!connected ? (
-              <button
-                onClick={openConnectModal}
-                type="button"
-                className={`relative px-6 py-0.5 text-[14px] uppercase text-[#CBFF00] transition duration-200 ${
-                  className ?? ""
-                }`}
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-              >
-                <HyperText
-                  text="CONNECT"
-                  className="text-sm uppercase"
-                  animateOnLoad={false}
-                />
-                <span className="absolute inset-0 z-0">
-                  <span
-                    className={`absolute left-0 top-0 h-2 w-2 border-l-2 border-t-2 border-[#CBFF00]/30 ${
-                      isHovered ? "animate-border-top-left" : ""
-                    }`}
-                  ></span>
-                  <span
-                    className={`absolute right-0 top-0 h-2 w-2 border-r-2 border-t-2 border-[#CBFF00]/30 ${
-                      isHovered ? "animate-border-top-right" : ""
-                    }`}
-                  ></span>
-                  <span
-                    className={`absolute bottom-0 left-0 border-b-2 border-l-2 border-[#CBFF00]/30 ${
-                      isHovered ? "animate-border-bottom-left" : ""
-                    }`}
-                  ></span>
-                  <span
-                    className={`absolute bottom-0 right-0 border-b-2 border-r-2 border-[#CBFF00]/30 ${
-                      isHovered ? "animate-border-bottom-right" : ""
-                    }`}
-                  ></span>
-                </span>
-              </button>
-            ) : chain.unsupported ? (
-              <button
-                onClick={openChainModal}
-                type="button"
-                className="text-red-500"
-              >
-                Wrong network
-              </button>
-            ) : (
-              <div className="relative">
+            <button
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              type="button"
+              className="rounded-md bg-[#212121] px-3 py-1.5 text-white"
+            >
+              <p className="text-sm font-medium">{account.displayName}</p>
+              <div className="flex w-full items-center justify-center">
+                {/* Include your SVG icon here if needed */}
+              </div>
+            </button>
+            {isDropdownOpen && (
+              <div className="absolute right-0 z-10 mt-2 w-36 rounded-md border border-[#242424] bg-black shadow-lg">
                 <button
-                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                   type="button"
-                  className="flex items-center gap-2"
+                  onClick={openChainModal}
+                  className="block w-full px-3 py-1.5 text-left text-white hover:bg-gray-700"
                 >
-                  <Icon
-                    {...{
-                      className: "size-8 rounded-full border border-[#242424]",
-                      icon: "wallet",
-                    }}
-                  />
-                  {account?.displayBalance
-                    ? ` (${account.displayBalance})`
-                    : ""}
+                  Switch Network
                 </button>
-                {isDropdownOpen && (
-                  <div className="absolute right-0 z-10 mt-2 w-48 rounded-md border border-[#242424] bg-[#09090b] shadow-lg ring-1 ring-black/5">
-                    <div
-                      className="py-1"
-                      role="menu"
-                      aria-orientation="vertical"
-                      aria-labelledby="options-menu"
-                    >
-                      <CardSpotlight radius={100} color="#1a1a1a">
-                        <button
-                          onClick={() => {
-                            openChainModal()
-                            setIsDropdownOpen(false)
-                          }}
-                          className="block w-full border-b border-[#242424] px-4 py-2 text-left text-sm text-[#fafafa]/80 hover:bg-[#0a0a0a] hover:text-[#fafafa]"
-                          role="menuitem"
-                        >
-                          Switch Network
-                        </button>
-                      </CardSpotlight>
-                      <CardSpotlight radius={100} color="#1a1a1a">
-                        <button
-                          onClick={() => {
-                            openAccountModal()
-                            setIsDropdownOpen(false)
-                          }}
-                          className="block w-full border-b border-[#242424] px-4 py-2 text-left text-sm text-[#fafafa]/80 hover:bg-[#0a0a0a] hover:text-[#fafafa]"
-                          role="menuitem"
-                        >
-                          Account Details
-                        </button>
-                      </CardSpotlight>
-                      {/* Add more menu items as needed */}
-                    </div>
-                  </div>
-                )}
+                <button
+                  type="button"
+                  onClick={openAccountModal}
+                  className="block w-full px-3 py-1.5 text-left text-white hover:bg-gray-700"
+                >
+                  Account Details
+                </button>
               </div>
             )}
           </div>

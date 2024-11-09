@@ -1,4 +1,4 @@
-import React from "react"
+import type React from "react"
 
 import { Button } from "../ui/button"
 
@@ -23,6 +23,7 @@ const ChatToggle: React.FC<ChatToggleProps> = ({
       aria-label={isOpen ? "Close chat" : "Open chat"}
     >
       {isOpen ? (
+        // biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
         <svg
           width="16"
           height="16"
@@ -37,6 +38,7 @@ const ChatToggle: React.FC<ChatToggleProps> = ({
           />
         </svg>
       ) : (
+        // biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
         <svg
           width="16"
           height="16"

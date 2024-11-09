@@ -3,7 +3,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { turboIntegrations } from "@/data/turbo-integrations"
-import { motion, MotionProps } from "framer-motion"
+import { motion, type MotionProps } from "framer-motion"
 import ReactMarkdown from "react-markdown"
 import Balancer from "react-wrap-balancer"
 
@@ -15,10 +15,10 @@ import { WalletAddress } from "@/components/blockchain/wallet-address"
 import { WalletConnect } from "@/components/blockchain/wallet-connect"
 import { PageSectionGrid } from "@/components/layout/page-section"
 import { IsDarkTheme } from "@/components/shared/is-dark-theme"
-import { IsLightTheme } from "@/components/shared/is-light-theme"
+import { IsMidnightTheme } from "@/components/shared/is-light-theme"
 import { IsWalletConnected } from "@/components/shared/is-wallet-connected"
 import { IsWalletDisconnected } from "@/components/shared/is-wallet-disconnected"
-import { LightDarkImage } from "@/components/shared/light-dark-image"
+import { MidnightDarkImage } from "@/components/shared/light-dark-image"
 import {
   ERC20Decimals,
   ERC20Name,
@@ -119,14 +119,14 @@ const demos = [
     href: turboIntegrations.etherscan.href,
     demo: (
       <div className="flex items-center justify-center space-x-20">
-        <IsLightTheme>
+        <IsMidnightTheme>
           <Image
             alt="Etherscan logo"
             height={100}
             src="/integrations/etherscan-dark.svg"
             width={100}
           />
-        </IsLightTheme>
+        </IsMidnightTheme>
         <IsDarkTheme>
           <Image
             alt="Etherscan logo"
@@ -230,19 +230,19 @@ const demos = [
     href: turboIntegrations.sessionKeys.href,
     demo: (
       <div className="flex items-center justify-center space-x-20">
-        <IsLightTheme>
+        <IsMidnightTheme>
           <Image
             alt="Session keys logo"
             height={100}
             src={turboIntegrations.sessionKeys.imgDark}
             width={100}
           />
-        </IsLightTheme>
+        </IsMidnightTheme>
         <IsDarkTheme>
           <Image
             alt="Session keys logo"
             height={100}
-            src={turboIntegrations.sessionKeys.imgLight}
+            src={turboIntegrations.sessionKeys.imgMidnight}
             width={100}
           />
         </IsDarkTheme>
@@ -255,19 +255,19 @@ const demos = [
     href: turboIntegrations.litProtocol.href,
     demo: (
       <div className="flex items-center justify-center space-x-20">
-        <IsLightTheme>
+        <IsMidnightTheme>
           <Image
             alt="Lit Protocol logo"
             height={100}
             src={turboIntegrations.litProtocol.imgDark}
             width={100}
           />
-        </IsLightTheme>
+        </IsMidnightTheme>
         <IsDarkTheme>
           <Image
             alt="Lit Protocol logo"
             height={100}
-            src={turboIntegrations.litProtocol.imgLight}
+            src={turboIntegrations.litProtocol.imgMidnight}
             width={100}
           />
         </IsDarkTheme>
@@ -280,19 +280,19 @@ const demos = [
     href: turboIntegrations.openai.href,
     demo: (
       <div className="flex items-center justify-center space-x-20">
-        <IsLightTheme>
+        <IsMidnightTheme>
           <Image
             alt="OpenAI logo"
             height={100}
             src={turboIntegrations.openai.imgDark}
             width={100}
           />
-        </IsLightTheme>
+        </IsMidnightTheme>
         <IsDarkTheme>
           <Image
             alt="OpenAI logo"
             height={100}
-            src={turboIntegrations.openai.imgLight}
+            src={turboIntegrations.openai.imgMidnight}
             width={100}
           />
         </IsDarkTheme>
@@ -305,19 +305,19 @@ const demos = [
     href: turboIntegrations.livepeer.href,
     demo: (
       <div className="flex items-center justify-center space-x-20">
-        <IsLightTheme>
+        <IsMidnightTheme>
           <Image
             alt="Livepeer logo"
             height={100}
             src={turboIntegrations.livepeer.imgDark}
             width={100}
           />
-        </IsLightTheme>
+        </IsMidnightTheme>
         <IsDarkTheme>
           <Image
             alt="Livepeer logo"
             height={100}
-            src={turboIntegrations.livepeer.imgLight}
+            src={turboIntegrations.livepeer.imgMidnight}
             width={100}
           />
         </IsDarkTheme>
@@ -330,19 +330,19 @@ const demos = [
     href: turboIntegrations.connext.href,
     demo: (
       <div className="flex items-center justify-center space-x-20">
-        <IsLightTheme>
+        <IsMidnightTheme>
           <Image
             alt={`${turboIntegrations.connext.name} logo`}
             height={100}
             src={turboIntegrations.connext.imgDark}
             width={100}
           />
-        </IsLightTheme>
+        </IsMidnightTheme>
         <IsDarkTheme>
           <Image
             alt={`${turboIntegrations.connext.name} logo`}
             height={100}
-            src={turboIntegrations.connext.imgLight}
+            src={turboIntegrations.connext.imgMidnight}
             width={100}
           />
         </IsDarkTheme>
@@ -355,19 +355,19 @@ const demos = [
     href: turboIntegrations.gelato.href,
     demo: (
       <div className="flex items-center justify-center space-x-20">
-        <IsLightTheme>
+        <IsMidnightTheme>
           <Image
             alt={`${turboIntegrations.gelato.name} logo`}
             height={100}
             src={turboIntegrations.gelato.imgDark}
             width={100}
           />
-        </IsLightTheme>
+        </IsMidnightTheme>
         <IsDarkTheme>
           <Image
             alt={`${turboIntegrations.gelato.name} logo`}
             height={100}
-            src={turboIntegrations.gelato.imgLight}
+            src={turboIntegrations.gelato.imgMidnight}
             width={100}
           />
         </IsDarkTheme>
@@ -380,19 +380,19 @@ const demos = [
     href: turboIntegrations.push_protocol.href,
     demo: (
       <div className="flex items-center justify-center space-x-20">
-        <IsLightTheme>
+        <IsMidnightTheme>
           <Image
             alt="Push Protocol logo"
             height={100}
             src={turboIntegrations.push_protocol.imgDark}
             width={100}
           />
-        </IsLightTheme>
+        </IsMidnightTheme>
         <IsDarkTheme>
           <Image
             alt="Push Protocol logo"
             height={100}
-            src={turboIntegrations.push_protocol.imgLight}
+            src={turboIntegrations.push_protocol.imgMidnight}
             width={100}
           />
         </IsDarkTheme>
@@ -405,9 +405,9 @@ const demos = [
     href: turboIntegrations.moralis.href,
     demo: (
       <div className="flex items-center justify-center space-x-20">
-        <LightDarkImage
-          LightImage={turboIntegrations.moralis.imgDark}
-          DarkImage={turboIntegrations.moralis.imgLight}
+        <MidnightDarkImage
+          MidnightImage={turboIntegrations.moralis.imgDark}
+          DarkImage={turboIntegrations.moralis.imgMidnight}
           alt="Moralis logo"
           height={100}
           width={100}
@@ -421,9 +421,9 @@ const demos = [
     href: turboIntegrations.aave.href,
     demo: (
       <div className="flex items-center justify-center space-x-20">
-        <LightDarkImage
-          LightImage={turboIntegrations.aave.imgDark}
-          DarkImage={turboIntegrations.aave.imgLight}
+        <MidnightDarkImage
+          MidnightImage={turboIntegrations.aave.imgDark}
+          DarkImage={turboIntegrations.aave.imgMidnight}
           alt="Aave logo"
           height={100}
           width={100}
@@ -437,9 +437,9 @@ const demos = [
     href: turboIntegrations.arweave.href,
     demo: (
       <div className="flex items-center justify-center space-x-20">
-        <LightDarkImage
-          LightImage={turboIntegrations.arweave.imgDark}
-          DarkImage={turboIntegrations.arweave.imgLight}
+        <MidnightDarkImage
+          MidnightImage={turboIntegrations.arweave.imgDark}
+          DarkImage={turboIntegrations.arweave.imgMidnight}
           alt="Arweave logo"
           height={100}
           width={100}
@@ -453,9 +453,9 @@ const demos = [
     href: turboIntegrations.gitcoinPassport.href,
     demo: (
       <div className="flex items-center justify-center space-x-20">
-        <LightDarkImage
-          LightImage={turboIntegrations.gitcoinPassport.imgDark}
-          DarkImage={turboIntegrations.gitcoinPassport.imgLight}
+        <MidnightDarkImage
+          MidnightImage={turboIntegrations.gitcoinPassport.imgDark}
+          DarkImage={turboIntegrations.gitcoinPassport.imgMidnight}
           alt="Gitcoin Passport logo"
           height={100}
           width={100}
@@ -469,9 +469,9 @@ const demos = [
     href: turboIntegrations.lensProtocol.href,
     demo: (
       <div className="flex items-center justify-center space-x-20">
-        <LightDarkImage
-          LightImage={turboIntegrations.lensProtocol.imgDark}
-          DarkImage={turboIntegrations.lensProtocol.imgLight}
+        <MidnightDarkImage
+          MidnightImage={turboIntegrations.lensProtocol.imgDark}
+          DarkImage={turboIntegrations.lensProtocol.imgMidnight}
           alt="Lens Protocol logo"
           height={100}
           width={100}
@@ -485,9 +485,9 @@ const demos = [
     href: turboIntegrations.defiLlama.href,
     demo: (
       <div className="flex items-center justify-center space-x-20">
-        <LightDarkImage
-          LightImage={turboIntegrations.defiLlama.imgDark}
-          DarkImage={turboIntegrations.defiLlama.imgLight}
+        <MidnightDarkImage
+          MidnightImage={turboIntegrations.defiLlama.imgDark}
+          DarkImage={turboIntegrations.defiLlama.imgMidnight}
           alt="Defi Llama logo"
           height={100}
           width={100}
@@ -501,9 +501,9 @@ const demos = [
     href: turboIntegrations.starter.href,
     demo: (
       <div className="flex items-center justify-center space-x-20">
-        <LightDarkImage
-          LightImage={turboIntegrations.starter.imgDark}
-          DarkImage={turboIntegrations.starter.imgLight}
+        <MidnightDarkImage
+          MidnightImage={turboIntegrations.starter.imgDark}
+          DarkImage={turboIntegrations.starter.imgMidnight}
           alt="Starter logo"
           height={100}
           width={100}

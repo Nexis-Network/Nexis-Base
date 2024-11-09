@@ -1,9 +1,10 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
+import type React from "react"
+import { useEffect, useState } from "react"
 
-import ChatToggle from "@/components/chat/ChatToggle"
 import LiveChat from "@/components/chat/LiveChat"
+import Toggle from "@/components/chat/toggle"
 
 import { ConnectionButton } from "./ConnectionButton"
 import { Logo } from "./Logo"
@@ -17,13 +18,13 @@ interface NavItemProps {
 const NavItem: React.FC<NavItemProps> = ({ label, className, isLast }) => (
   <div
     className={`group relative my-auto w-24 self-stretch text-center tracking-wide hover:text-white
-      ${isLast ? "" : "border-r border-white/50"} ${className ?? ""}`}
+      ${isLast ? "" : ""} ${className ?? ""}`}
   >
     <span className="relative z-10">{label}</span>
     <div
       className="duration-[3000ms] absolute bottom-0 left-0 w-full origin-left scale-x-0 bg-white transition-transform 
                     ease-out hover:text-white group-hover:scale-x-100"
-    ></div>
+    />
   </div>
 )
 
@@ -60,15 +61,9 @@ export const NavMenu: React.FC = () => {
     <div className="flex w-full min-w-full items-start justify-between px-2 md:px-2">
       <Logo />
       <nav className="flex items-center bg-transparent px-4 transition-all duration-300 ease-in-out md:px-8">
-        <div className="flex items-center"></div>
         <div className="flex items-center">
           {!isMobileView && (
-            <div className="hidden items-center space-x-4 text-sm text-zinc-500 sm:flex">
-              <ChatToggle isOpen={isChatOpen} onClick={toggleChat} />
-              <NavItem label="Changelog" />
-              <NavItem label="Help" />
-              <NavItem label="Docs" />
-            </div>
+            <div className="hidden w-full items-center space-x-6 text-sm sm:flex" />
           )}
           {!isMobileView && (
             <ConnectionButton className="ml-8 hidden sm:block" />
@@ -81,9 +76,9 @@ export const NavMenu: React.FC = () => {
               onClick={toggleMobileMenu}
               className="flex flex-col space-y-2"
             >
-              <span className="block h-0.5 w-6 bg-white"></span>
-              <span className="block h-0.5 w-6 bg-white"></span>
-              <span className="block h-0.5 w-6 bg-white"></span>
+              <span className="block h-0.5 w-6 bg-white" />
+              <span className="block h-0.5 w-6 bg-white" />
+              <span className="block h-0.5 w-6 bg-white" />
             </button>
           )}
         </div>

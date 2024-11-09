@@ -1,10 +1,11 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
+import type React from "react"
+import { useEffect, useState } from "react"
 import { useAccount } from "wagmi"
 
 // Update the Message interface to match the one from types/chat
-import { Message } from "@/types/chat"
+import type { Message } from "@/types/chat"
 // You'll need to implement these functions
 import { fetchMessages, fetchOnlineUsers, sendMessage } from "@/lib/chat-api"
 import { Button } from "@/components/ui/button"
@@ -92,6 +93,7 @@ const LiveChat: React.FC = () => {
             } as React.CSSProperties
           }
         >
+          {/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
           <svg
             width="16"
             height="16"

@@ -4,6 +4,7 @@ import CustomCursor from "@/components/CustomCursor"
 import { Footer } from "@/components/Footer/Foot/Footer"
 import { Header } from "@/components/Header/Header"
 import { NavigationMenu } from "@/components/NavMenu/NavigationMenu"
+import RootProvider from "@/components/providers/root-provider"
 
 interface RootLayoutProps {
   children: ReactNode

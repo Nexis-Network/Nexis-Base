@@ -15,14 +15,14 @@ interface SiteConfig {
   }
 }
 
-export const SITE_CANONICAL = "https://turboeth.xyz"
+export const SITE_CANONICAL = "https://homebase.nexis.foundation"
 
 export const siteConfig: SiteConfig = {
-  name: "TurboETH",
-  title: "TurboETH - Web3 App Template",
+  name: "Nexis Foundation",
+  title: "Nexis Foundation Homebase",
   emoji: "⚡",
   description:
-    "Start building full-stack Web3 applications in minutes with TurboETH.",
+    "Nexis Network Homebase is the all in one hub for the Nexis Network blockchain.",
   localeDefault: "en",
   links: {
     docs: "https://docs.turboeth.xyz/overview",

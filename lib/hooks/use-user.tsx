@@ -30,7 +30,7 @@ export function useUser({ redirectTo = "", redirectIfFound = false } = {}) {
     ) {
       Router.push(redirectTo)
     }
-  }, [user, redirectIfFound, redirectTo])
+  }, [user, redirectIfFound, redirectTo, Router])
 
   return { user, mutateUser }
 }

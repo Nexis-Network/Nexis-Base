@@ -6,7 +6,7 @@ import type { ReactNode } from "react"
 import {
   connectorsForWallets,
   darkTheme,
-  lightTheme,
+  midnightTheme,
   RainbowKitProvider,
 } from "@rainbow-me/rainbowkit"
 import {
@@ -48,7 +48,7 @@ export function RainbowKit({ children }: { children: ReactNode }) {
     <WagmiConfig config={wagmiConfig}>
       <RainbowKitProvider
         chains={chains}
-        theme={colorMode === "dark" ? darkTheme() : lightTheme()}
+        theme={colorMode === "dark" ? darkTheme() : midnightTheme()}
       >
         {children}
       </RainbowKitProvider>

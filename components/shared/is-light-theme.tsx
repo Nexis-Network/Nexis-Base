@@ -1,16 +1,16 @@
 "use client"
 
-import { ReactNode } from "react"
+import type { ReactNode } from "react"
 import { useTheme } from "next-themes"
 
-interface IsLightThemeProps {
+interface IsMidnightThemeProps {
   children: ReactNode
 }
 
-export const IsLightTheme = ({ children }: IsLightThemeProps) => {
+export const IsMidnightTheme = ({ children }: IsMidnightThemeProps) => {
   const { resolvedTheme } = useTheme()
 
-  if (resolvedTheme === "light") return <>{children}</>
+  if (resolvedTheme === "midnight") return <>{children}</>
 
   return null
 }

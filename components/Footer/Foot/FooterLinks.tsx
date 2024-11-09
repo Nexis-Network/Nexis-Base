@@ -12,7 +12,7 @@ const links = [
 
 export const FooterLinks: FC = () => {
   return (
-    <nav className="flex flex-auto flex-wrap gap-10 leading-none">
+    <nav className="flex flex-auto flex-wrap gap-7 leading-none">
       <img
         loading="lazy"
         src="https://cdn.builder.io/api/v1/image/assets/TEMP/ed8058ca30fdc69bf34739ce82fdfe888822b9cff122c3b387fa6c9b4a8ed245?placeholderIfAbsent=true&apiKey=d3a09a2fda7941e0a2c87f17f318ba21"
