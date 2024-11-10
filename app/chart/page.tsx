@@ -1,7 +1,7 @@
 import { Metadata } from "next"
 
 import { CryptoChart } from "@/components/CryptoChart/Chart"
-import Stats from "@/components/Stats"
+// import Stats from "@/components/Stats"
 import RecentTransactions from "@/components/Transactions"
 
 export const metadata: Metadata = {
@@ -13,7 +13,7 @@ export default function TokenomicsPage() {
   return (
     <div className="space-y-0">
       <CryptoChart ticker="ETH/USD" />
-      <Stats />
+      {/* <Stats /> */}
       <RecentTransactions />
     </div>
   )
