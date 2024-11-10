@@ -15,11 +15,12 @@ interface NavigationItem {
 
 const navigationItems: NavigationItem[] = [
   { label: "<A/> OVERVIEW", href: "/" },
-  { label: "<A/> TOKENOMICS", href: "/tokenomics" },
+  { label: "<T/> TOKENOMICS", href: "/tokenomics" },
+  { label: "<F/> FAUCET", href: "/faucet" },
   { label: "<A/> AIRDROP", href: "/airdrop" },
-  { label: "<A/> NODES", href: "/nodes" },
-  { label: "<A/> TOKEN", href: "/token" },
-  { label: "<A/> BRIDGE", href: "/bridge" },
+  { label: "<N/> NODES", href: "/nodes" },
+  { label: "<T/> TOKEN", href: "/token" },
+  { label: "<B/> BRIDGE", href: "/bridge" },
 ]
 
 export function NavigationMenu() {

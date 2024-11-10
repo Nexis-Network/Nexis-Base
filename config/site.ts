@@ -18,8 +18,8 @@ interface SiteConfig {
 export const SITE_CANONICAL = "https://turboeth.xyz"
 
 export const siteConfig: SiteConfig = {
-  name: "TurboETH",
-  title: "TurboETH - Web3 App Template",
+  name: "Nexis Base",
+  title: "Nexis Base",
   emoji: "⚡",
   description:
     "Start building full-stack Web3 applications in minutes with TurboETH.",
