@@ -1,6 +1,5 @@
 import type { ReactNode } from "react"
 
-import Background from "@/components/Background"
 import CustomCursor from "@/components/CustomCursor"
 import { Footer } from "@/components/Footer/Foot/Footer"
 import { Header } from "@/components/Header/Header"
@@ -13,10 +12,7 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <>
-      <div className="relative flex min-h-screen min-w-full flex-col">
-        <Background />
-        {children}
-      </div>
+      <div className="relative flex min-h-screen flex-col">{children}</div>
       <CustomCursor />
     </>
   )

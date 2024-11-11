@@ -19,7 +19,6 @@ import BlockchainActions from "@/components/blockchain/send-receive-buttons"
 import NexisIcon from "@/components/NexisIcon"
 import { IsWalletConnected } from "@/components/shared/is-wallet-connected"
 import { IsWalletDisconnected } from "@/components/shared/is-wallet-disconnected"
-import { VersionTasksArgs } from "@/integrations/gelato/graphql/graphql/generated/graphql"
 
 type DashboardData = {
   totalNZT: string

@@ -1,0 +1,179 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&display=swap');
+
+color-scheme: dark;
+--toastify-color-light: #fff;
+--toastify-color-dark: #121212;
+--toastify-color-info: #3498db;
+--toastify-color-success: #07bc0c;
+--toastify-color-warning: #f1c40f;
+--toastify-color-error: #e74c3c;
+--toastify-color-transparent: hsla(0,0%,100%,.7);
+--toastify-icon-color-info: var(--toastify-color-info);
+--toastify-icon-color-success: var(--toastify-color-success);
+--toastify-icon-color-warning: var(--toastify-color-warning);
+--toastify-icon-color-error: var(--toastify-color-error);
+--toastify-toast-width: 320px;
+--toastify-toast-background: #fff;
+--toastify-toast-min-height: 64px;
+--toastify-toast-max-height: 800px;
+--toastify-font-family: sans-serif;
+--toastify-text-color-light: #757575;
+--toastify-text-color-dark: #fff;
+--toastify-text-color-info: #fff;
+--toastify-text-color-success: #fff;
+--toastify-text-color-warning: #fff;
+--toastify-text-color-error: #fff;
+--toastify-spinner-color: #616161;
+--toastify-spinner-color-empty-area: #e0e0e0;
+--toastify-color-progress-dark: #bb86fc;
+--toastify-color-progress-info: var(--toastify-color-info);
+--toastify-color-progress-success: var(--toastify-color-success);
+--toastify-color-progress-warning: var(--toastify-color-warning);
+--toastify-color-progress-error: var(--toastify-color-error);
+--toastify-z-index: 100;
+--toastify-color-progress-light: #F2F2F2;
+-webkit-font-smoothing: antialiased;
+color: #fff;
+--tw-border-spacing-x: 0;
+--tw-border-spacing-y: 0;
+--tw-translate-x: 0;
+--tw-translate-y: 0;
+--tw-rotate: 0;
+--tw-skew-x: 0;
+--tw-skew-y: 0;
+--tw-scale-x: 1;
+--tw-scale-y: 1;
+--tw-pan-x: ;
+--tw-pan-y: ;
+--tw-pinch-zoom: ;
+--tw-scroll-snap-strictness: proximity;
+--tw-gradient-from-position: ;
+--tw-gradient-via-position: ;
+--tw-gradient-to-position: ;
+--tw-ordinal: ;
+--tw-slashed-zero: ;
+--tw-numeric-figure: ;
+--tw-numeric-spacing: ;
+--tw-numeric-fraction: ;
+--tw-ring-inset: ;
+--tw-ring-offset-width: 0px;
+--tw-ring-offset-color: #fff;
+--tw-ring-color: rgba(59,130,246,.5);
+--tw-ring-offset-shadow: 0 0 #0000;
+--tw-ring-shadow: 0 0 #0000;
+--tw-shadow: 0 0 #0000;
+--tw-shadow-colored: 0 0 #0000;
+--tw-blur: ;
+--tw-brightness: ;
+--tw-contrast: ;
+--tw-grayscale: ;
+--tw-hue-rotate: ;
+--tw-invert: ;
+--tw-saturate: ;
+--tw-sepia: ;
+--tw-drop-shadow: ;
+--tw-backdrop-blur: ;
+--tw-backdrop-brightness: ;
+--tw-backdrop-contrast: ;
+--tw-backdrop-grayscale: ;
+--tw-backdrop-hue-rotate: ;
+--tw-backdrop-invert: ;
+--tw-backdrop-opacity: ;
+--tw-backdrop-saturate: ;
+--tw-backdrop-sepia: ;
+--tw-contain-size: ;
+--tw-contain-layout: ;
+--tw-contain-paint: ;
+--tw-contain-style: ;
+box-sizing: border-box;
+margin: 0;
+font-weight: 400;
+font-family: "Roboto Mono", monospace;
+font-size: 12px;
+line-height: 16px;
+height: 32px;
+display: flex;
+-webkit-box-align: center;
+align-items: center;
+border-top: 1px solid rgb(39, 39, 39);
+overflow: hidden;
+position: relative;
+padding-left: 10%;
+text-transform: uppercase;
+border-bottom: none;
+margin-top: 106px;
+
+.scrollbar:before {
+  content: "";
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(-270deg, rgb(10, 10, 10) 55%, rgba(10, 10, 10, 0.01) 100%);
+}
+
+.scrollbar:after {
+  content: "";
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(270deg, rgb(10, 10, 10) 55%, rgba(10, 10, 10, 0.01) 100%);
+}
+
+.scrollbar {
+  display: inline-flex;
+  font-family: "Roboto Mono", monospace;
+  font-size: 12px;
+  animation: scroll-animation 20s linear infinite;
+  gap: 6px;
+  position: relative;
+}
+
+.menuText {
+    font-weight: 400;
+    font-family: "Roboto Mono", monospace;
+    font-size: 12px;
+    line-height: 16px;
+    display: flex;
+    gap: 8px;
+    color: rgb(117, 117, 117);
+    text-transform: uppercase;
+}
+
+.menuText:hover {
+    font-weight: 400;
+    font-family: "Roboto Mono", monospace;
+    font-size: 12px;
+    line-height: 16px;
+    display: flex;
+    gap: 8px;
+    color: #F2F2F2;
+    text-transform: uppercase;
+}
+
+.scrollbanner {
+    font-weight: 400;
+    font-family: "Roboto Mono", monospace;
+    font-size: 12px;
+    line-height: 16px;
+    height: 32px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    border-top: 1px solid rgb(39, 39, 39);
+    overflow: hidden;
+    position: relative;
+    padding-left: 10%;
+    margin-top: 106px;
+    text-transform: uppercase;
+    border-bottom: none;
+}
+
+/* Add keyframes for the scrolling animation */
+@keyframes scroll-animation {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}

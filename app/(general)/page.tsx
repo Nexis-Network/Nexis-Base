@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 
 import BlogCardCarousel from "@/components/blog/blogCarousel"
-import ScrollBanner from "@/components/ScrollBanner"
+import ScrollBanner from "@/components/scrollbar/ScrollBanner"
 import { WalletContainer } from "@/components/Wallet/WalletContainer"
 import Web3DashboardTable from "@/components/WalletDetails"
 

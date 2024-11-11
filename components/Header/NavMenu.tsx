@@ -58,7 +58,7 @@ export const NavMenu: React.FC = () => {
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen)
 
   return (
-    <div className="flex w-full min-w-full items-start justify-between px-2 md:px-2">
+    <div className="z-10 flex w-full min-w-full items-start justify-between px-2 md:px-2">
       <Logo />
       <nav className="flex items-center bg-transparent px-4 transition-all duration-300 ease-in-out md:px-8">
         <div className="flex items-center">

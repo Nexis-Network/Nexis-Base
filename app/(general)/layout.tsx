@@ -1,10 +1,10 @@
 import type { ReactNode } from "react"
 
+import { Analytics } from "@/components/analytics"
 import CustomCursor from "@/components/CustomCursor"
 import { Footer } from "@/components/Footer/Foot/Footer"
 import { Header } from "@/components/Header/Header"
 import { NavigationMenu } from "@/components/NavMenu/NavigationMenu"
-import RootProvider from "@/components/providers/root-provider"
 
 interface RootLayoutProps {
   children: ReactNode
@@ -19,6 +19,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <main className="flex-1">{children}</main>
         <Footer />
       </div>
+      <Analytics />
       <CustomCursor />
     </>
   )

@@ -1,7 +1,10 @@
+/* eslint-disable tailwindcss/no-custom-classname */
 "use client"
 
 import React from "react"
 import { motion } from "framer-motion"
+
+import styles from "./scrollbar.module.css"
 
 const ScrollBanner: React.FC = () => {
   const bannerItems = [
@@ -33,7 +36,7 @@ const ScrollBanner: React.FC = () => {
   ]
 
   return (
-    <div className="relative h-[30px] w-full overflow-hidden border-b border-[#242424] bg-black font-mono text-xs">
+    <div className="scrollbanner scrollbar relative h-[30px] w-full overflow-hidden border-b border-[#242424] bg-black font-mono text-xs">
       <motion.div
         className="absolute inset-y-0 left-0 flex whitespace-nowrap"
         animate={{
@@ -51,13 +54,11 @@ const ScrollBanner: React.FC = () => {
         {bannerItems.map((item) => (
           <React.Fragment key={item.title}>
             <div className="flex items-center">
-              <p className="text-base uppercase leading-4 text-[#8AE06C]">
+              <p className="scrollbanner uppercase text-[#8AE06C]">
                 {item.title}
               </p>
-              <p className="mx-2 text-base uppercase leading-4 text-[#757575]">
-                -
-              </p>
-              <p className="text-base uppercase leading-4 text-white">
+              <p className="scrollbanner mx-2 uppercase text-[#757575]">-</p>
+              <p className="scrollbanner uppercase leading-4 text-white">
                 {item.description}
               </p>
             </div>

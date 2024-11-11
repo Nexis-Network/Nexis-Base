@@ -32,7 +32,6 @@ const nextConfig = {
   },
   webpack: (config) => {
     config.resolve.fallback = { fs: false, net: false, tls: false }
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     config.module.rules.push({
       test: /\.svg$/i,
       issuer: /\.[jt]sx?$/,

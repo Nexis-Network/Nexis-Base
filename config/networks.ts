@@ -2,7 +2,8 @@
 // Networks
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 import { env } from "@/env.mjs"
-import { Chain, ChainProviderFn, configureChains } from "wagmi"
+import type { Chain, ChainProviderFn } from "wagmi"
+import { configureChains } from "wagmi"
 import {
   arbitrum,
   arbitrumGoerli as arbitrumGoerliNoIcon,
@@ -29,7 +30,7 @@ const arbitrumGoerli = {
   iconUrl: "/icons/NetworkArbitrumTest.svg",
 }
 
-export const ETH_CHAINS_TEST = [sepolia]
+export const ETH_CHAINS_TEST = [arbitrum, mainnet, sepolia]
 
 export const ETH_CHAINS_PROD = [mainnet, optimism, arbitrum, polygon]
 export const ETH_CHAINS_DEV =

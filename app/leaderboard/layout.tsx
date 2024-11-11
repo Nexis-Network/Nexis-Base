@@ -1,5 +1,6 @@
 import type { ReactNode } from "react"
 
+import CustomCursor from "@/components/CustomCursor"
 import { Footer } from "@/components/Footer/Foot/Footer"
 import { Header } from "@/components/Header/Header"
 import { NavigationMenu } from "@/components/NavMenu/NavigationMenu"
@@ -15,8 +16,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <Header />
         <NavigationMenu />
         <main className="flex-1">{children}</main>
+        <Footer />
       </div>
-      <Footer />
+      <CustomCursor />
     </>
   )
 }

@@ -1,4 +1,4 @@
-import { Metadata } from "next"
+import type { Metadata } from "next"
 
 import { CryptoChart } from "@/components/CryptoChart/Chart"
 import Stats from "@/components/Stats"

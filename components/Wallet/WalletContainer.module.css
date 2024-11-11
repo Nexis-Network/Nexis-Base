@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css?family=Inter:400|Jura:400");
+
 .zkDataContainer {
   color-scheme: dark;
   --toastify-color-light: #fff;
@@ -48,4 +50,18 @@
   margin-bottom: 0;
   padding-right: 15px;
   padding-bottom: 10px;
+}
+
+/* Add this to your CSS module */
+.negativeMarginTop {
+  margin-top: -3px;
+  z-index: 500;
+}
+
+.netWorthText {
+  fill: #8AE06C;
+  font-size: 14px;
+  font-weight: bold;
+  font-family: "Jura";
+  text-shadow: 0 0 20px 1px rgb(var(--c), 1);
 }

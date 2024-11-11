@@ -8,6 +8,8 @@ import { env } from "@/env.mjs"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { Toaster } from "@/components/ui/toaster"
+import { Analytics } from "@/components/analytics"
+import CustomCursor from "@/components/CustomCursor"
 import RootProvider from "@/components/providers/root-provider"
 
 const url = env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
@@ -47,6 +49,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <RootProvider>{children}</RootProvider>
         <Toaster />
       </body>
+      <Analytics />
+      <CustomCursor />
     </html>
   )
 }

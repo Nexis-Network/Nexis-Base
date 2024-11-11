@@ -49,14 +49,14 @@ export default function Leaderboard() {
         {players.slice(0, 3).map((player) => (
           <div
             key={player.address}
-            className="flex flex-col items-center rounded-xl bg-gradient-to-b from-yellow-500 to-yellow-300 p-4"
+            className="flex flex-col items-center rounded-xl border border-[#242424] bg-[#0a0a0a] p-4"
           >
-            <div className="text-3xl font-bold">#{player.rank}</div>
-            <div className="text-lg font-semibold">
+            <div className="text-3xl font-bold text-white">#{player.rank}</div>
+            <div className="text-lg font-semibold text-white">
               {player.address === userAddress ? "You" : player.address}
             </div>
-            <div className="text-sm text-gray-700">{player.points} points</div>
-            <div className="text-sm text-gray-700">
+            <div className="text-sm text-gray-400">{player.points} points</div>
+            <div className="text-sm text-gray-400">
               ({player.challengesCompleted} challenges)
             </div>
           </div>
@@ -68,19 +68,17 @@ export default function Leaderboard() {
         {players.slice(0, 100).map((player) => (
           <div
             key={player.address}
-            className={`flex flex-col items-center justify-between rounded-xl border p-4 md:flex-row ${
-              player.address === userAddress
-                ? "border-blue-300 bg-blue-100"
-                : "border-gray-200 bg-white"
+            className={`flex flex-col items-center justify-between rounded-xl border border-[#242424] p-4 md:flex-row ${
+              player.address === userAddress ? "bg-[#0a0a0a]" : "bg-[#0a0a0a]"
             }`}
           >
             <div className="flex items-center gap-4">
-              <div className="text-lg font-bold">#{player.rank}</div>
-              <div className="text-md">
+              <div className="text-lg font-bold text-white">#{player.rank}</div>
+              <div className="text-md text-white">
                 {player.address === userAddress ? "You" : player.address}
               </div>
             </div>
-            <div className="flex gap-4 text-sm text-gray-700">
+            <div className="flex gap-4 text-sm text-gray-400">
               <div>{player.points} points</div>
               <div>({player.challengesCompleted} challenges)</div>
             </div>

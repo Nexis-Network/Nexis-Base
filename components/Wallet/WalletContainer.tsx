@@ -1,14 +1,13 @@
+/* eslint-disable tailwindcss/no-custom-classname */
 /* eslint-disable react/jsx-no-comment-textnodes */
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import type { ConnectButton as RainbowkitConnectButton } from "@rainbow-me/rainbowkit"
+import { EvmNetWorthResult } from "@moralisweb3/common-evm-utils"
 import { WalletAddress, WalletBalance } from "@turbo-eth/core-wagmi"
-import { Copy, ExternalLink } from "lucide-react"
 import Moralis from "moralis"
 import { useAccount } from "wagmi"
 
-import { Button } from "@/components/ui/button"
 import { CardContent } from "@/components/ui/card"
 
 import styles from "./WalletContainer.module.css"
@@ -18,6 +17,83 @@ export const WalletContainer: React.FC = () => {
 
   const splineContainerRef = useRef<HTMLDivElement>(null)
   const [netWorth, setNetWorth] = useState<string | null>(null)
+
+  // State variables for the typewriter effect
+  const [displayedText, setDisplayedText] = useState<string>("")
+  const [isTyping, setIsTyping] = useState<boolean>(false)
+  const [currentWordIndex, setCurrentWordIndex] = useState<number>(0)
+  const [currentCharIndex, setCurrentCharIndex] = useState<number>(0)
+  const [textArray, setTextArray] = useState<string[]>([
+    "Welcome...",
+    "Systems initializing...",
+    "Wallet connected...",
+    "Nodes activated...",
+    "Analyzing systems...",
+    "All systems operational...",
+    "Please connect your wallet...",
+  ])
+
+  // Add net worth to the text array when it's fetched
+  useEffect(() => {
+    if (netWorth) {
+      const netWorthText = `$${Number.parseFloat(netWorth).toFixed(2)}`
+      setTextArray((prev) => [...prev, netWorthText])
+    }
+  }, [netWorth])
+
+  // Typewriter effect logic
+  useEffect(() => {
+    let typingTimeout: NodeJS.Timeout
+
+    if (!isTyping && currentWordIndex < textArray.length) {
+      setIsTyping(true)
+      setCurrentCharIndex(0)
+      setDisplayedText("")
+    }
+
+    if (isTyping) {
+      if (currentCharIndex < textArray[currentWordIndex].length) {
+        typingTimeout = setTimeout(() => {
+          setDisplayedText(
+            (prev) => prev + textArray[currentWordIndex][currentCharIndex]
+          )
+          setCurrentCharIndex((prev) => prev + 1)
+        }, 100)
+      } else {
+        // Finish typing current word, wait for a while, then move to next word
+        typingTimeout = setTimeout(() => {
+          setIsTyping(false)
+          setCurrentWordIndex((prev) => prev + 1)
+        }, 1000)
+      }
+    }
+
+    return () => clearTimeout(typingTimeout)
+  }, [isTyping, currentCharIndex, currentWordIndex, textArray])
+
+  useEffect(() => {
+    const fetchNetWorth = async (walletAddress: string) => {
+      try {
+        await Moralis.start({
+          apiKey: process.env.NEXT_PUBLIC_MORALIS_API_KEY,
+        })
+        const response = await Moralis.EvmApi.wallets.getWalletNetWorth({
+          address: walletAddress,
+          excludeSpam: true,
+          excludeUnverifiedContracts: true,
+        })
+
+        setNetWorth(response.raw.total_networth_usd)
+      } catch (e) {
+        console.error("Error fetching net worth:", e)
+        setNetWorth(null)
+      }
+    }
+
+    if (address) {
+      fetchNetWorth(address).catch(console.error)
+    }
+  }, [address])
 
   useEffect(() => {
     const script = document.createElement("script")
@@ -48,34 +124,71 @@ export const WalletContainer: React.FC = () => {
     }
   }, [])
 
-  useEffect(() => {
-    const fetchNetWorth = async (walletAddress: string) => {
-      try {
-        await Moralis.start({
-          apiKey: process.env.MORALIS_API_KEY,
-        })
-        const response = await Moralis.EvmApi.wallets.getWalletNetWorth({
-          excludeSpam: true,
-          excludeUnverifiedContracts: true,
-          address: walletAddress,
-        })
-
-        setNetWorth(response.raw.total_networth_usd)
-      } catch (e) {
-        console.error("Error fetching net worth:", e)
-        setNetWorth(null)
-      }
-    }
-
-    if (address) {
-      fetchNetWorth(address).catch(console.error)
-    }
-  }, [address])
-
   return (
     <div
       className={`${styles.WalletContainer} relative z-0 mb-0 h-[400px] w-full overflow-hidden`}
     >
+      {/* Add the SVG to the top middle of the container with higher z-index */}
+      <div className="negativeMarginTop absolute left-1/2 top-0 z-[100] mt-[-3px] -translate-x-1/2">
+        <svg
+          width="504"
+          height="24"
+          viewBox="0 0 504 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className={styles.negativeMarginTop}
+        >
+          <title>Decorative top border</title>
+          <mask id="path-1-inside-1_1085_39" fill="white">
+            <path d="M0 0C0 13.2548 10.7452 24 24 24H480C493.255 24 504 13.2548 504 0V0H0V0Z" />
+          </mask>
+          <path
+            d="M0 0C0 13.2548 10.7452 24 24 24H480C493.255 24 504 13.2548 504 0V0H0V0Z"
+            fill="#0a0a0a"
+          />
+          <path
+            d="M-1 0C-1 13.8071 10.1929 25 24 25H480C493.807 25 505 13.8071 505 0H503C503 12.7025 492.703 23 480 23H24C11.2975 23 1 12.7025 1 0H-1ZM504 0H0H504ZM-1 0C-1 13.8071 10.1929 25 24 25V23C11.2975 23 1 12.7025 1 0H-1ZM480 25C493.807 25 505 13.8071 505 0H503C503 12.7025 492.703 23 480 23V25Z"
+            fill="#0a0a0a"
+            mask="url(#path-1-inside-1_1085_39)"
+          />
+          {/* Display the animated text */}
+          <text
+            x="50%"
+            y="50%"
+            textAnchor="middle"
+            dy=".3em"
+            className={styles.netWorthText}
+          >
+            {displayedText}
+          </text>
+        </svg>
+      </div>
+
+      <div
+        className={`absolute left-1/2 top-0 -translate-x-1/2${styles.negativeMarginTop}`}
+      >
+        <svg
+          width="504"
+          height="31"
+          viewBox="0 0 504 31"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <title>Decorative bottom border</title>
+          <mask id="path-1-inside-1_1093_684" fill="white">
+            <path d="M0 1C0 17.5685 13.4315 31 30 31H474C490.569 31 504 17.5685 504 1V1H0V1Z" />
+          </mask>
+          <path
+            d="M0 1C0 17.5685 13.4315 31 30 31H474C490.569 31 504 17.5685 504 1V1H0V1Z"
+            fill="black"
+          />
+          <path
+            d="M-1 1C-1 18.1208 12.8792 32 30 32H474C491.121 32 505 18.1208 505 1H503C503 17.0163 490.016 30 474 30H30C13.9837 30 1 17.0163 1 1H-1ZM504 1H0H504ZM-1 1C-1 18.1208 12.8792 32 30 32V30C13.9837 30 1 17.0163 1 1H-1ZM474 32C491.121 32 505 18.1208 505 1H503C503 17.0163 490.016 30 474 30V32Z"
+            fill="#242424"
+            mask="url(#path-1-inside-1_1093_684)"
+          />
+        </svg>
+      </div>
       <div className={`${styles.SplineContainer} absolute inset-0`}>
         <iframe
           src="https://my.spline.design/untitled-2bf3731ab3100c1b1df0d37d5896fa68/"
@@ -87,31 +200,21 @@ export const WalletContainer: React.FC = () => {
         />
       </div>
       <div className="relative z-50 flex h-full flex-col border-y border-[#242424] bg-black/10 text-black">
-        <div className="flex flex-1 items-center justify-end p-4">
-          <div className="text-right">
+        <div className="flex flex-1 items-center justify-start p-4">
+          <div className="text-left">
             <p className="text-sm">Net Worth</p>
             <h3 className="text-3xl font-bold">
               {netWorth
-                ? `$${
-                    // biome-ignore lint/style/useNumberNamespace: <explanation>
-                    parseFloat(netWorth).toFixed(2)
-                  }`
+                ? `$${Number.parseFloat(netWorth).toFixed(2)}`
                 : "Loading..."}
             </h3>
-            <Button
-              variant="outline"
-              size="sm"
-              className="z-10 mt-2 text-black"
-            >
-              View Portfolio
-            </Button>
           </div>
         </div>
         <div className="flex">
           <CardContent className="flex w-1/2 items-center space-x-4 p-4">
             <div className="z-10 flex size-6 items-center justify-center">
               <svg
-                width="100%"
+                width="50%"
                 height="100%"
                 viewBox="0 0 358 358"
                 fill="none"
@@ -179,6 +282,7 @@ export const WalletContainer: React.FC = () => {
           </div>
         </div>
       </div>
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2" />
     </div>
   )
 }

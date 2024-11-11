@@ -1,3 +1,4 @@
+/* eslint-disable tailwindcss/no-custom-classname */
 "use client"
 
 import * as React from "react"
@@ -17,6 +18,8 @@ import {
   NavigationMenuList,
   NavigationMenu as NavigationMenuPrimitive,
 } from "@/components/ui/navigation-menu"
+
+import styles from "./navmenu.module.css"
 
 interface NavigationItem {
   label: string
@@ -51,20 +54,21 @@ function NavigationDropdownItem({ item }: { item: NavigationItem }) {
           onClick={() => setOpen(!open)}
           onMouseEnter={() => setOpen(true)}
           onMouseLeave={() => setOpen(false)}
-          className="relative flex h-[40px] items-center justify-center p-3 font-mono text-xs transition-colors duration-200 hover:text-[#fafafa]"
+          className="menuText relative flex h-[40px] items-center justify-center p-3 transition-colors duration-200 hover:text-[#F2F2F2]"
         >
           <HyperText
             text={item.label}
-            className="font-mono text-xs"
+            className={styles.menuText}
             animateOnLoad={false}
-            duration={600}
+            duration={800}
           />
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="start"
         sideOffset={5}
-        className="z-[100] min-w-40 border border-[#232323] bg-[#080808] shadow-2xl backdrop-blur-2xl"
+        className="menuText border-[rgb(39, 39, 39)] z-10 min-w-40 border bg-black/70 shadow-2xl backdrop-blur-xl"
+        onClick={() => setOpen(true)}
         onMouseEnter={() => setOpen(true)}
         onMouseLeave={() => setOpen(false)}
       >
@@ -73,7 +77,7 @@ function NavigationDropdownItem({ item }: { item: NavigationItem }) {
             {subItem.href && (
               <Link
                 href={subItem.href}
-                className="block w-full px-4 py-2 text-xs hover:border-b hover:border-lime-400 hover:bg-black/50 hover:text-[#fafafa]"
+                className="menuText block w-full px-4 py-2 hover:border-l hover:border-lime-400 hover:text-[#fafafa]"
               >
                 {subItem.label}
               </Link>
@@ -87,9 +91,25 @@ function NavigationDropdownItem({ item }: { item: NavigationItem }) {
 
 export function NavigationMenu() {
   const pathname = usePathname()
+  const [hasScrolled, setHasScrolled] = React.useState(false)
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop
+      setHasScrolled(scrollTop > 0)
+    }
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   return (
-    <nav className="sticky top-0 z-[100] mt-[-10px] flex w-full flex-col items-start self-center overflow-hidden overflow-x-auto whitespace-nowrap bg-neutral-950 leading-none text-[#7d7d7d] bg-blend-normal shadow-[inset_0_-1px_#ffffff24] [-webkit-overflow-scrolling:touch] [scrollbar-width:none]">
+    <nav
+      className={`sticky top-0 z-30 mt-[-10px] flex w-full flex-col items-start self-center overflow-hidden overflow-x-auto whitespace-nowrap bg-[#0a0a0a]/90 leading-none text-[#7d7d7d] bg-blend-normal shadow-[inset_0_-1px_#ffffff24] backdrop-blur-md [-webkit-overflow-scrolling:touch] [scrollbar-width:none] ${
+        hasScrolled
+          ? "border-b border-[rgb(39,39,39)]"
+          : "border-b border-transparent"
+      }`}
+    >
       <NavigationMenuPrimitive className="flex w-[950px] max-w-full flex-wrap items-stretch justify-between pl-5 bg-blend-normal">
         <NavigationMenuList className="flex w-full">
           {navigationItems.map((item) => (
@@ -102,7 +122,7 @@ export function NavigationMenu() {
               ) : (
                 <NavigationMenuLink
                   asChild
-                  className={`relative z-50 flex h-[40px] items-center justify-center p-3 font-mono text-xs transition-colors duration-200 hover:text-[#fafafa] ${
+                  className={`relative z-10 flex h-[40px] items-center justify-center p-3 font-mono text-xs transition-colors duration-200 hover:text-[#fafafa] ${
                     pathname === item.href ? "text-[#fafafa]" : ""
                   }`}
                 >
