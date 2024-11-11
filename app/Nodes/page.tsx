@@ -1,5 +1,7 @@
 "use client"
 
+import Link from "next/link"
+
 import { Button } from "@/components/ui/button"
 
 // Mock validators data
@@ -93,7 +95,9 @@ export default function NodesPage() {
                   </div>
                 </div>
               </div>
-              <Button size="lg">Stake</Button>
+              <Link href={`/nodes/${validator.publicKey}`}>
+                <Button size="lg">Stake</Button>
+              </Link>
             </div>
           </div>
         ))}
