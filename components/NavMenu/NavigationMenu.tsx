@@ -37,6 +37,7 @@ const navigationItems: NavigationItem[] = [
   },
   { label: "<A/> NODES", href: "/nodes" },
   { label: "<A/> QUESTS", href: "/quests" },
+  { label: "<A/> DELEGATIONS", href: "/delegations" },
   { label: "<A/> LEADERBOARD", href: "/leaderboard" },
 ]
 
