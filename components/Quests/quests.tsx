@@ -3,6 +3,7 @@
 import React from "react"
 import { motion } from "framer-motion"
 
+import Card from "./qcard"
 import { QuestCard } from "./questCard"
 import type { Quest } from "./questTypes"
 
@@ -133,7 +134,10 @@ export default function Quests() {
         }}
       >
         {mockQuests.map((quest) => (
-          <QuestCard key={quest.id} quest={quest} />
+          <React.Fragment key={quest.id}>
+            <QuestCard quest={quest} />
+            <Card quest={quest} />
+          </React.Fragment>
         ))}
       </motion.div>
     </div>

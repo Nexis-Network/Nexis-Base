@@ -2,6 +2,7 @@
 
 import React, { useState } from "react"
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 
 import { cn } from "@/lib/utils"
 
@@ -9,6 +10,7 @@ type CardType = {
   title: string
   description: string
   src: string
+  href: string
 }
 
 export const Card = React.memo(function Card({
@@ -16,17 +18,37 @@ export const Card = React.memo(function Card({
   index,
   hovered,
   setHovered,
+  href,
 }: {
   card: CardType
   index: number
   hovered: number | null
   setHovered: React.Dispatch<React.SetStateAction<number | null>>
+  href: string
 }) {
+  const router = useRouter()
+
   return (
     <div
       className="relative size-full overflow-hidden"
       onMouseEnter={() => setHovered(index)}
       onMouseLeave={() => setHovered(null)}
+      onClick={() => router.push(href)}
+      // biome-ignore lint/a11y/useSemanticElements: <explanation>
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") {
+          e.preventDefault()
+          router.push(href)
+        }
+      }}
+      onKeyUp={(e) => {
+        if (e.key === " ") {
+          e.preventDefault()
+          router.push(href)
+        }
+      }}
     >
       {/* Image */}
       <Image
@@ -77,6 +99,7 @@ export function FocusCards({ cards }: { cards: CardType[] }) {
           index={index}
           hovered={hovered}
           setHovered={setHovered}
+          href={card.href}
         />
       ))}
     </div>

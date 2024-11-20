@@ -2,7 +2,7 @@
 
 import React, { useState } from "react"
 
-import { QuestCard } from "./questCard"
+import Qcard from "./qcard"
 import type { Quest } from "./questTypes"
 
 const QuestsGrid = () => {
@@ -107,10 +107,10 @@ const QuestsGrid = () => {
         </button>
       </div>
 
-      {/* Grid of QuestCards */}
+      {/* Grid of Qcards */}
       <div className="grid grid-cols-1 justify-items-center gap-6 sm:grid-cols-2 md:grid-cols-4">
         {filteredQuests.slice(0, 12).map((quest) => (
-          <QuestCard key={quest.id} quest={quest} />
+          <Qcard key={quest.id} quest={quest} />
         ))}
       </div>
     </div>

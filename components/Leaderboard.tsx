@@ -85,13 +85,6 @@ export default function Leaderboard() {
           </div>
         ))}
       </div>
-
-      {/* Connect Wallet Button */}
-      {!userAddress && (
-        <div className="mt-4">
-          <ConnectButton />
-        </div>
-      )}
     </div>
   )
 }

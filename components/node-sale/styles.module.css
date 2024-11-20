@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
+.roboto-mono-text-wrapper {
+  font-family: "Roboto Mono", monospace;
+    font-family-bold: "Roboto Mono", monospace;
+    font-family-bold-italic: "Roboto Mono", monospace;
+    font-family-italic: "Roboto Mono", monospace;
+    font-size: 14px;
+    font-style: normal;
+    font-style-bold: normal;
+    font-style-bold-italic: italic;
+    font-style-italic: italic;
+    font-weight: 400;
+    font-weight-bold: 700;
+    font-weight-bold-italic: 700;
+    font-weight-italic: 400;
+    letter-spacing: .1em;
+    line-height: 1.3em;
+    paragraph-spacing: 20px;
+    text-alignment: start;
+    text-color: var(--token-d1e5be00-c20d-4142-aea2-48002100e9b5, #808080);
+    text-decoration: none;
+    text-stroke-color: initial;
+    text-stroke-width: initial;
+    text-transform: uppercase;
+}
+
+
+.textcss {
+  font-family: "Roboto Mono", monospace;
+    font-family-bold: "Roboto Mono", monospace;
+    font-family-bold-italic: "Roboto Mono", monospace;
+    font-family-italic: "Roboto Mono", monospace;
+    font-size: 14px;
+    font-style: normal;
+    font-style-bold: normal;
+    font-style-bold-italic: italic;
+    font-style-italic: italic;
+    font-weight: 400;
+    font-weight-bold: 700;
+    font-weight-bold-italic: 700;
+    font-weight-italic: 400;
+    letter-spacing: .1em;
+    line-height: 1.3em;
+    paragraph-spacing: 20px;
+    text-alignment: start;
+    text-color: var(--token-d1e5be00-c20d-4142-aea2-48002100e9b5, #808080);
+    text-decoration: none;
+    text-stroke-color: initial;
+    text-stroke-width: initial;
+    text-transform: uppercase;
+    border-bottom: 1px solid white;
+    padding-bottom: 8px;
+}

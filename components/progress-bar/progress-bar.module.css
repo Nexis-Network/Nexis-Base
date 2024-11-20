@@ -1,0 +1,177 @@
+
+.tierProgress, .tierProgress .tierProgressMain {
+  display: flex;
+  width: 100%;
+}
+
+.tierProgressBar {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.tierProgress {
+  flex-direction: column;
+  gap: 7.5px;
+}
+
+.tierProgress, .tierProgress .tierProgressMain {
+  display: flex;
+  width: 100%;
+}
+
+.tierProgress .box, .tierProgress .card {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  position: relative;
+}
+
+.box, .click {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: 700;
+}
+
+.box {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.tierProgress .box .box-inner, .tierProgress .box .card-inner, .tierProgress .card .box-inner, .tierProgress .card .card-inner {
+  border-radius: 13px;
+  width: 200%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0;
+}
+
+.tierProgressBar .tierProgressBarLabels {
+  font-size: 10px;
+  font-weight: 700;
+  opacity: .3;
+  justify-content: space-between;
+  display: flex;
+  position: relative;
+  z-index: 2;
+}
+
+.\!w-\[76\%\] {
+  width: 76% !important;
+}
+
+.tierProgressBar .tierProgressBarLines {
+  display: flex;
+  gap: 5px;
+  width: 100%;
+  position: relative;
+}
+
+.tierProgressBar .tierProgressBarLines:after, .tierProgressBar .tierProgressBarLines:before {
+  content: "";
+  position: absolute;
+  width: 60px;
+  height: calc(100% + 20px);
+  left: -10px;
+  top: -10px;
+  background-image: linear-gradient(270deg, transparent, #000);
+  opacity: .8;
+}
+
+.tierProgressBar .tierProgressBarLines .line.fill {
+  background: #e7f614;
+  box-shadow: 0 0 6px #e7f614;
+}
+
+
+.tierProgressBar .tierProgressBarLines .line {
+  width: 6px;
+  border-radius: 3px;
+  height: 20px;
+  background-color: #ffffff1a;
+}
+
+.tierProgressBar .tierProgressBarLines:after {
+  right: -10px;
+  left: auto;
+  transform: scale(-1);
+}
+
+.tierProgressBar .tierProgressBarLines:after, .tierProgressBar .tierProgressBarLines:before {
+  content: "";
+  position: absolute;
+  width: 60px;
+  height: calc(100% + 20px);
+  left: -10px;
+  top: -10px;
+  background-image: linear-gradient(270deg, transparent, #000);
+  opacity: .8;
+}
+
+.font-technor {
+  font-family: Sans, Monospace;
+}
+
+.tierProgressBar .tierProgressBarLines .line.fill {
+  background: #e7f614;
+  box-shadow: 0 0 6px #e7f614
+}
+
+.tierProgressBar .tierProgressBarLines .line {
+  width: 6px;
+  border-radius: 3px;
+  height: 20px;
+  background-color: #ffffff1a
+}
+
+.tierProgressBar .tierProgressBarLines:after {
+  right: -10px;
+  left: auto;
+  transform: scale(-1)
+}
+
+.tierProgress .box .box-row,.tierProgress .card .box-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center
+}
+
+.tierProgress .box .box-inner>span,.tierProgress .box .box-row>span,.tierProgress .card .box-inner>span,.tierProgress .card .box-row>span {
+  font-size: 42px;
+  letter-spacing: -2px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px
+}
+
+.tierProgress .box .box-inner>span>small,.tierProgress .box .box-row>span>small,.tierProgress .card .box-inner>span>small,.tierProgress .card .box-row>span>small {
+  font-size: 60%;
+  opacity: .8
+}
+
+.tierProgress .box .box-inner>small,.tierProgress .box .box-row>small,.tierProgress .card .box-inner>small,.tierProgress .card .box-row>small {
+  font-size: 10px;
+  font-weight: 700;
+  color: #ffffff80;
+  display: flex;
+  align-items: center;
+  justify-content: center
+}
+
+.tierProgress .tierProgressSecond {
+  height: 95px;
+  display: flex;
+  gap: 16px
+}
+
+.tierProgress .tierProgressSecond>div {
+  width: 100%
+}

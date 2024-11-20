@@ -152,6 +152,9 @@ margin-top: 106px;
     gap: 8px;
     color: #F2F2F2;
     text-transform: uppercase;
+    border-bottom: 1px solid #b5ff1e;
+    transition: border-bottom 0.2s ease-in-out;
+    box-shadow: 0 0 2px 0 rgba(181, 255, 30, 0.5);
 }
 
 .scrollbanner {

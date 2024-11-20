@@ -7,21 +7,25 @@ const cards = [
     title: "NEXIS HOMEBASE",
     description: "Discover",
     src: "/images/image1.jpg",
+    href: "/home",
   },
   {
     title: "VESTING",
     description: "View your holdings",
     src: "/images/image2.jpg",
+    href: "/vesting",
   },
   {
     title: "$NZT",
     description: "Stake and earn",
     src: "/images/image3.jpg",
+    href: "/token",
   },
   {
-    title: "ARTIFICIAL INTELLIGENCE",
+    title: "EXPLORE QUESTS",
     description: "Explore Nexis Network",
     src: "/images/image4.jpg",
+    href: "/quests",
   },
 ]
 

@@ -18,6 +18,8 @@ import {
   NavigationMenuList,
   NavigationMenu as NavigationMenuPrimitive,
 } from "@/components/ui/navigation-menu"
+import { ConnectionButton } from "@/components/NavMenu/ConnectionButton"
+import { Logo } from "@/components/NavMenu/Logo"
 
 import styles from "./navmenu.module.css"
 
@@ -28,7 +30,7 @@ interface NavigationItem {
 }
 
 const navigationItems: NavigationItem[] = [
-  { label: "<A/> OVERVIEW", href: "/" },
+  { label: "<A/> OVERVIEW", href: "/home" },
   {
     label: "<A/> APPS",
     items: [
@@ -38,7 +40,13 @@ const navigationItems: NavigationItem[] = [
       { label: "Vesting", href: "/vesting" },
     ],
   },
-  { label: "<A/> NODES", href: "/nodes" },
+  {
+    label: "<A/> NODES",
+    items: [
+      { label: "Node Sale", href: "/node-sale" },
+      { label: "Node Delegating", href: "/nodes" },
+    ],
+  },
   { label: "<A/> QUESTS", href: "/quests" },
   { label: "<A/> LEADERBOARD", href: "/leaderboard" },
 ]
@@ -67,7 +75,7 @@ function NavigationDropdownItem({ item }: { item: NavigationItem }) {
       <DropdownMenuContent
         align="start"
         sideOffset={5}
-        className="menuText border-[rgb(39, 39, 39)] z-10 min-w-40 border bg-black/70 shadow-2xl backdrop-blur-xl"
+        className="styles.menuText border-3 z-10 min-w-40 border-zinc-800 bg-black/90 shadow-2xl backdrop-blur-lg hover:text-[#fafafa]"
         onClick={() => setOpen(true)}
         onMouseEnter={() => setOpen(true)}
         onMouseLeave={() => setOpen(false)}
@@ -103,45 +111,47 @@ export function NavigationMenu() {
   }, [])
 
   return (
-    <nav
-      className={`sticky top-0 z-30 mt-[-10px] flex w-full flex-col items-start self-center overflow-hidden overflow-x-auto whitespace-nowrap bg-[#0a0a0a]/90 leading-none text-[#7d7d7d] bg-blend-normal shadow-[inset_0_-1px_#ffffff24] backdrop-blur-md [-webkit-overflow-scrolling:touch] [scrollbar-width:none] ${
-        hasScrolled
-          ? "border-b border-[rgb(39,39,39)]"
-          : "border-b border-transparent"
+    <div
+      className={`sticky top-0 z-30 mt-[-10px] flex min-w-full border-collapse flex-row items-center justify-between bg-black/80 px-5 pb-2 leading-none bg-blend-normal shadow-[inset_0_-1px_#ffffff24] backdrop-blur-lg [-webkit-overflow-scrolling:touch] [scrollbar-width:none] max-md:max-w-full ${
+        hasScrolled ? "border-b border-zinc-800" : "border-b border-transparent"
       }`}
     >
-      <NavigationMenuPrimitive className="flex w-[950px] max-w-full flex-wrap items-stretch justify-between pl-5 bg-blend-normal">
-        <NavigationMenuList className="flex w-full">
-          {navigationItems.map((item) => (
-            <NavigationMenuItem
-              key={item.label}
-              className="group relative shrink-0 grow basis-auto"
-            >
-              {item.items ? (
-                <NavigationDropdownItem item={item} />
-              ) : (
-                <NavigationMenuLink
-                  asChild
-                  className={`relative z-10 flex h-[40px] items-center justify-center p-3 font-mono text-xs transition-colors duration-200 hover:text-[#fafafa] ${
-                    pathname === item.href ? "text-[#fafafa]" : ""
-                  }`}
-                >
-                  {item.href && (
-                    <Link href={item.href}>
-                      <HyperText
-                        text={item.label}
-                        className="font-mono text-xs"
-                        animateOnLoad={false}
-                        duration={600}
-                      />
-                    </Link>
-                  )}
-                </NavigationMenuLink>
-              )}
-            </NavigationMenuItem>
-          ))}
-        </NavigationMenuList>
-      </NavigationMenuPrimitive>
-    </nav>
+      <Logo />
+      <nav className="grow text-[#7d7d7d]">
+        <NavigationMenuPrimitive className="flex w-full flex-wrap items-stretch justify-between bg-blend-normal">
+          <NavigationMenuList className="flex w-full">
+            {navigationItems.map((item) => (
+              <NavigationMenuItem
+                key={item.label}
+                className="group relative shrink-0 grow basis-auto"
+              >
+                {item.items ? (
+                  <NavigationDropdownItem item={item} />
+                ) : (
+                  <NavigationMenuLink
+                    asChild
+                    className={`relative z-10 flex h-[40px] items-center justify-center p-3 font-mono text-xs transition-colors duration-200 hover:text-[#fafafa] ${
+                      pathname === item.href ? "text-[#fafafa]" : ""
+                    }`}
+                  >
+                    {item.href && (
+                      <Link href={item.href}>
+                        <HyperText
+                          text={item.label}
+                          className="font-mono text-xs hover:border-b hover:border-lime-400"
+                          animateOnLoad={false}
+                          duration={600}
+                        />
+                      </Link>
+                    )}
+                  </NavigationMenuLink>
+                )}
+              </NavigationMenuItem>
+            ))}
+          </NavigationMenuList>
+        </NavigationMenuPrimitive>
+      </nav>
+      <ConnectionButton />
+    </div>
   )
 }

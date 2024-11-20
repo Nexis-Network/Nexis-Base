@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 
-import TokenBg from "@/components/token/bg"
+import { ConnectButton } from "@/components/Header/ConnectionButton"
+import VestingButton from "@/components/vesting/vestingButton"
 
 export const metadata: Metadata = {
   title: "Nexis Network Dashboard",
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
 export default function VestingPage() {
   return (
     <div className="space-y-20">
-      <TokenBg />
+      <VestingButton />
     </div>
   )
 }

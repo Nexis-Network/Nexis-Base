@@ -1,0 +1,13 @@
+.card {
+  position: relative;
+  /* Your existing styles */
+  cursor: pointer;
+  /* Add any additional styles */
+}
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  /* Adjust as needed */
+} 

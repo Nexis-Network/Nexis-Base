@@ -1,26 +1,14 @@
 import type React from "react"
 
-import styles from "./CustomButton.module.css"
-
-// ...rest of the component
-
-interface ButtonProps {
-  children: React.ReactNode
-  variant?: "primary" | "secondary" | "tertiary"
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  [key: string]: any
-}
-
-const CustomButton: React.FC<ButtonProps> = ({
-  children,
-  variant = "primary",
-  ...props
-}) => {
+const CustomBtn: React.FC = () => {
   return (
-    <button className={`${styles.btn} ${styles[`btn-${variant}`]}`} {...props}>
-      {children}
+    <button
+      type="button"
+      className="fixed bottom-[30px] left-[30px] z-10 rounded-full border border-lime-300/40 bg-lime-300/30 text-lime-300"
+    >
+      Click Me
     </button>
   )
 }
 
-export default CustomButton
+export default CustomBtn

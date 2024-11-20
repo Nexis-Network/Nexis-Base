@@ -4,7 +4,6 @@ import { motion } from "framer-motion"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
-  Card,
   CardContent,
   CardDescription,
   CardFooter,
@@ -13,6 +12,7 @@ import {
 } from "@/components/ui/card"
 import { ProgressBar } from "@/components/ui/progressBar/progress"
 
+import Card from "./qcard"
 import type { Quest } from "./questTypes"
 
 const cardVariants = {
@@ -21,11 +21,7 @@ const cardVariants = {
 }
 
 export const QuestCard: React.FC<{ quest: Quest }> = ({ quest }) => (
-  <motion.div
-    variants={cardVariants}
-    whileHover={{ scale: 1.05 }}
-    whileTap={{ scale: 0.95 }}
-  >
+  <motion.div variants={cardVariants}>
     <Card className="flex h-full flex-col rounded-md border border-[#242424]">
       <CardHeader>
         <div className="flex items-start justify-between">

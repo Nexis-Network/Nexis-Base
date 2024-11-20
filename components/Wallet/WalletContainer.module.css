@@ -54,7 +54,7 @@
 
 /* Add this to your CSS module */
 .negativeMarginTop {
-  margin-top: -3px;
+  margin-top: 0px;
   z-index: 500;
 }
 
@@ -64,4 +64,36 @@
   font-weight: bold;
   font-family: "Jura";
   text-shadow: 0 0 20px 1px rgb(var(--c), 1);
+}
+
+.nexisNetworkText {
+    font-weight: 400;
+    font-family: "Roboto Mono", monospace;
+    font-size: 12px;
+    line-height: 16px;
+    text-transform: uppercase;
+    color: rgb(117, 117, 117);
+    position: relative;
+    z-index: 1;
+    margin-bottom: 8px;
+}
+
+.homebase {
+  position: relative;
+  display: inline-block;
+  opacity: 1;
+  color: #000000;
+  background-color: transparent;
+  font-size: 96px;
+  line-height: 1;
+  letter-spacing: -4.8px;
+  font-weight: 400;
+  font-family: "Roboto", sans-serif;
+  transform: uppercase;
+}
+
+.homebasebox {
+  display: block;
+  text-align: start;
+  position: relative;
 }

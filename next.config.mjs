@@ -14,6 +14,9 @@ const nextConfig = {
       "images.unsplash.com",
       "cloudflare-ipfs.com",
       "gateway.ipfs.io",
+      'raw.githubusercontent.com',
+      'assets.coingecko.com',
+      's2.coinmarketcap.com',
     ],
     remotePatterns: [
       {

@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 
 import Background from "@/components/Background"
-import ScrollBanner from "@/components/ScrollBanner"
+import VestingButton from "@/components/vesting/vestingButton"
 import { WalletContainer } from "@/components/Wallet/WalletContainer"
 import Web3DashboardTable from "@/components/WalletDetails"
 
@@ -11,5 +11,9 @@ export const metadata: Metadata = {
 }
 
 export default function Dashboard() {
-  return <div className="space-y-0"></div>
+  return (
+    <div className="space-y-0">
+      <VestingButton />
+    </div>
+  )
 }
