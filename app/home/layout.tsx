@@ -13,9 +13,9 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <>
-      <div className="relative flex min-h-screen border-collapse flex-col rounded-lg border">
+      <div className="relative flex min-h-screen flex-col bg-[#0a0a0a]">
         <NavigationMenu />
-        <main className="flex-1 px-5">{children}</main>
+        <main className="flex-1 px-5 md:px-10 lg:px-20">{children}</main>
         <Footer />
       </div>
       <Analytics />

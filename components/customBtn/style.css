@@ -8,9 +8,10 @@
     text-transform: uppercase;
     font-weight: normal;
     letter-spacing: 1.8px;
-    width: 200px;
-    height: 70px;
-    padding: 0;
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    padding: 15px 0;
     transition: all 0.25s ease;
     outline: none;
     &:before {
@@ -77,6 +78,27 @@
       transform: translateX(-1px);
       background: rgba(0, 214, 252, 1);
       transition: all 0.25s ease;
+    }
+  }
+}
+
+/* Media query for smaller screens */
+@media (max-width: 640px) {
+  .kave-btn {
+    max-width: 100%;
+    padding: 10px 0;
+    font-size: 14px;
+    letter-spacing: 1px;
+
+    &:before,
+    &:after {
+      width: 40px;
+    }
+    &:hover {
+      &:before,
+      &:after {
+        width: 20px;
+      }
     }
   }
 }

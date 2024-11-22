@@ -1,13 +1,14 @@
+/* eslint-disable tailwindcss/no-custom-classname */
 /* eslint-disable react/jsx-no-comment-textnodes */
 "use client"
 
 import { useEffect, useState } from "react"
+import { Avatar } from "@geist-ui/core"
 import { EvmChain } from "@moralisweb3/common-evm-utils"
-import { ConnectButton } from "@rainbow-me/rainbowkit"
 import Moralis from "moralis"
 import { useAccount } from "wagmi"
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
   Card,
   CardContent,
@@ -26,7 +27,10 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 import EthereumIcon from "../ui/chains/EthereumIcon"
+import HyperText from "../ui/hyper-text"
+import Web3DashboardTable from "../WalletDetails"
 import Styles from "./portfolio.module.css"
+import TokenSearch from "./search"
 import TokenIcon from "./tokenIcon"
 
 // Token addresses (Ethereum mainnet)
@@ -34,25 +38,8 @@ const TOKEN_ADDRESSES = {
   WETH: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
   USDT: "0xdAC17F958D2ee523a2206206994597C13D831ec7",
   USDC: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-  BNB: "0xB8c77482e45F1F44dE1745F52C74426C631bDD52",
-  ARB: "0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1",
-  PEPE: "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
+  ESE: "0x908dDb096BFb3AcB19e2280aAD858186ea4935C4",
   SHIBA: "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
-  ChainGPT: "0x32353A6C91143bfd6C7d363B546e62a9A2489A20",
-  Eesee: "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
-}
-
-interface Token {
-  token: {
-    name: string
-    symbol: string
-    contractAddress: string
-    logo?: string | React.ReactNode
-  }
-  amount: string
-  price: number
-  priceChange24h: number | undefined
-  value: number
 }
 
 // Define the Nft interface
@@ -68,22 +55,33 @@ interface Nft {
   // Include any other properties you need from the NFT object
 }
 
+// Ensure the Token interface includes all necessary properties
 interface Token {
   token: {
     name: string
     symbol: string
     contractAddress: string
-    logo?: string | React.ReactNode
+    logo: JSX.Element
   }
   amount: string
   price: number
-  priceChange24h: number | undefined
+  priceChange24h: number
   value: number
+  portfolioPercentage: number
+}
+
+// Define the TokenResult interface
+interface TokenResult {
+  name?: string
+  symbol?: string
+  address?: string
+  image?: JSX.Element | null
 }
 
 export default function Portfolio() {
   const [activeTab, setActiveTab] = useState("tokens")
   const [tokens, setTokens] = useState<Token[]>([])
+  const [trackedTokens, setTrackedTokens] = useState<Token[]>([])
   const [nfts, setNfts] = useState<Nft[]>([])
   const { address, isConnected } = useAccount()
 
@@ -135,12 +133,19 @@ export default function Portfolio() {
               priceChange24h: Number(priceData.result["24hrPercentChange"]),
               value:
                 Number(token.amount.toString()) * priceData.result.usdPrice,
+              portfolioPercentage: 0, // Placeholder, calculate later
             } as Token
           }
           return null
         })
       )
     ).filter((token): token is Token => token !== null)
+
+    // Calculate portfolio percentage
+    const totalValue = tokenData.reduce((acc, token) => acc + token.value, 0)
+    for (const token of tokenData) {
+      token.portfolioPercentage = (token.value / totalValue) * 100
+    }
 
     // Add tokens with zero balance for remaining TOKEN_ADDRESSES
     const existingAddresses = tokenData.map((t) =>
@@ -161,6 +166,7 @@ export default function Portfolio() {
         price: 0,
         priceChange24h: 0,
         value: 0,
+        portfolioPercentage: 0,
       }))
 
     // Add ETH data
@@ -188,7 +194,12 @@ export default function Portfolio() {
       priceChange24h: Number(ethPriceData.result["24hrPercentChange"]),
       value:
         Number(ethBalance.result.balance.ether) * ethPriceData.result.usdPrice,
+      portfolioPercentage: 0, // Placeholder, calculate later
     }
+
+    // Calculate portfolio percentage for ETH
+    const totalPortfolioValue = totalValue + ethData.value
+    ethData.portfolioPercentage = (ethData.value / totalPortfolioValue) * 100
 
     setTokens([ethData, ...tokenData, ...remainingTokens])
   }
@@ -231,103 +242,236 @@ export default function Portfolio() {
     setNfts(nftData)
   }
 
-  return (
-    <Card className={Styles.container}>
-      <CardContent>
-        <Tabs
-          className={Styles.tabs}
-          value={activeTab}
-          onValueChange={setActiveTab}
-        >
-          <div className="mb-4 flex items-center justify-between">
-            <div>
-              <CardTitle>Wallet Assets</CardTitle>
-              <CardDescription>View your tokens and NFTs</CardDescription>
-            </div>
-            <TabsList>
-              <TabsTrigger value="tokens">Tokens</TabsTrigger>
-              <TabsTrigger value="nfts">NFTs</TabsTrigger>
-            </TabsList>
-          </div>
+  const handleAddToken = (tokenResult: TokenResult) => {
+    const token: Token = {
+      token: {
+        name: tokenResult.name ?? "",
+        symbol: tokenResult.symbol ?? "",
+        contractAddress: tokenResult.address ?? "",
+        logo: tokenResult.image ?? null,
+      },
+      amount: "0", // Default amount
+      price: 0, // Default price
+      priceChange24h: 0, // Default price change
+      value: 0, // Default value
+    }
 
-          <TabsContent value="tokens">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Logo</TableHead>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Symbol</TableHead>
-                  <TableHead>Balance</TableHead>
-                  <TableHead>Price</TableHead>
-                  <TableHead>24h Change</TableHead>
-                  <TableHead>Value</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {tokens.map((token) => (
-                  <TableRow key={token.token.contractAddress}>
-                    <TableCell>
-                      <div className="relative h-4 w-4">
-                        <div className="absolute inset-0 overflow-hidden">
-                          {token.token.logo}
-                        </div>
-                      </div>
-                    </TableCell>
-                    <TableCell>{token.token.name}</TableCell>
-                    <TableCell>{token.token.symbol}</TableCell>
-                    <TableCell>
-                      {Number.parseFloat(token.amount).toFixed(4)}
-                    </TableCell>
-                    <TableCell>${token.price.toFixed(2)}</TableCell>
-                    <TableCell
-                      className={
-                        (token.priceChange24h ?? 0) >= 0
-                          ? "text-green-500"
-                          : "text-red-500"
-                      }
+    setTrackedTokens((prevTokens) => {
+      if (
+        !prevTokens.find(
+          (t) => t.token.contractAddress === token.token.contractAddress
+        )
+      ) {
+        return [...prevTokens, token]
+      }
+      return prevTokens
+    })
+  }
+
+  const handleRemoveToken = (tokenResult: TokenResult) => {
+    setTrackedTokens((prevTokens) =>
+      prevTokens.filter((t) => t.token.contractAddress !== tokenResult.address)
+    )
+  }
+
+  return (
+    <div className="mx-0 py-0">
+      <Card
+        className={`${Styles.container} rounded-none border-t border-zinc-800`}
+      >
+        <TokenSearch
+          onAddToken={handleAddToken}
+          onRemoveToken={handleRemoveToken}
+          trackedTokens={trackedTokens}
+        />
+        <CardContent className="mx-0 p-0 px-2">
+          <Tabs
+            className={Styles.tabs}
+            value={activeTab}
+            onValueChange={setActiveTab}
+          >
+            <div className="mx-0 mb-4 flex w-full items-center justify-between border-b border-zinc-800 px-4">
+              <div className="align-center my-0 py-0">
+                <h2 className={Styles.DescriptionText}>
+                  {"/// WALLET HOLDINGS"}
+                </h2>
+              </div>
+              <TabsList className="align-center my-0 bg-[#0a0a0a] py-0">
+                <div className="grid min-w-full grid-cols-3 bg-[#0a0a0a]">
+                  <div className="group relative size-full bg-[#0a0a0a] align-bottom">
+                    <TabsTrigger
+                      className="relative z-10 w-full border-collapse rounded-none bg-[#0a0a0a] px-8 py-4 font-mono text-white/80 transition-colors duration-300 hover:text-white data-[state=active]:border-b-2 data-[state=active]:border-b-lime-300"
+                      value="tokens"
                     >
-                      {(token.priceChange24h ?? 0).toFixed(2)}%
-                    </TableCell>
-                    <TableCell>${token.value.toFixed(2)}</TableCell>
+                      <div className="mr-2 flex bg-[#0a0a0a]">
+                        <svg
+                          width="5"
+                          height="4"
+                          viewBox="0 0 5 4"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <title>dot</title>
+                          <rect
+                            width="3.6"
+                            height="3.6"
+                            transform="translate(0.590637 0.0977173)"
+                            fill="white"
+                            className="pr-2 align-middle"
+                          />
+                        </svg>
+                      </div>
+                      <HyperText className={Styles.tabsTrigger} text="TOKENS" />
+                    </TabsTrigger>
+                    <div className="pointer-events-none absolute inset-0 z-0 h-full py-2 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  </div>
+                  <div className="group relative size-full bg-[#0a0a0a] align-bottom">
+                    <TabsTrigger
+                      className="relative z-10 w-full border-collapse rounded-none border-l border-zinc-800 bg-[#0a0a0a] px-8 py-4 font-mono text-white/80 transition-colors duration-300 hover:text-white data-[state=active]:border-b-2 data-[state=active]:border-b-lime-300"
+                      value="nfts"
+                    >
+                      <div className="mr-2 flex bg-[#0a0a0a]">
+                        <svg
+                          width="5"
+                          height="4"
+                          viewBox="0 0 5 4"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <title>dot</title>
+                          <rect
+                            width="3.6"
+                            height="3.6"
+                            transform="translate(0.590637 0.0977173)"
+                            fill="white"
+                            className="pr-2 align-middle"
+                          />
+                        </svg>
+                      </div>
+                      <HyperText className={Styles.tabsTrigger} text="NFTs" />
+                    </TabsTrigger>
+                    <div className="pointer-events-none absolute inset-0 z-0 h-full py-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  </div>
+                  <div className="group relative size-full bg-[#0a0a0a] align-bottom">
+                    <TabsTrigger
+                      className="relative z-10 w-full border-collapse rounded-none border-l border-zinc-800 bg-[#0a0a0a] px-8 py-4 font-mono text-white/80 transition-colors duration-300 hover:text-white data-[state=active]:border-b-2 data-[state=active]:border-b-lime-300"
+                      value="vesting"
+                    >
+                      <div className="mr-2 flex bg-[#0a0a0a]">
+                        <svg
+                          width="5"
+                          height="4"
+                          viewBox="0 0 5 4"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <title>dot</title>
+                          <rect
+                            width="3.6"
+                            height="3.6"
+                            transform="translate(0.590637 0.0977173)"
+                            fill="white"
+                            className="pr-2 align-middle"
+                          />
+                        </svg>
+                      </div>
+                      <HyperText
+                        className={Styles.tabsTrigger}
+                        text="VESTING"
+                      />
+                    </TabsTrigger>
+                    <div className="pointer-events-none absolute inset-0 z-0 h-full py-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  </div>
+                </div>
+              </TabsList>
+            </div>
+
+            <TabsContent value="tokens">
+              <Table className="w-full px-6">
+                <TableHeader>
+                  <TableRow className="my-2">
+                    <TableHead>Logo</TableHead>
+                    <TableHead>Name</TableHead>
+                    <TableHead>Balance</TableHead>
+                    <TableHead>Price</TableHead>
+                    <TableHead>24h Change</TableHead>
+                    <TableHead>Value</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TabsContent>
-          <TabsContent value="nfts">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Image</TableHead>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Floor Price</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {nfts.map((nft) => (
-                  <TableRow key={`${nft.tokenAddress}-${nft.tokenId}`}>
-                    <TableCell>
-                      <Avatar>
-                        <AvatarImage
-                          src={nft.metadata?.image}
-                          alt={nft.metadata?.name}
-                        />
-                        <AvatarFallback>
-                          {nft.metadata?.name?.charAt(0)}
-                        </AvatarFallback>
-                      </Avatar>
-                    </TableCell>
-                    <TableCell>
-                      {nft.metadata?.name || `${nft.name} #${nft.tokenId}`}
-                    </TableCell>
-                    <TableCell>{nft.floorPrice} ETH</TableCell>
+                </TableHeader>
+                <TableBody className="px-20 py-0">
+                  {trackedTokens.map((token) => (
+                    <TableRow key={token.token.contractAddress}>
+                      <TableCell>
+                        <div className="align-center relative size-6 content-center">
+                          <div className="absolute inset-0 size-6 overflow-hidden rounded-full">
+                            {token.token.logo}
+                          </div>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        {token.token.name}{" "}
+                        <span className="text-sm">({token.token.symbol})</span>
+                      </TableCell>
+                      <TableCell>
+                        {Number.parseFloat(token.amount ?? "0").toFixed(4)}
+                      </TableCell>
+                      <TableCell>${(token.price ?? 0).toFixed(2)}</TableCell>
+                      <TableCell
+                        className={
+                          (token.priceChange24h ?? 0) >= 0
+                            ? "text-lime-500"
+                            : "text-red-500"
+                        }
+                      >
+                        {(token.priceChange24h ?? 0).toFixed(2)}%
+                      </TableCell>
+                      <TableCell>${(token.value ?? 0).toFixed(2)}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TabsContent>
+            <TabsContent value="nfts">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Image</TableHead>
+                    <TableHead>Name</TableHead>
+                    <TableHead>Floor Price</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TabsContent>
-        </Tabs>
-      </CardContent>
-    </Card>
+                </TableHeader>
+                <TableBody>
+                  {nfts.map((nft) => (
+                    <TableRow key={`${nft.tokenAddress}-${nft.tokenId}`}>
+                      <TableCell>
+                        <Avatar>
+                          <AvatarImage
+                            src={nft.metadata?.image}
+                            alt={nft.metadata?.name}
+                          />
+                          <AvatarFallback>
+                            {nft.metadata?.name?.charAt(0)}
+                          </AvatarFallback>
+                        </Avatar>
+                      </TableCell>
+                      <TableCell>
+                        {nft.metadata?.name ||
+                          `${nft.name ?? ""} ${nft.tokenId}`}
+                      </TableCell>
+                      <TableCell>{nft.floorPrice} ETH</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TabsContent>
+            <TabsContent value="vesting">
+              <div>
+                <Web3DashboardTable />
+              </div>
+            </TabsContent>
+          </Tabs>
+        </CardContent>
+      </Card>
+    </div>
   )
 }

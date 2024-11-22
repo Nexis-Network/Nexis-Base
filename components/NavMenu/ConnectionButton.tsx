@@ -15,16 +15,24 @@ export const ConnectionButton: React.FC<{ className?: string }> = ({
     [class*="btn-glitch-"] {
       display: inline-block;
       font-family: "VT323", monospace;
-      border: 1px solid rgb(212, 254, 45, 0.5);
-      color: rgb(212, 254, 45, 0.5);
-      padding: 7.5px 9.75px;
-      min-width: 131.25px;
+      color: #f4f4f4;
+      padding: 11px 14px;
+      min-width: 132.25px;
       line-height: 1.125em;
       white-space: nowrap;
       text-transform: uppercase;
       cursor: pointer;
-      border-radius: 11.25px;
+      border-radius: 0px;
       font-size: 0.75em;
+
+      background: linear-gradient(
+        to right,
+        transparent 50%,
+        rgba(177, 255, 105, 100) 0%
+      );
+      background-size: 200% 100%;
+      background-position: left bottom;
+      transition: background-position 0.5s ease-in-out;
 
       .text,
       .decoration {
@@ -32,17 +40,12 @@ export const ConnectionButton: React.FC<{ className?: string }> = ({
       }
 
       .decoration {
-        display: inline-block;
         float: right;
       }
 
-      &:hover,
-      &:focus {
-        animation-name: glitch;
-        animation-duration: 0.2s;
-        background-color: rgb(212, 254, 45);
-        color: black;
-        border: 1px solid rgb(212, 254, 45);
+      &:hover {
+        background-position: right bottom;
+        color: #0a0a0a;
 
         .text-decoration {
           animation-name: blink;
@@ -61,10 +64,7 @@ export const ConnectionButton: React.FC<{ className?: string }> = ({
         background: none;
         color: yellow;
 
-        .text-decoration {
-          animation-name: none;
-        }
-
+        .text-decoration,
         .decoration {
           animation-name: none;
         }
@@ -79,7 +79,7 @@ export const ConnectionButton: React.FC<{ className?: string }> = ({
     @keyframes glitch {
       25% {
         background-color: red;
-        transform: translateX(-7.5px);
+        transform: translateX(-1.5px);
         letter-spacing: 7.5px;
       }
 
@@ -94,7 +94,7 @@ export const ConnectionButton: React.FC<{ className?: string }> = ({
 
       60% {
         background-color: blue;
-        transform: translate(-7.5px);
+        transform: translate(-1.5px);
         filter: blur(3.75px);
       }
 
@@ -213,18 +213,18 @@ export const ConnectionButton: React.FC<{ className?: string }> = ({
               </span>
             </button>
             {isDropdownOpen && (
-              <div className="absolute right-0 z-10 mx-auto mt-2 w-full rounded-md border border-[#242424] bg-black/50 px-3 shadow-lg backdrop-blur-md">
+              <div className="absolute right-0 z-10 mx-auto mt-2 w-full rounded-md border border-[#242424] bg-[#0a0a0a]/50 px-3 shadow-lg backdrop-blur-md">
                 <button
                   type="button"
                   onClick={openChainModal}
-                  className="block w-full p-2 text-left text-[12px] text-white hover:border-b hover:border-lime-300 hover:bg-black/30"
+                  className="block w-full p-2 text-left text-[12px] text-white hover:border-b hover:border-lime-300 hover:bg-[#0a0a0a]/30"
                 >
                   Switch Network
                 </button>
                 <button
                   type="button"
                   onClick={openAccountModal}
-                  className="block w-full p-2 text-left text-[12px] text-white hover:border-b hover:border-lime-300 hover:bg-black/30"
+                  className="block w-full p-2 text-left text-[12px] text-white hover:border-b hover:border-lime-300 hover:bg-[#0a0a0a]/30"
                 >
                   Account Details
                 </button>

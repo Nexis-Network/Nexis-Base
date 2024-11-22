@@ -58,7 +58,7 @@ const RecentTransactions: React.FC = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="w-full bg-black pl-4 text-[#fafafa]" // Added pl-4 for left padding
+      className="w-full bg-[#0a0a0a] pl-4 text-[#fafafa]" // Added pl-4 for left padding
     >
       <Table>
         <TableHeader>

@@ -28,7 +28,7 @@ export const CanvasRevealEffect = ({
   showGradient?: boolean
 }) => {
   return (
-    <div className={cn("relative size-full bg-black", containerClassName)}>
+    <div className={cn("relative size-full bg-[#0a0a0a]", containerClassName)}>
       <div className="size-full">
         <DotMatrix
           colors={colors ?? [[0, 255, 255]]}

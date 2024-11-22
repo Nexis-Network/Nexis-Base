@@ -23,7 +23,7 @@ export function CryptoChart({ ticker }: CryptoChartProps) {
   const priceFeedPromise = getPriceFeedsData()
 
   return (
-    <Card className="w-full max-w-none rounded-none border-0 border-b border-[#242424] bg-black">
+    <Card className="w-full max-w-none rounded-none border-0 border-b border-[#242424] bg-[#0a0a0a]">
       <CardHeader className="flex flex-row items-start justify-between space-y-0 px-4 py-5 sm:py-6 md:px-6">
         <div className="flex flex-1 flex-col justify-center gap-1">
           <ErrorBoundary

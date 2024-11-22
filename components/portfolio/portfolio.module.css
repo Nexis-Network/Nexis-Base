@@ -1,5 +1,5 @@
 .container {
-  background-color: rgb(0, 0, 0);
+  background-color: #0a0a0a;
   box-shadow: none;
   transition: box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 0px;
@@ -17,11 +17,30 @@
   margin-top: auto;
   padding-top: 10px;
   padding-bottom: 10px;
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
 }
 
+.DescriptionText {
+  position: relative;
+  display: inline-block;
+  opacity: 1;
+  color: #ffffff;
+  background-color: transparent;
+  font-size: 18px;
+  line-height: 1;
+  letter-spacing: 1px;
+  font-weight: 400;
+  font-family: "Roboto", sans-serif;
+  transform: uppercase;
+  align-items: center;
+  }
+
 .header {
-  background-color: 000000;
-  border-bottom: 0.5px solid #1A1B20;
+  background-color: #0a0a0a;
+  border-bottom: 0.5px solid #242424;
   height: 40px;
   width: 100%;
 }
@@ -99,17 +118,19 @@ color: #F8F8FB;
   opacity: 1;
   color: #ffffff;
   background-color: transparent;
+  font-family: "Roboto Mono", monospace;
   font-size: 18px;
   line-height: 1;
   letter-spacing: 1px;
   font-weight: 400;
-  font-family: "Roboto", sans-serif;
   transform: uppercase;
   align-items: center;
   }
   
-  .tabs {
-    background-color: #000000;
+.tabs {
+    background-color: #0a0a0a;
+    margin-left: 0px;
+    margin-right: 0px;
   }
 
 .tokenIcon {
@@ -119,4 +140,20 @@ color: #F8F8FB;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.tabsTrigger {
+font-family: 'Inter';
+font-style: normal;
+font-weight: 500;
+font-size: 12px;
+line-height: 9px;
+/* identical to box height, or 109% */
+display: flex;
+align-items: center;
+letter-spacing: -0.162px;
+text-transform: uppercase;
+background-color: transparent;
+
+color: #f4f4f4;
 }

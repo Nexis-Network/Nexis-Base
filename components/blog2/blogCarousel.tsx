@@ -109,7 +109,7 @@ export default function BlogCardCarousel() {
               className="border-collapse rounded-lg pl-4 md:basis-1/2 lg:basis-1/4"
             >
               <Card className="flex h-full flex-col">
-                <AspectRatio ratio={16 / 9} className="bg-black">
+                <AspectRatio ratio={16 / 9} className="bg-[#0a0a0a]">
                   <Image
                     src={post.image}
                     alt={`Cover image for ${post.title}`}

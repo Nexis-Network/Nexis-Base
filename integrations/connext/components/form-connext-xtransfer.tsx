@@ -557,7 +557,7 @@ export function FormConnextXTransfer({
           </Select>
         </div>
         <input
-          className="3xl:text-2xl w-36 rounded border-0 bg-transparent py-1.5 text-right font-semibold focus:ring-0 sm:w-48 sm:text-lg"
+          className="3xl:text-2xl w-36 rounded border-0 bg-[#0a0a0a] py-1.5 text-right font-semibold focus:ring-0 sm:w-48 sm:text-lg"
           placeholder="0.00"
           type="text"
           value={amount}

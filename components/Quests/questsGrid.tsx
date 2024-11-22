@@ -52,7 +52,7 @@ const QuestsGrid = () => {
         <button
           type="button"
           className={`rounded-3xl border border-[#242424] px-8 py-2 hover:border-white/50 ${
-            activeFilter === "all" ? "bg-white/30 text-white" : "bg-black"
+            activeFilter === "all" ? "bg-white/30 text-white" : "bg-[#0a0a0a]"
           }`}
           onClick={() => handleFilterChange("all")}
         >
@@ -63,7 +63,7 @@ const QuestsGrid = () => {
           className={`rounded-3xl border border-[#242424] px-4 py-2 hover:border-white/50 ${
             activeFilter === "onboarding"
               ? "bg-white/30 text-white"
-              : "bg-black"
+              : "bg-[#0a0a0a]"
           }`}
           onClick={() => handleFilterChange("onboarding")}
         >
@@ -72,7 +72,9 @@ const QuestsGrid = () => {
         <button
           type="button"
           className={`rounded-3xl border border-[#242424] px-4 py-2 hover:border-white/50 ${
-            activeFilter === "social" ? "bg-white/30 text-white" : "bg-black"
+            activeFilter === "social"
+              ? "bg-white/30 text-white"
+              : "bg-[#0a0a0a]"
           }`}
           onClick={() => handleFilterChange("social")}
         >
@@ -81,7 +83,9 @@ const QuestsGrid = () => {
         <button
           type="button"
           className={`rounded-3xl border border-[#242424] px-4 py-2 hover:border-white/50 ${
-            activeFilter === "on-chain" ? "bg-white/30 text-white" : "bg-black"
+            activeFilter === "on-chain"
+              ? "bg-white/30 text-white"
+              : "bg-[#0a0a0a]"
           }`}
           onClick={() => handleFilterChange("on-chain")}
         >
@@ -90,7 +94,9 @@ const QuestsGrid = () => {
         <button
           type="button"
           className={`rounded-3xl border border-[#242424] px-4 py-2 hover:border-white/50 ${
-            activeFilter === "ecosystem" ? "bg-white/30 text-white" : "bg-black"
+            activeFilter === "ecosystem"
+              ? "bg-white/30 text-white"
+              : "bg-[#0a0a0a]"
           }`}
           onClick={() => handleFilterChange("ecosystem")}
         >
@@ -99,7 +105,9 @@ const QuestsGrid = () => {
         <button
           type="button"
           className={`rounded-3xl border border-[#242424] px-4 py-2 hover:border-white/50 ${
-            activeFilter === "developer" ? "bg-white/30 text-white" : "bg-black"
+            activeFilter === "developer"
+              ? "bg-white/30 text-white"
+              : "bg-[#0a0a0a]"
           }`}
           onClick={() => handleFilterChange("developer")}
         >

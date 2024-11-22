@@ -179,7 +179,7 @@ export const WalletContainer: React.FC = () => {
             title="Spline Design"
           />
         </div>
-        <div className="relative z-50 flex h-full flex-col justify-end bg-transparent text-black">
+        <div className="relative z-50 flex h-full flex-col justify-end bg-[#0a0a0a] text-black">
           <div className="align-start m-6 border-b border-[#131313]">
             <div className="flex">
               <CardContent className="flex w-1/2 items-center">

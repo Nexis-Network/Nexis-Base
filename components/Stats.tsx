@@ -51,7 +51,7 @@ export default function Stats({
       {cardContent.map((content) => (
         <Card
           key={content.title}
-          className="relative mt-0 border-collapse overflow-hidden rounded-none border-l-0 border-t-0 bg-black pt-0 text-white"
+          className="relative mt-0 border-collapse overflow-hidden rounded-none border-l-0 border-t-0 bg-[#0a0a0a] pt-0 text-white"
           onMouseEnter={() => setHoveredCard(content.title)}
           onMouseLeave={() => setHoveredCard(null)}
         >
@@ -66,7 +66,7 @@ export default function Stats({
           <div
             className={`absolute inset-0 transition-opacity duration-300 ${
               hoveredCard === content.title
-                ? "bg-black/50 opacity-100"
+                ? "bg-[#0a0a0a]/50 opacity-100"
                 : "opacity-0"
             }`}
           />

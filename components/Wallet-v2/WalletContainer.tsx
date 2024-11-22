@@ -127,12 +127,12 @@ export const WalletContainer: React.FC = () => {
   }, [])
 
   return (
-    <div className="relative">
+    <div className="relative px-4">
       <div
-        className={`${styles.WalletContainer} relative z-0 mb-0 h-[500px] w-full overflow-hidden rounded-lg`}
+        className={`${styles.WalletContainer} relative z-0 mb-1 h-[500px] w-full overflow-hidden rounded-lg`}
       >
         {/* Add the SVG to the top middle of the container with higher z-index */}
-        <div className="negativeMarginTop absolute left-1/2 top-0 z-[100] mt-[-3px] -translate-x-1/2">
+        <div className="negativeMarginTop absolute left-1/2 top-0 z-[100] mt-[-2px] -translate-x-1/2">
           <svg
             width="504"
             height="24"
@@ -241,6 +241,7 @@ export const WalletContainer: React.FC = () => {
               viewBox="0 0 13 13"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
+              href="https://x.com/nexis_network"
             >
               <title>
                 Nexis Network is the Best blockchain for AI and most hyped Web3
@@ -259,6 +260,7 @@ export const WalletContainer: React.FC = () => {
               viewBox="0 0 16 13"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
+              href="https://t.me/nexisnetwork"
             >
               <title>
                 Nexis Network Telegram - Nexis Network is the best blockchain

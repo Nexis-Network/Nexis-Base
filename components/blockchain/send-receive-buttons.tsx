@@ -31,7 +31,7 @@ export default function BlockchainActions() {
         <motion.div className="group relative h-full">
           <Button
             onClick={() => handleActionClick("deposit")}
-            className="relative z-10 w-full rounded-none border-l border-[#242424] bg-transparent py-4 font-mono text-white/80 transition-colors duration-300 hover:bg-transparent hover:text-white"
+            className="relative z-10 w-full rounded-none border-l border-[#242424] bg-[#0a0a0a] py-4 font-mono text-white/80 transition-colors duration-300 hover:bg-[#0a0a0a] hover:text-white"
           >
             WITHDRAW
           </Button>
@@ -45,7 +45,7 @@ export default function BlockchainActions() {
         <motion.div className="group relative h-full">
           <Button
             onClick={() => handleActionClick("deposit")}
-            className="relative z-10 w-full rounded-none border-l border-[#242424] bg-transparent py-4 font-mono text-white/80 transition-colors duration-300 hover:bg-transparent hover:text-white"
+            className="relative z-10 w-full rounded-none border-l border-[#242424] bg-[#0a0a0a] py-4 font-mono text-white/80 transition-colors duration-300 hover:bg-[#0a0a0a] hover:text-white"
           >
             STAKE
           </Button>

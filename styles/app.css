@@ -27,7 +27,7 @@
 }
 
 .input {
-  @apply border-0 px-3 py-3 placeholder-neutral-400 text-gray-600 bg-black rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150;
+  @apply border-0 px-3 py-3 placeholder-neutral-400 text-gray-600 bg-[#0a0a0a] rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150;
 }
 
 @layer base {

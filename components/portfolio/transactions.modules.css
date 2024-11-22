@@ -1,3 +1,17 @@
 
 
 
+.DescriptionText {
+  position: relative;
+  display: inline-block;
+  opacity: 1;
+  color: #ffffff;
+  background-color: transparent;
+  font-size: 18px;
+  line-height: 1;
+  letter-spacing: 1px;
+  font-weight: 400;
+  font-family: "Roboto", sans-serif;
+  transform: uppercase;
+  align-items: center;
+  }

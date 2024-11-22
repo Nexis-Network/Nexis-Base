@@ -17,7 +17,7 @@ const ChatToggle: React.FC<ChatToggleProps> = ({
     <Button
       onClick={onClick}
       size="sm"
-      className={`group flex items-center bg-transparent p-2 hover:bg-transparent ${
+      className={`group flex items-center bg-[#0a0a0a] p-2 hover:bg-[#0a0a0a] ${
         className ?? ""
       }`}
       aria-label={isOpen ? "Close chat" : "Open chat"}

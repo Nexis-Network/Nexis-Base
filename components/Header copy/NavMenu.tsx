@@ -60,7 +60,7 @@ export const NavMenu: React.FC = () => {
   return (
     <div className="z-10 flex w-full min-w-full items-start justify-between px-2 md:px-2">
       <Logo />
-      <nav className="flex items-center bg-transparent px-4 transition-all duration-300 ease-in-out md:px-8">
+      <nav className="flex items-center bg-[#0a0a0a] px-4 transition-all duration-300 ease-in-out md:px-8">
         <div className="flex items-center">
           {!isMobileView && (
             <div className="hidden w-full items-center space-x-6 text-sm sm:flex" />

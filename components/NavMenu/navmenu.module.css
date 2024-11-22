@@ -175,6 +175,37 @@ margin-top: 106px;
     border-bottom: none;
 }
 
+.navItemHover {
+  position: relative;
+  z-index: 1;
+  display: flex;
+}
+
+.subnavItemHover {
+  position: relative;
+  z-index: 1;
+  display: flex;
+}
+
+.navItemHover::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 20px;
+  margin-top: 10px;
+  background-color: white;
+  transition: width 0.3s ease;
+  z-index: -1;
+  align-items: center;
+  justify-content: center;
+}
+
+.navItemHover:hover::before {
+  width: 100%;
+}
+
 /* Add keyframes for the scrolling animation */
 @keyframes scroll-animation {
   0% { transform: translateX(0); }

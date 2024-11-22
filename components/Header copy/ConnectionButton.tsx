@@ -213,18 +213,18 @@ export const ConnectionButton: React.FC<{ className?: string }> = ({
               </span>
             </button>
             {isDropdownOpen && (
-              <div className="absolute right-0 z-10 mx-auto mt-2 w-full rounded-md border border-[#242424] bg-black/50 px-3 shadow-lg backdrop-blur-md">
+              <div className="absolute right-0 z-10 mx-auto mt-2 w-full rounded-md border border-[#242424] bg-[#0a0a0a]/50 px-3 shadow-lg backdrop-blur-md">
                 <button
                   type="button"
                   onClick={openChainModal}
-                  className="block w-full p-2 text-left text-[12px] text-white hover:border-b hover:border-lime-300 hover:bg-black/30"
+                  className="block w-full p-2 text-left text-[12px] text-white hover:border-b hover:border-lime-300 hover:bg-[#0a0a0a]/30"
                 >
                   Switch Network
                 </button>
                 <button
                   type="button"
                   onClick={openAccountModal}
-                  className="block w-full p-2 text-left text-[12px] text-white hover:border-b hover:border-lime-300 hover:bg-black/30"
+                  className="block w-full p-2 text-left text-[12px] text-white hover:border-b hover:border-lime-300 hover:bg-[#0a0a0a]/30"
                 >
                   Account Details
                 </button>

@@ -101,3 +101,18 @@
     width: 10%;
   }
 }
+
+/* Media query for smaller screens */
+@media (max-width: 640px) {
+  [class*="btn-glitch-"] {
+    padding: 8px 10px;
+    min-width: auto;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 10px;
+    font-size: 0.9em;
+  }
+  [class*="btn-glitch-"] .decoration {
+    display: none;
+  }
+}

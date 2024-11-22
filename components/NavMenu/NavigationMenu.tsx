@@ -4,6 +4,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { Github, Twitter } from "@geist-ui/icons"
 
 import {
   DropdownMenu,
@@ -20,7 +21,10 @@ import {
 } from "@/components/ui/navigation-menu"
 import { ConnectionButton } from "@/components/NavMenu/ConnectionButton"
 import { Logo } from "@/components/NavMenu/Logo"
+import { WalletNotifications } from "@/components/notifications/walletNotifications"
 
+import { NetworkStatus } from "../blockchain/network-status"
+import Toggle from "../chat/toggle"
 import styles from "./navmenu.module.css"
 
 interface NavigationItem {
@@ -41,7 +45,7 @@ const navigationItems: NavigationItem[] = [
     ],
   },
   {
-    label: "<A/> NODES",
+    label: " <A/> NODES",
     items: [
       { label: "Node Sale", href: "/node-sale" },
       { label: "Node Delegating", href: "/nodes" },
@@ -62,11 +66,11 @@ function NavigationDropdownItem({ item }: { item: NavigationItem }) {
           onClick={() => setOpen(!open)}
           onMouseEnter={() => setOpen(true)}
           onMouseLeave={() => setOpen(false)}
-          className="menuText relative flex h-[40px] items-center justify-center p-3 transition-colors duration-200 hover:text-[#F2F2F2]"
+          className="menuText navItemHover relative flex h-[40px] items-center justify-center p-3 transition-colors duration-200 hover:text-[#F2F2F2]"
         >
           <HyperText
             text={item.label}
-            className={styles.menuText}
+            className={`${styles.menuText} hover:text-[#f4f4f4]`}
             animateOnLoad={false}
             duration={800}
           />
@@ -75,7 +79,7 @@ function NavigationDropdownItem({ item }: { item: NavigationItem }) {
       <DropdownMenuContent
         align="start"
         sideOffset={5}
-        className="styles.menuText border-3 z-10 min-w-40 border-zinc-800 bg-black/90 shadow-2xl backdrop-blur-lg hover:text-[#fafafa]"
+        className="styles.menuText z-10 min-w-40 border-2 border-zinc-900 bg-[#0a0a0a]/90 shadow-2xl backdrop-blur-lg hover:text-[#fafafa]"
         onClick={() => setOpen(true)}
         onMouseEnter={() => setOpen(true)}
         onMouseLeave={() => setOpen(false)}
@@ -85,7 +89,7 @@ function NavigationDropdownItem({ item }: { item: NavigationItem }) {
             {subItem.href && (
               <Link
                 href={subItem.href}
-                className="menuText block w-full px-4 py-2 hover:border-l hover:border-lime-400 hover:text-[#fafafa]"
+                className={`${styles.subnavItem} menuText block w-full px-4 py-2 hover:text-black`}
               >
                 {subItem.label}
               </Link>
@@ -112,35 +116,33 @@ export function NavigationMenu() {
 
   return (
     <div
-      className={`sticky top-0 z-30 mt-[-10px] flex min-w-full border-collapse flex-row items-center justify-between bg-black/80 px-5 pb-2 leading-none bg-blend-normal shadow-[inset_0_-1px_#ffffff24] backdrop-blur-lg [-webkit-overflow-scrolling:touch] [scrollbar-width:none] max-md:max-w-full ${
-        hasScrolled ? "border-b border-zinc-800" : "border-b border-transparent"
+      className={`sticky top-0 z-30 flex items-center bg-[#0a0a0a]/80 px-4 leading-none bg-blend-normal shadow-[inset_0_-1px_#ffffff24] backdrop-blur-lg ${
+        hasScrolled ? "border-b border-zinc-900" : "border-b border-transparent"
       }`}
     >
-      <Logo />
-      <nav className="grow text-[#7d7d7d]">
-        <NavigationMenuPrimitive className="flex w-full flex-wrap items-stretch justify-between bg-blend-normal">
-          <NavigationMenuList className="flex w-full">
+      <div className="flex items-center border-r border-zinc-800">
+        <Logo />
+      </div>
+
+      <nav className="flex-1 pl-4 text-[#7d7d7d]">
+        <NavigationMenuPrimitive className="flex">
+          <NavigationMenuList className="flex">
             {navigationItems.map((item) => (
-              <NavigationMenuItem
-                key={item.label}
-                className="group relative shrink-0 grow basis-auto"
-              >
+              <NavigationMenuItem key={item.label}>
                 {item.items ? (
                   <NavigationDropdownItem item={item} />
                 ) : (
-                  <NavigationMenuLink
-                    asChild
-                    className={`relative z-10 flex h-[40px] items-center justify-center p-3 font-mono text-xs transition-colors duration-200 hover:text-[#fafafa] ${
-                      pathname === item.href ? "text-[#fafafa]" : ""
-                    }`}
-                  >
+                  <NavigationMenuLink asChild>
                     {item.href && (
-                      <Link href={item.href}>
+                      <Link
+                        href={item.href}
+                        className="menuText navItemHover relative flex h-[40px] items-center justify-center p-3 transition-colors duration-200 hover:text-[#F2F2F2]"
+                      >
                         <HyperText
                           text={item.label}
-                          className="font-mono text-xs hover:border-b hover:border-lime-400"
+                          className={`${styles.menuText} hover:text-[#f4f4f4]`}
                           animateOnLoad={false}
-                          duration={600}
+                          duration={800}
                         />
                       </Link>
                     )}
@@ -151,7 +153,18 @@ export function NavigationMenu() {
           </NavigationMenuList>
         </NavigationMenuPrimitive>
       </nav>
-      <ConnectionButton />
+      <div className="h-full border-l border-zinc-800 px-4">
+        <Twitter size={18} />
+      </div>
+      <div className="h-full border-l border-zinc-800 px-4">
+        <Github size={18} />
+      </div>
+      <div className="h-full border-l border-zinc-800 px-4">
+        <WalletNotifications />
+      </div>
+      <div className="flex items-center gap-2 border-l border-zinc-800 px-2">
+        <ConnectionButton />
+      </div>
     </div>
   )
 }

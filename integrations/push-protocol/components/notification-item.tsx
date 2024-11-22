@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { NotificationItemProps } from "@pushprotocol/uiweb"
+import type { NotificationItemProps } from "@pushprotocol/uiweb"
 import { BsGlobe } from "react-icons/bs"
 
 import { strLimit } from "../utils/helpers"

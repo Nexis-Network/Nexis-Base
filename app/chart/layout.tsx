@@ -14,7 +14,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <>
       <div className="relative flex min-h-screen flex-col">
-        <Header />
         <NavigationMenu />
         <main className="flex-1">{children}</main>
         <Footer />
