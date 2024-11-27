@@ -207,24 +207,19 @@ export default function NodeStakingPage() {
                 Mnemonics to access your staking account in future, failing to
                 do so will result in loss of your account!
               </p>
-              <div>
-                {generatedCredentials?.mnemonic
-                  .split(" ")
-                  .map((word, index) => (
-                    <span
-                      key={index}
-                      className="mx-1 mb-2 inline-block w-40 rounded-full border border-primary px-4 py-2 text-center"
-                    >
-                      {index + 1}. {word}
-                    </span>
-                  ))
-                  .reduce((acc, curr, index) => {
-                    if (index % 3 === 0 && index !== 0) {
-                      acc.push(<br key={`br-${index}`} />) // Add a line break after every 3 words
-                    }
-                    acc.push(curr)
-                    return acc
-                  }, [])}
+              <div className="mt-4 flex flex-col items-center">
+                <div className="grid grid-cols-3 gap-2">
+                  {generatedCredentials?.mnemonic
+                    .split(" ")
+                    .map((word, index) => (
+                      <span
+                        key={index}
+                        className="w-40 rounded-full border border-primary px-4 py-2 text-center"
+                      >
+                        {index + 1}. {word}
+                      </span>
+                    ))}
+                </div>
               </div>
 
               <div className="mt-4">
