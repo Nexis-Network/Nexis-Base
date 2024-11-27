@@ -1,38 +1,70 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import Link from "next/link"
+import * as web3 from "@velas/web3"
+import { rpc } from "viem/utils"
 
 import { Button } from "@/components/ui/button"
 
-// Mock validators data
-const VALIDATORS = [
-  {
-    publicKey: "NZT7nJrxqodF3z9YvKnxwUbJ5zJK1FrjBY2WeHf89w2",
-    name: "Nexis Foundation",
-    commission: 10,
-    activeStake: 450000,
-    apy: 12.5,
-    score: 98,
-  },
-  {
-    publicKey: "NZT9xKpJkn6JqumUMw4FHvqxhvjxGvED7HAJGMkd2w1",
-    name: "Nexis Labs",
-    commission: 8,
-    activeStake: 380000,
-    apy: 11.8,
-    score: 95,
-  },
-  {
-    publicKey: "NZT5xKpJkn6JqumUMw4FHvqxhvjxGvED7HAJGMkd2w3",
-    name: "Nexis Staking Pool",
-    commission: 7,
-    activeStake: 520000,
-    apy: 13.2,
-    score: 97,
-  },
-] as const
+const getConnection = () => {
+  const connection = new web3.Connection("https://api.testnet.nexis.network", {
+    commitment: "singleGossip",
+  })
+
+  return connection
+}
+
+interface ValidatorInfo {
+  publicKey: string
+  name: string
+  commission: number
+  activeStake: number
+  apy: number
+  score: number
+}
+
+const formatNumber = (num: number) => {
+  if (num >= 1e6) return (num / 1e6).toFixed(1) + "M"
+  if (num >= 1e3) return (num / 1e3).toFixed(1) + "k"
+  return num.toString()
+}
 
 export default function NodesPage() {
+  const [validators, setValidators] = useState([] as ValidatorInfo[])
+
+  useEffect(() => {
+    const getVoteAccounts = async () => {
+      const response = await getConnection().getVoteAccounts()
+      console.log("response===", response)
+      const _validators: ValidatorInfo[] = []
+      response.current.forEach((val) => {
+        let validatorName = "Unknown Validator"
+        let score = 100
+        if (val.nodePubkey == "7yxFRV6tHecaLpADmo6FEkTzbWbBGjAhPHo46XdJ4i8y") {
+          ;(validatorName = "Nexis Foundation Bootstrap"), (score = 100)
+        }
+        _validators.push({
+          publicKey: val.nodePubkey,
+          name: validatorName,
+          commission: val.commission,
+          activeStake: val.activatedStake,
+          apy: 13.2,
+          score,
+        })
+      })
+      setValidators(_validators as any)
+    }
+
+    getVoteAccounts()
+      .then((v) => {
+        console.log("fetched vote accounts")
+      })
+      .catch((e) => {
+        console.log("getVoteAccounts ERR", e)
+      })
+  }, [])
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8 space-y-4">
@@ -49,21 +81,39 @@ export default function NodesPage() {
       <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
         <div className="rounded-lg border bg-card p-6">
           <p className="text-sm text-muted-foreground">Total Staked</p>
-          <p className="text-2xl font-bold">1.35M NZT</p>
+          <p className="text-2xl font-bold">
+            {formatNumber(
+              validators.reduce(
+                (total, validator) => total + validator.activeStake,
+                0
+              ) / 1e9
+            )}{" "}
+            NZT
+          </p>
         </div>
         <div className="rounded-lg border bg-card p-6">
           <p className="text-sm text-muted-foreground">Average APY</p>
-          <p className="text-2xl font-bold">12.5%</p>
+          <p className="text-2xl font-bold">
+            {validators.length > 0
+              ? (
+                  validators.reduce(
+                    (total, validator) => total + validator.apy,
+                    0
+                  ) / validators.length
+                ).toFixed(2)
+              : 0}
+            %
+          </p>
         </div>
         <div className="rounded-lg border bg-card p-6">
           <p className="text-sm text-muted-foreground">Active Validators</p>
-          <p className="text-2xl font-bold">{VALIDATORS.length}</p>
+          <p className="text-2xl font-bold">{validators.length}</p>
         </div>
       </div>
 
       {/* Validators Grid */}
       <div className="grid gap-6">
-        {VALIDATORS.map((validator) => (
+        {validators.map((validator) => (
           <div
             key={validator.publicKey}
             className="rounded-lg border bg-card p-6 transition-all hover:border-primary/50"
@@ -83,7 +133,7 @@ export default function NodesPage() {
                   </div>
                   <div>
                     <p className="text-muted-foreground">Active Stake</p>
-                    <p>{validator.activeStake.toLocaleString()} NZT</p>
+                    <p>{(validator.activeStake / 1e9).toLocaleString()} NZT</p>
                   </div>
                   <div>
                     <p className="text-muted-foreground">APY</p>
