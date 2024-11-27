@@ -6,6 +6,12 @@ import * as web3 from "@velas/web3"
 
 import { Button } from "@/components/ui/button"
 
+export interface AccountCredentials {
+  mnemonic: string
+  publicKey: string
+  secretKey: string
+}
+
 const getConnection = () => {
   const connection = new web3.Connection("https://api.testnet.nexis.network", {
     commitment: "singleGossip",
