@@ -143,6 +143,12 @@ export default function NodeStakingPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      {/* Display Public Key if Logged In */}
+      {loggedIn && (
+        <div className="absolute right-4 top-44 rounded-full bg-primary p-2 text-sm font-bold text-black">
+          Nexis Native Address: {generatedCredentials?.publicKey}
+        </div>
+      )}
       {/* Validator Details */}
       <div className="mb-8 space-y-4">
         <h1 className="text-3xl font-bold">{validator.name}</h1>
@@ -200,7 +206,7 @@ export default function NodeStakingPage() {
           <div className="fixed inset-0 z-40 bg-black bg-opacity-70 backdrop-blur-sm" />
           <div className="fixed inset-0 z-50 flex items-center justify-center">
             <div className="modal-content max-w-[60vw] rounded-lg border border-primary bg-black p-6 text-white shadow-lg">
-              <h2 className="text-lg font-semibold">Native Wallet Creation</h2>
+              <h1 className="text-3xl font-bold">Native Wallet Creation</h1>
               <p className="my-4">
                 Staking is native feature of the Nexis Chain, which can not be
                 directly accessed by Metamask, kindly note down the below
