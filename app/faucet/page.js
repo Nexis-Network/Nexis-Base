@@ -12,15 +12,18 @@ import { Alert } from "@/components/ui/alert";
 export default function Faucet() {
   const [address, setAddress] = useState('');
   const [error, setError] = useState(null);
+  const [responseData, setResponseData] = useState(null);
 
   const requestNzt = async () => {
     try {
-      const response = await axios.post("https://evm-faucet-devnet.nexscan.io/api", { address });
+      setResponseData(null);
+      const response = await axios.post("https://evm-faucet.nexis.network", { address });
       console.log(response.data);
+      setResponseData("Sending Testnet NZT");
       setError(null);
     } catch (error) {
       console.error("Error making the POST request:", error);
-      setError("Unable to request");
+      setError("Too many requests");
     }
   };
 
@@ -28,18 +31,18 @@ export default function Faucet() {
     <div className="relative flex min-h-screen flex-col">
       <Header />
       <NavigationMenu />
-      <div className="flex-grow flex items-center justify-center p-4">
-        <div className="w-full max-w-xl p-6 bg-gray-100 rounded-lg shadow-md text-center">
-          <h2 className="text-2xl font-semibold mb-2">Request Testnet Nexis Tokens</h2>
-          <p className="text-gray-600 mb-2 text-sm">
+      <div className="flex grow items-center justify-center p-4">
+        <div className="w-full max-w-xl rounded-lg bg-gray-100 p-6 text-center shadow-md">
+          <h2 className="mb-2 text-2xl font-semibold">Request Testnet Nexis Tokens</h2>
+          <p className="mb-2 text-sm text-gray-600">
             Enter your wallet address to receive 1 NZT for testing dApps on our TESTNET
           </p>
-          <p className="text-gray-600 mb-4 text-sm">
+          <p className="mb-4 text-sm text-gray-600">
             (NOTE: Testnet tokens don’t hold any physical significance)
           </p>
           
           <Input
-            className="w-full mb-4 px-4 py-2 border border-gray-300 rounded-lg"
+            className="mb-4 w-full rounded-lg border border-gray-300 px-4 py-2"
             placeholder="Wallet Address"
             onChange={(e) => setAddress(e.target.value)}
           />
@@ -50,6 +53,11 @@ export default function Faucet() {
             <Alert className="mb-4 text-red-600">
               {error}
             </Alert>
+          )}
+          {responseData && (
+            <p className="mt-4 text-green-600">
+              {responseData}
+            </p>
           )}
         </div>
       </div>
