@@ -1,42 +1,67 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useParams } from "next/navigation"
+import * as web3 from "@velas/web3"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
-// Using the same validators data (you should move this to a shared location)
-const VALIDATORS = [
-  {
-    publicKey: "NZT7nJrxqodF3z9YvKnxwUbJ5zJK1FrjBY2WeHf89w2",
-    name: "Nexis Foundation",
-    commission: 10,
-    activeStake: 450000,
-    apy: 12.5,
-    score: 98,
-  },
-  {
-    publicKey: "NZT9xKpJkn6JqumUMw4FHvqxhvjxGvED7HAJGMkd2w1",
-    name: "Nexis Labs",
-    commission: 8,
-    activeStake: 380000,
-    apy: 11.8,
-    score: 95,
-  },
-  {
-    publicKey: "NZT5xKpJkn6JqumUMw4FHvqxhvjxGvED7HAJGMkd2w3",
-    name: "Nexis Staking Pool",
-    commission: 7,
-    activeStake: 520000,
-    apy: 13.2,
-    score: 97,
-  },
-] as const
+interface ValidatorInfo {
+  publicKey: string
+  voteKey: string
+  name: string
+  commission: number
+  activeStake: number
+  apy: number
+  score: number
+}
+
+const getConnection = () => {
+  const connection = new web3.Connection("https://api.testnet.nexis.network", {
+    commitment: "singleGossip",
+  })
+
+  return connection
+}
 
 export default function NodeStakingPage() {
   const { nodeId } = useParams()
   const [amount, setAmount] = useState("")
+  const [VALIDATORS, setValidators] = useState([] as ValidatorInfo[])
+
+  useEffect(() => {
+    const getVoteAccounts = async () => {
+      const response = await getConnection().getVoteAccounts()
+      console.log("response===", response)
+      const _validators: ValidatorInfo[] = []
+      response.current.forEach((val) => {
+        let validatorName = "Unknown Validator"
+        let score = 100
+        if (val.nodePubkey == "7yxFRV6tHecaLpADmo6FEkTzbWbBGjAhPHo46XdJ4i8y") {
+          ;(validatorName = "Nexis Foundation Bootstrap"), (score = 100)
+        }
+        _validators.push({
+          publicKey: val.nodePubkey,
+          voteKey: val.votePubkey,
+          name: validatorName,
+          commission: val.commission,
+          activeStake: val.activatedStake / 1e9,
+          apy: 13.2,
+          score,
+        })
+      })
+      setValidators(_validators as any)
+    }
+
+    getVoteAccounts()
+      .then((v) => {
+        console.log("fetched vote accounts")
+      })
+      .catch((e) => {
+        console.log("getVoteAccounts ERR", e)
+      })
+  }, [])
 
   const validator = VALIDATORS.find((v) => v.publicKey === nodeId)
 

@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import * as web3 from "@velas/web3"
-import { rpc } from "viem/utils"
 
 import { Button } from "@/components/ui/button"
 
