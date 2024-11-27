@@ -31,9 +31,11 @@ const formatNumber = (num: number) => {
 
 export default function NodesPage() {
   const [validators, setValidators] = useState([] as ValidatorInfo[])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const getVoteAccounts = async () => {
+      setLoading(true)
       const response = await getConnection().getVoteAccounts()
       console.log("response===", response)
       const _validators: ValidatorInfo[] = []
@@ -53,6 +55,7 @@ export default function NodesPage() {
         })
       })
       setValidators(_validators as any)
+      setLoading(false)
     }
 
     getVoteAccounts()
@@ -61,6 +64,7 @@ export default function NodesPage() {
       })
       .catch((e) => {
         console.log("getVoteAccounts ERR", e)
+        setLoading(false)
       })
   }, [])
 
@@ -112,44 +116,56 @@ export default function NodesPage() {
 
       {/* Validators Grid */}
       <div className="grid gap-6">
-        {validators.map((validator) => (
-          <div
-            key={validator.publicKey}
-            className="rounded-lg border bg-card p-6 transition-all hover:border-primary/50"
-          >
-            <div className="flex items-center justify-between">
-              <div className="space-y-4">
-                <div>
-                  <h3 className="text-lg font-semibold">{validator.name}</h3>
-                  <p className="font-mono text-sm text-muted-foreground">
-                    {validator.publicKey}
-                  </p>
-                </div>
-                <div className="grid grid-cols-4 gap-8 text-sm">
-                  <div>
-                    <p className="text-muted-foreground">Commission</p>
-                    <p>{validator.commission}%</p>
-                  </div>
-                  <div>
-                    <p className="text-muted-foreground">Active Stake</p>
-                    <p>{(validator.activeStake / 1e9).toLocaleString()} NZT</p>
-                  </div>
-                  <div>
-                    <p className="text-muted-foreground">APY</p>
-                    <p className="text-primary">{validator.apy}%</p>
-                  </div>
-                  <div>
-                    <p className="text-muted-foreground">Score</p>
-                    <p>{validator.score}/100</p>
-                  </div>
-                </div>
-              </div>
-              <Link href={`/nodes/${validator.publicKey}`}>
-                <Button size="lg">Stake</Button>
-              </Link>
-            </div>
+        {loading ? (
+          <div className="flex items-center justify-center">
+            <p>Loading...</p>
           </div>
-        ))}
+        ) : validators.length === 0 ? (
+          <div className="flex items-center justify-center">
+            <p className="text-muted-foreground">Validator not found</p>
+          </div>
+        ) : (
+          validators.map((validator) => (
+            <div
+              key={validator.publicKey}
+              className="rounded-lg border bg-card p-6 transition-all hover:border-primary/50"
+            >
+              <div className="flex items-center justify-between">
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="text-lg font-semibold">{validator.name}</h3>
+                    <p className="font-mono text-sm text-muted-foreground">
+                      {validator.publicKey}
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-4 gap-8 text-sm">
+                    <div>
+                      <p className="text-muted-foreground">Commission</p>
+                      <p>{validator.commission}%</p>
+                    </div>
+                    <div>
+                      <p className="text-muted-foreground">Active Stake</p>
+                      <p>
+                        {(validator.activeStake / 1e9).toLocaleString()} NZT
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-muted-foreground">APY</p>
+                      <p className="text-primary">{validator.apy}%</p>
+                    </div>
+                    <div>
+                      <p className="text-muted-foreground">Score</p>
+                      <p>{validator.score}/100</p>
+                    </div>
+                  </div>
+                </div>
+                <Link href={`/nodes/${validator.publicKey}`}>
+                  <Button size="lg">Stake</Button>
+                </Link>
+              </div>
+            </div>
+          ))
+        )}
       </div>
     </div>
   )
