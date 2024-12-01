@@ -22,7 +22,7 @@ const cardVariants = {
 
 export const QuestCard: React.FC<{ quest: Quest }> = ({ quest }) => (
   <motion.div variants={cardVariants}>
-    <Card className="flex h-full flex-col rounded-md border border-[#242424]">
+    <Card className="flex h-full flex-col rounded-md border border-[#181F25]/70">
       <CardHeader>
         <div className="flex items-start justify-between">
           <CardTitle className="text-xl font-bold">{quest.title}</CardTitle>

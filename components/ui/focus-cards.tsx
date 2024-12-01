@@ -79,8 +79,8 @@ export const Card = React.memo(function Card({
           "absolute bottom-0 left-0 z-20 p-4 transition-opacity duration-500"
         )}
       >
-        <h2 className="text-xl font-bold text-white">{card.title}</h2>
-        <p className="text-sm text-white">{card.description}</p>
+        <h2 className="text-xl font-bold text-[#F2F4F3]">{card.title}</h2>
+        <p className="text-sm text-[#F2F4F3]">{card.description}</p>
       </div>
     </div>
   )

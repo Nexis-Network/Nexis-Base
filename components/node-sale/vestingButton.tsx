@@ -11,14 +11,14 @@ const VestingButton: React.FC = () => {
       <div className="fixed bottom-[30px] left-[30px] mr-[30px] flex gap-4">
         <button
           type="button"
-          className="flex items-center justify-start space-x-2 rounded-sm border-x border-white/40  bg-[#0a0a0a] px-6 py-2 text-[14px] text-white/70 hover:border-lime-300 hover:text-white"
+          className="flex items-center justify-start space-x-2 rounded-sm border-x border-[#181F25]/40  bg-[#07090b] px-6 py-2 text-[14px] text-[#F2F4F3]/70 hover:border-lime-300 hover:text-[#F2F4F3]"
         >
           <HyperText text="WITHDRAW NZT" />
           <ArrowRight />
         </button>
         <button
           type="button"
-          className="flex items-center justify-start space-x-2 rounded-sm border-x border-white/40  bg-[#0a0a0a] px-6 py-2 text-[14px] text-white/70 hover:border-lime-300 hover:text-white"
+          className="flex items-center justify-start space-x-2 rounded-sm border-x border-[#181F25]/40  bg-[#07090b] px-6 py-2 text-[14px] text-[#F2F4F3]/70 hover:border-lime-300 hover:text-[#F2F4F3]"
         >
           <HyperText text="DELEGATE NZT" />
           <ArrowRight />
@@ -29,21 +29,21 @@ const VestingButton: React.FC = () => {
         <h1 className={styles.textcss}>/// Discover Nexis</h1>
         <button
           type="button"
-          className="flex w-full items-center space-x-2 rounded-none border-b border-white/40 bg-[#0a0a0a] py-2 pl-2 pr-6 text-[14px] text-white/70 hover:border-white hover:text-white"
+          className="flex w-full items-center space-x-2 rounded-none border-b border-[#181F25]/40 bg-[#07090b] py-2 pl-2 pr-6 text-[14px] text-[#F2F4F3]/70 hover:border-[#181F25] hover:text-[#F2F4F3]"
         >
           <HyperText text="DISCOVER" />
           <ArrowRight />
         </button>
         <button
           type="button"
-          className="flex items-center justify-start space-x-2 rounded-none border-b border-white/40 bg-[#0a0a0a] py-2 pl-2 pr-6 text-[14px] text-white/70 hover:border-white hover:text-white"
+          className="flex items-center justify-start space-x-2 rounded-none border-b border-[#181F25]/40 bg-[#07090b] py-2 pl-2 pr-6 text-[14px] text-[#F2F4F3]/70 hover:border-[#181F25] hover:text-[#F2F4F3]"
         >
           <HyperText text="DELEGATE NZT" />
           <ArrowRight />
         </button>
         <button
           type="button"
-          className="flex items-center space-x-2 rounded-none border-b border-white/40 bg-[#0a0a0a] py-2 pl-2 pr-6 text-[14px] text-white/70 hover:border-white hover:text-white"
+          className="flex items-center space-x-2 rounded-none border-b border-[#181F25]/40 bg-[#07090b] py-2 pl-2 pr-6 text-[14px] text-[#F2F4F3]/70 hover:border-[#181F25] hover:text-[#F2F4F3]"
         >
           <HyperText text="BECOME A VALIDATOR" />
           <ArrowRight />

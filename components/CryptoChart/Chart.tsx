@@ -23,7 +23,7 @@ export function CryptoChart({ ticker }: CryptoChartProps) {
   const priceFeedPromise = getPriceFeedsData()
 
   return (
-    <Card className="w-full max-w-none rounded-none border-0 border-b border-[#242424] bg-[#0a0a0a]">
+    <Card className="w-full max-w-none rounded-none border-0 border-b border-[#181F25]/70 bg-[#07090b]">
       <CardHeader className="flex flex-row items-start justify-between space-y-0 px-4 py-5 sm:py-6 md:px-6">
         <div className="flex flex-1 flex-col justify-center gap-1">
           <ErrorBoundary
@@ -69,6 +69,7 @@ export function CryptoChart({ ticker }: CryptoChartProps) {
 const ChartSkeleton = () => {
   return (
     <div className="flex h-[400px] w-full animate-pulse items-center justify-center">
+      {/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
       <svg
         height="240"
         viewBox="0 0 1176 1474"

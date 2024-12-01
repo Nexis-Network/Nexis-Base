@@ -46,7 +46,7 @@
   width: 0;
   height: 0;
   border: calc(var(--timeline-events-line-height) / 2) solid transparent;
-  border-bottom-color: #fff;
+  border-bottom-color: #181F25;
 }
 
 .timeline-event-legend i:after {
@@ -55,7 +55,7 @@
   width: 0;
   height: 0;
   border: calc(var(--timeline-events-line-height) / 2) solid transparent;
-  border-top-color: #fff;
+  border-top-color: #181F25;
 }
 
 .timeline-event-legend > i {

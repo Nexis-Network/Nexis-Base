@@ -89,8 +89,8 @@ export default function BlogCardCarousel() {
   return (
     <div className="relative w-full">
       <div className="w-full">
-        <div className="border-b border-[#242424]">
-          <div className="w-1/2 p-0 font-mono text-white">
+        <div className="border-b border-[#181F25]/70">
+          <div className="w-1/2 p-0 font-mono text-[#F2F4F3]">
             <div className="p-4">
               {/* biome-ignore lint/suspicious/noCommentText: <explanation> */}
               <span className="text-base">/// LATEST NEWS</span>
@@ -109,7 +109,7 @@ export default function BlogCardCarousel() {
               className="border-collapse rounded-lg pl-4 md:basis-1/2 lg:basis-1/4"
             >
               <Card className="flex h-full flex-col">
-                <AspectRatio ratio={16 / 9} className="bg-[#0a0a0a]">
+                <AspectRatio ratio={16 / 9} className="bg-[#07090b]">
                   <Image
                     src={post.image}
                     alt={`Cover image for ${post.title}`}

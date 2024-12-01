@@ -126,7 +126,7 @@ export const WalletContainer: React.FC = () => {
   }, [])
 
   return (
-    <>
+    <div>
       <div
         className={`${styles.WalletContainer} relative z-0 mb-0 h-[400px] w-full overflow-hidden rounded-lg`}
       >
@@ -146,11 +146,11 @@ export const WalletContainer: React.FC = () => {
             </mask>
             <path
               d="M0 0C0 13.2548 10.7452 24 24 24H480C493.255 24 504 13.2548 504 0V0H0V0Z"
-              fill="#0a0a0a"
+              fill="#07090b"
             />
             <path
               d="M-1 0C-1 13.8071 10.1929 25 24 25H480C493.807 25 505 13.8071 505 0H503C503 12.7025 492.703 23 480 23H24C11.2975 23 1 12.7025 1 0H-1ZM504 0H0H504ZM-1 0C-1 13.8071 10.1929 25 24 25V23C11.2975 23 1 12.7025 1 0H-1ZM480 25C493.807 25 505 13.8071 505 0H503C503 12.7025 492.703 23 480 23V25Z"
-              fill="#0a0a0a"
+              fill="#07090b"
               mask="url(#path-1-inside-1_1085_39)"
             />
             {/* Display the animated text */}
@@ -179,7 +179,7 @@ export const WalletContainer: React.FC = () => {
             title="Spline Design"
           />
         </div>
-        <div className="relative z-50 flex h-full flex-col justify-end bg-[#0a0a0a] text-black">
+        <div className="relative z-50 flex h-full flex-col justify-end bg-[#07090b] text-black">
           <div className="align-start m-6 border-b border-[#131313]">
             <div className="flex">
               <CardContent className="flex w-1/2 items-center">
@@ -219,7 +219,7 @@ export const WalletContainer: React.FC = () => {
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2" />
       </div>
       <ScrollBanner />
-    </>
+    </div>
   )
 }
 

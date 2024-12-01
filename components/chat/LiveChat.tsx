@@ -80,16 +80,16 @@ const LiveChat: React.FC = () => {
   }
 
   return (
-    <div className="flex min-h-[520px] w-80 flex-col rounded-lg border border-[#242424] bg-[#0a0a0a] shadow-lg">
-      <div className="flex items-center justify-between border-b border-[#242424] bg-[#16171A] p-3">
-        <h2 className="text-sm font-semibold text-white">Community Chat</h2>
+    <div className="flex min-h-[520px] w-80 flex-col rounded-lg border border-[#181F25]/70 bg-[#07090b] shadow-lg">
+      <div className="flex items-center justify-between border-b border-[#181F25]/70 bg-[#16171A] p-3">
+        <h2 className="text-sm font-semibold text-[#F2F4F3]">Community Chat</h2>
         <div
           className="flex cursor-help items-center"
           title="Online users"
           style={
             {
-              "--tooltip-bg": "#0a0a0a",
-              "--tooltip-border": "#242424",
+              "--tooltip-bg": "#07090b",
+              "--tooltip-border": "#181F25",
             } as React.CSSProperties
           }
         >
@@ -110,7 +110,7 @@ const LiveChat: React.FC = () => {
           <span className="text-sm text-[#acfa19]">{onlineUsers.length}</span>
         </div>
       </div>
-      <div className="grow overflow-y-auto p-4 text-white">
+      <div className="grow overflow-y-auto p-4 text-[#F2F4F3]">
         {messages.map((message) => (
           <div key={message.id} className="mb-2">
             <span className="font-semibold text-[#acfa19]">
@@ -125,7 +125,7 @@ const LiveChat: React.FC = () => {
           value={inputMessage}
           onChange={handleInputChange}
           placeholder="Type a message..."
-          className="border-[#242424] bg-[#242424] text-white placeholder:text-gray-400"
+          className="border-[#181F25]/70 bg-[#181F25] text-[#F2F4F3] placeholder:text-gray-400"
         />
         <Button
           onClick={handleSendMessage}

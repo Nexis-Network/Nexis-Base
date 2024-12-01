@@ -1,32 +1,32 @@
-'use client';
+"use client"
 
-import { useState, Fragment } from 'react';
-import { format } from 'date-fns';
-import cn from '@/utils/cn';
+import { Fragment, useState } from "react"
 import {
-  AreaChart,
-  Area,
-  XAxis,
-  Tooltip,
-  ResponsiveContainer,
-  CartesianGrid,
-} from 'recharts';
-import { Bitcoin } from '@/components/icons/bitcoin';
-import { EthereumDark } from '@/components/icons/ethereum-dark';
-import { SwapIcon } from '@/components/icons/swap-icon';
-import { Refresh } from '@/components/icons/refresh';
-import Button from '@/components/ui/button';
-import { ArrowUp } from '@/components/icons/arrow-up';
-import { RadioGroup } from '@/components/ui/radio-group';
-import { motion } from 'framer-motion';
-import { useTheme } from 'next-themes';
-import { useBreakpoint } from '@/lib/hooks/use-breakpoint';
-
-import {
-  weeklyComparison,
   monthlyComparison,
+  weeklyComparison,
   yearlyComparison,
-} from '@/data/static/price-history-retro';
+} from "@/data/static/price-history-retro"
+import cn from "@/utils/cn"
+import { format } from "date-fns"
+import { motion } from "framer-motion"
+import { useTheme } from "next-themes"
+import {
+  Area,
+  AreaChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+} from "recharts"
+
+import { useBreakpoint } from "@/lib/hooks/use-breakpoint"
+import Button from "@/components/ui/button"
+import { RadioGroup } from "@/components/ui/radio-group"
+import { ArrowUp } from "@/components/icons/arrow-up"
+import { Bitcoin } from "@/components/icons/bitcoin"
+import { EthereumDark } from "@/components/icons/ethereum-dark"
+import { Refresh } from "@/components/icons/refresh"
+import { SwapIcon } from "@/components/icons/swap-icon"
 
 function CustomAxis({ x, y, payload }: any) {
   return (
@@ -38,11 +38,11 @@ function CustomAxis({ x, y, payload }: any) {
         {payload.value}
       </text>
     </g>
-  );
+  )
 }
 
 interface RadioOptionProps {
-  value: string;
+  value: string
 }
 
 function RadioGroupOption({ value }: RadioOptionProps) {
@@ -51,7 +51,7 @@ function RadioGroupOption({ value }: RadioOptionProps) {
       {({ checked }) => (
         <span
           className={`relative flex h-8 cursor-pointer items-center justify-center rounded-lg px-3 text-sm uppercase tracking-wider ${
-            checked ? 'text-white' : 'text-brand dark:text-gray-400'
+            checked ? "text-[#F2F4F3]" : "text-brand dark:text-gray-400"
           }`}
         >
           {checked && (
@@ -64,49 +64,49 @@ function RadioGroupOption({ value }: RadioOptionProps) {
         </span>
       )}
     </RadioGroup.Option>
-  );
+  )
 }
 
 export default function ComparisonChart() {
-  const { theme } = useTheme();
-  const breakpoint = useBreakpoint();
-  const [price, setPrice] = useState(6.2);
-  const [date, setDate] = useState(1624147200);
-  const [status, setStatus] = useState('Year');
-  const [chartData, setChartData] = useState(yearlyComparison);
-  const [priceDiff, setPriceDiff] = useState(-1.107);
-  const [percentage, setPercentage] = useState('2.22%');
-  const [toggleCoin, setToggleCoin] = useState(false);
-  const formattedDate = format(new Date(date * 1000), 'MMMM d, yyyy hh:mma');
+  const { theme } = useTheme()
+  const breakpoint = useBreakpoint()
+  const [price, setPrice] = useState(6.2)
+  const [date, setDate] = useState(1624147200)
+  const [status, setStatus] = useState("Year")
+  const [chartData, setChartData] = useState(yearlyComparison)
+  const [priceDiff, setPriceDiff] = useState(-1.107)
+  const [percentage, setPercentage] = useState("2.22%")
+  const [toggleCoin, setToggleCoin] = useState(false)
+  const formattedDate = format(new Date(date * 1000), "MMMM d, yyyy hh:mma")
 
   const handleOnChange = (value: string) => {
-    setStatus(value);
+    setStatus(value)
     switch (value) {
-      case 'Week':
-        setChartData(weeklyComparison);
-        break;
-      case 'Month':
-        setChartData(monthlyComparison);
-        break;
-      case 'Year':
-        setChartData(yearlyComparison);
-        break;
+      case "Week":
+        setChartData(weeklyComparison)
+        break
+      case "Month":
+        setChartData(monthlyComparison)
+        break
+      case "Year":
+        setChartData(yearlyComparison)
+        break
       default:
-        setChartData(yearlyComparison);
-        break;
+        setChartData(yearlyComparison)
+        break
     }
-  };
+  }
 
   return (
-    <div className="light:border light:border-slate-200 rounded-lg bg-white p-6 shadow-card dark:bg-light-dark sm:p-8">
+    <div className="light:border light:border-slate-200 rounded-lg bg-[#F2F4F3] p-6 shadow-card dark:bg-light-dark sm:p-8">
       <div className="flex flex-col-reverse justify-between gap-8 md:items-start lg:flex-row lg:items-center lg:gap-4">
         <div>
           <div className="text-sm uppercase tracking-wider text-gray-600 dark:text-gray-400 sm:text-base">
             <span className="flex items-center gap-2.5">
               <span
                 className={cn(
-                  'flex items-center gap-2.5',
-                  toggleCoin ? 'flex-row-reverse' : 'flex-row',
+                  "flex items-center gap-2.5",
+                  toggleCoin ? "flex-row-reverse" : "flex-row"
                 )}
               >
                 <Bitcoin className="h-auto w-7 lg:w-9" />
@@ -114,8 +114,8 @@ export default function ComparisonChart() {
               </span>
               <span
                 className={cn(
-                  'flex items-end font-medium text-dark dark:text-gray-400',
-                  toggleCoin ? 'flex-row-reverse' : 'flex-row',
+                  "flex items-end font-medium text-dark dark:text-gray-400",
+                  toggleCoin ? "flex-row-reverse" : "flex-row"
                 )}
               >
                 <span>BTCB</span>/<span>ETH</span>
@@ -132,12 +132,12 @@ export default function ComparisonChart() {
               </Button>
             </span>
           </div>
-          <div className="mt-5 flex items-end gap-3 text-base font-medium text-gray-900 dark:text-white sm:text-xl lg:flex-wrap 2xl:flex-nowrap">
+          <div className="mt-5 flex items-end gap-3 text-base font-medium text-gray-900 dark:text-[#F2F4F3] sm:text-xl lg:flex-wrap 2xl:flex-nowrap">
             <span className="text-2xl font-semibold xl:text-4xl">{price}</span>
             <span
               className={cn(
-                'flex items-end',
-                toggleCoin ? 'flex-row-reverse' : 'flex-row',
+                "flex items-end",
+                toggleCoin ? "flex-row-reverse" : "flex-row"
               )}
             >
               <span>BTCB</span>/<span>ETH</span>
@@ -145,13 +145,13 @@ export default function ComparisonChart() {
 
             <span
               className={cn(
-                'mb-1 flex items-center text-xs sm:mb-0 sm:text-base',
-                priceDiff > 0 ? 'text-green-500' : 'text-red-500',
+                "mb-1 flex items-center text-xs sm:mb-0 sm:text-base",
+                priceDiff > 0 ? "text-green-500" : "text-red-500"
               )}
             >
               <span
                 className={`inline-flex ltr:mr-2 rtl:ml-2 ${
-                  priceDiff > 0 ? '' : 'rotate-180'
+                  priceDiff > 0 ? "" : "rotate-180"
                 }`}
               >
                 <ArrowUp />
@@ -187,18 +187,17 @@ export default function ComparisonChart() {
             onMouseMove={(data) => {
               if (data.isTooltipActive) {
                 setDate(
-                  data.activePayload && data.activePayload[0].payload.date,
-                );
+                  data.activePayload && data.activePayload[0].payload.date
+                )
                 setPrice(
-                  data.activePayload && data.activePayload[0].payload.btc,
-                );
+                  data.activePayload && data.activePayload[0].payload.btc
+                )
                 setPriceDiff(
-                  data.activePayload && data.activePayload[0].payload.diff,
-                );
+                  data.activePayload && data.activePayload[0].payload.diff
+                )
                 setPercentage(
-                  data.activePayload &&
-                    data.activePayload[0].payload.percentage,
-                );
+                  data.activePayload && data.activePayload[0].payload.percentage
+                )
               }
             }}
           >
@@ -223,35 +222,35 @@ export default function ComparisonChart() {
             <Tooltip
               content={<></>}
               cursor={{
-                strokeWidth: breakpoint === 'xs' ? 30 : 50,
+                strokeWidth: breakpoint === "xs" ? 30 : 50,
 
-                stroke: theme === 'dark' ? '#1F2937' : 'rgb(237, 239, 243)',
+                stroke: theme === "dark" ? "#1F2937" : "rgb(237, 239, 243)",
               }}
               wrapperStyle={{
-                boxShadow: '0 0 1px 0px 4px 50px rgba(73, 93, 112, 0.08)',
-                background: 'red',
+                boxShadow: "0 0 1px 0px 4px 50px rgba(73, 93, 112, 0.08)",
+                background: "red",
               }}
             />
             <CartesianGrid
               vertical={false}
               strokeDasharray="10 5"
-              stroke={theme === 'dark' ? '#374151' : '#E5E7EB'}
+              stroke={theme === "dark" ? "#374151" : "#E5E7EB"}
             />
             <Area
               type="monotone"
               dataKey="btc"
               stroke="#3A63E0"
-              strokeWidth={breakpoint === 'xs' ? 2 : 4}
+              strokeWidth={breakpoint === "xs" ? 2 : 4}
               fill="url(#liquidity-gradient)"
               activeDot={{
-                stroke: '#fff',
-                strokeWidth: breakpoint === 'xs' ? 2 : 5,
-                r: breakpoint === 'xs' ? 5 : 10,
+                stroke: "#fff",
+                strokeWidth: breakpoint === "xs" ? 2 : 5,
+                r: breakpoint === "xs" ? 5 : 10,
               }}
             />
           </AreaChart>
         </ResponsiveContainer>
       </div>
     </div>
-  );
+  )
 }

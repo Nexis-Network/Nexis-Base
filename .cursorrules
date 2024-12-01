@@ -1,0 +1,24 @@
+# Always use PNPM 
+# Codebase OverviewThis codebase appears to be part of a web application built using TypeScript, React, and various NextUI components. It is structured to support a landing page, authentication flows, and a dashboard for logged-in users. The application integrates with Supabase for backend services, including authentication and database interactions.
+
+# Stack and Key Technologies Frontend Framework: 
+
+# React TypeScript: Used for type-safe code across the frontend.
+
+# NextUI: A React UI library used for building the UI components like buttons, modals, inputs, etc.
+
+# Prisma.schema: is used for fetching data to and from our Supabase database.
+
+# Supabase: An open-source Firebase alternative used for backend services like authentication, database, and storage.Next.js: Likely used as the React framework, indicated by the usage of next/navigation and server utilities.
+
+# radix-ui: For icons across the application.Purpose and Functionality## AuthenticationThe application includes a comprehensive authentication flow:Login: Users can log in using email/password or GitHub OAuth. 
+
+# The login logic is handled in frontend/app/(landing-page)/login/action.ts.
+
+# Moralis-evm-api: used for fetching data for erc20 tokens, native coins, nft's and wallet data.
+
+# Coingecko API: is utilized for fetching token info regarding category, marketcap, volume, 
+
+# Error Handling: A generic error component is used to display errors and provide a retry mechanism.## Navigation and LayoutNavbar: A responsive navbar for the landing page and possibly other public pages.Sidebar: A collapsible sidebar for the dashboard, indicating a more complex, multi-page application structure for authenticated users.
+
+# Utilize our package.json to reference all code created and generated. Always review prior 

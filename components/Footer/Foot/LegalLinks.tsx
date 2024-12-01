@@ -5,7 +5,7 @@ export const LegalLink: React.FC = () => {
     <div className="my-auto flex gap-1 whitespace-nowrap leading-none">
       <a
         href="#"
-        className="grow hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
+        className="grow hover:text-[#F2F4F3] focus:outline-none focus:ring-2 focus:ring-[#F2F4F3]"
       >
         Legal
       </a>

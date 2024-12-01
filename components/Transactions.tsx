@@ -58,24 +58,24 @@ const RecentTransactions: React.FC = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="w-full bg-[#0a0a0a] pl-4 text-[#fafafa]" // Added pl-4 for left padding
+      className="w-full bg-[#07090b] pl-4 text-[#fafafa]" // Added pl-4 for left padding
     >
       <Table>
         <TableHeader>
-          <TableRow className="border-b border-[#242424]">
-            <TableHead className="pl-[10px] text-[#fafafa] transition-colors duration-200 hover:bg-[#242424]">
+          <TableRow className="border-b border-[#181F25]/70">
+            <TableHead className="pl-[10px] text-[#fafafa] transition-colors duration-200 hover:bg-[#181F25]">
               TXN Hash
             </TableHead>
-            <TableHead className="pl-[10px] text-[#fafafa] transition-colors duration-200 hover:bg-[#242424]">
+            <TableHead className="pl-[10px] text-[#fafafa] transition-colors duration-200 hover:bg-[#181F25]">
               Wallet
             </TableHead>
-            <TableHead className="pl-[10px] text-[#fafafa] transition-colors duration-200 hover:bg-[#242424]">
+            <TableHead className="pl-[10px] text-[#fafafa] transition-colors duration-200 hover:bg-[#181F25]">
               Transaction Type
             </TableHead>
-            <TableHead className="pl-[10px] text-[#fafafa] transition-colors duration-200 hover:bg-[#242424]">
+            <TableHead className="pl-[10px] text-[#fafafa] transition-colors duration-200 hover:bg-[#181F25]">
               Amount of NZT
             </TableHead>
-            <TableHead className="pl-[10px] text-[#fafafa] transition-colors duration-200 hover:bg-[#242424]">
+            <TableHead className="pl-[10px] text-[#fafafa] transition-colors duration-200 hover:bg-[#181F25]">
               Block Number
             </TableHead>
           </TableRow>
@@ -87,7 +87,7 @@ const RecentTransactions: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: index * 0.05 }}
-              className="border-b border-[#242424]"
+              className="border-b border-[#181F25]/70"
             >
               <TableCell className="pl-[10px] font-mono">
                 {tx.txnHash.slice(0, 10)}...
@@ -123,7 +123,7 @@ const RecentTransactions: React.FC = () => {
           onClick={prevPage}
           disabled={currentPage === 1}
           variant="outline"
-          className="border-[#242424] text-[#fafafa]"
+          className="border-[#181F25]/70 text-[#fafafa]"
         >
           <ChevronLeft className="mr-2 h-4 w-4" /> Previous
         </Button>
@@ -134,7 +134,7 @@ const RecentTransactions: React.FC = () => {
           onClick={nextPage}
           disabled={currentPage === totalPages}
           variant="outline"
-          className="border-[#242424] text-[#fafafa]"
+          className="border-[#181F25]/70 text-[#fafafa]"
         >
           Next <ChevronRight className="ml-2 h-4 w-4" />
         </Button>

@@ -14,7 +14,7 @@ const inputClasses = {
   },
   variant: {
     outline: {
-      base: "bg-[#0a0a0a] border border-gray-300 checked:!bg-gray-1000 focus:ring-gray-900/30 checked:!border-gray-1000",
+      base: "bg-[#07090b] border border-gray-300 checked:!bg-gray-1000 focus:ring-gray-900/30 checked:!border-gray-1000",
       color: {
         DEFAULT: "hover:enabled:border-gray-1000",
         primary: "hover:enabled:border-primary",

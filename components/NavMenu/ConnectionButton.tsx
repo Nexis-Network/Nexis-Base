@@ -45,7 +45,7 @@ export const ConnectionButton: React.FC<{ className?: string }> = ({
 
       &:hover {
         background-position: right bottom;
-        color: #0a0a0a;
+        color: #07090b;
 
         .text-decoration {
           animation-name: blink;
@@ -135,7 +135,7 @@ export const ConnectionButton: React.FC<{ className?: string }> = ({
               {/* biome-ignore lint/a11y/useValidAnchor: <explanation> */}
               <a
                 href="#"
-                className="btn-glitch-fill"
+                className="btn-glitch-fill w-full"
                 onClick={openConnectModal}
               >
                 <span className="text">{"// Connect"}</span>
@@ -151,7 +151,7 @@ export const ConnectionButton: React.FC<{ className?: string }> = ({
             <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               type="button"
-              className="z-[100] flex items-center rounded-full border-[0.5px] border-white/20 bg-white/10 p-1 px-3 text-xs transition-all hover:bg-lime-300/20 hover:text-lime-300"
+              className="z-[100] flex items-center rounded-full border-[0.5px] border-[#181F25]/20 bg-[#F2F4F3]/10 p-1 px-3 text-xs transition-all hover:bg-lime-300/20 hover:text-lime-300"
               style={{ width: "100%" }}
             >
               {/* SVG Icon */}
@@ -213,18 +213,18 @@ export const ConnectionButton: React.FC<{ className?: string }> = ({
               </span>
             </button>
             {isDropdownOpen && (
-              <div className="absolute right-0 z-10 mx-auto mt-2 w-full rounded-md border border-[#242424] bg-[#0a0a0a]/50 px-3 shadow-lg backdrop-blur-md">
+              <div className="absolute right-0 z-10 mx-auto mt-2 w-full rounded-md border border-[#181F25]/70 bg-[#07090b]/80 px-3 drop-shadow-md backdrop-blur-md">
                 <button
                   type="button"
                   onClick={openChainModal}
-                  className="block w-full p-2 text-left text-[12px] text-white hover:border-b hover:border-lime-300 hover:bg-[#0a0a0a]/30"
+                  className="block w-full p-2 text-left text-[12px] text-[#F2F4F3] hover:border-b hover:border-lime-300 hover:bg-[#07090b]/30"
                 >
                   Switch Network
                 </button>
                 <button
                   type="button"
                   onClick={openAccountModal}
-                  className="block w-full p-2 text-left text-[12px] text-white hover:border-b hover:border-lime-300 hover:bg-[#0a0a0a]/30"
+                  className="block w-full p-2 text-left text-[12px] text-[#F2F4F3] hover:border-b hover:border-lime-300 hover:bg-[#07090b]/30"
                 >
                   Account Details
                 </button>

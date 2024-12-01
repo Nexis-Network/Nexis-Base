@@ -4,13 +4,13 @@
   align-items: center;     /* Centers vertically */
   width: 100%;
   height: 25vh; /* Adjust the height as needed */
-  border-bottom: inset 1px #242424;
+  border-bottom: inset 1px #181F25;
 }
 
 .quest-image {
   max-width: 100%;
   height: auto;
-  border-bottom: inset 1px #242424;
+  border-bottom: inset 1px #181F25;
   background-image: url("/quests.png");
   background-size: cover;
   background-position: center;

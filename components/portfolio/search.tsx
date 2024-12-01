@@ -2,9 +2,7 @@ import { useEffect, useState } from "react"
 import { Toggle } from "@geist-ui/core"
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons"
 import { useQuery } from "@tanstack/react-query"
-import { Token } from "@thirdweb-dev/sdk"
 
-import { Button } from "@/components/ui/button"
 import {
   Command,
   CommandEmpty,
@@ -13,12 +11,13 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command"
-import { Input } from "@/components/ui/input"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+
+import { Button } from "../ui/button"
 
 interface TokenResult {
   id: string
@@ -50,27 +49,11 @@ interface TrendingResponse {
   coins: CoinData[]
 }
 
-// Rename the local Token interface to avoid conflict
-interface LocalToken {
-  contractAddress: string
-  // ... other properties
-}
-
-// Update the TokenSearchProps to use the renamed interface
-interface TokenSearchProps {
-  onAddToken: (tokenResult: TokenResult) => void
-  onRemoveToken: (tokenResult: TokenResult) => void
-  trackedTokens: LocalToken[]
-}
-
-const TokenSearch: React.FC<TokenSearchProps> = ({
-  onAddToken,
-  onRemoveToken,
-  trackedTokens,
-}) => {
+export function TokenSearch() {
   const [open, setOpen] = useState(false)
   const [search, setSearch] = useState("")
   const [trendingTokens, setTrendingTokens] = useState<TokenResult[]>([])
+  const [trackedTokens, setTrackedTokens] = useState<Set<string>>(new Set())
 
   // Define an interface for the raw token data
   interface RawTokenData {
@@ -99,7 +82,7 @@ const TokenSearch: React.FC<TokenSearchProps> = ({
           name: coin.item.name,
           image: coin.item.large,
           address: coin.item.address || "",
-          chain: coin.item.chain || "",
+          chain: coin.item.chain || "ethereum",
           type: coin.item.type || "crypto",
         }))
         setTrendingTokens(tokens)
@@ -164,43 +147,53 @@ const TokenSearch: React.FC<TokenSearchProps> = ({
     enabled: search.length > 2,
   })
 
+  const handleToggleToken = (token: TokenResult) => {
+    setTrackedTokens((prev) => {
+      const newTrackedTokens = new Set(prev)
+      if (newTrackedTokens.has(token.id)) {
+        newTrackedTokens.delete(token.id)
+        // Remove token from database
+      } else {
+        newTrackedTokens.add(token.id)
+        // Add token to database
+      }
+      return newTrackedTokens
+    })
+  }
+
   const tokensToDisplay = search.length > 2 ? searchResults : trendingTokens
-
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button variant="outline" className="w-full justify-start rounded-none">
-          <MagnifyingGlassIcon className="mr-2" />
-          Search tokens...
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="mx-4 my-2 w-[300px] p-0">
-        <Command>
-          <CommandInput
-            placeholder="Search token or paste address..."
-            value={search}
-            onValueChange={setSearch}
-          />
-          <CommandList>
-            <CommandEmpty>No tokens found.</CommandEmpty>
-            {tokensToDisplay.length > 0 && (
-              <CommandGroup>
-                {tokensToDisplay.map((token) => {
-                  const isTracked = trackedTokens.some(
-                    (t) => t.contractAddress === token.address
-                  )
-
-                  const handleToggle = (checked: boolean) => {
-                    if (checked) {
-                      onAddToken(token)
-                    } else {
-                      onRemoveToken(token)
-                    }
-                  }
-
-                  return (
-                    <CommandItem key={token.id}>
-                      <div className="flex w-full items-center justify-between">
+    <div className="z-[5] w-full border-y border-[#181F25]/70 bg-[#07090b]">
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <Button
+            className="w-full justify-start bg-[#07090b] text-[#F2F4F3]/80 hover:bg-[#07090b]/90 hover:text-[#F2F4F3]"
+            style={{
+              padding: "1rem",
+              borderRadius: "0",
+            }}
+          >
+            <MagnifyingGlassIcon className="mr-2 size-4" />
+            Search tokens...
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-full border-[#181F25]/70 bg-[#07090b] p-0">
+          <Command className="w-full bg-[#07090b]">
+            <CommandInput
+              placeholder="Search token or paste address..."
+              value={search}
+              onValueChange={setSearch}
+              className="border-b border-[#181F25]/70"
+            />
+            <CommandList className="bg-[#07090b]">
+              <CommandEmpty className="p-4 text-sm text-gray-400">
+                No tokens found.
+              </CommandEmpty>
+              {tokensToDisplay.length > 0 && (
+                <CommandGroup>
+                  {tokensToDisplay.map((token) => (
+                    <CommandItem key={token.id} className="hover:bg-[#181F25]">
+                      <div className="flex w-full items-center justify-between gap-2 p-2">
                         <div className="flex items-center gap-2">
                           {token.image && (
                             <img
@@ -209,35 +202,41 @@ const TokenSearch: React.FC<TokenSearchProps> = ({
                               className="size-6 rounded-full"
                             />
                           )}
-                          <span>{token.symbol}</span>
-                          <span className="text-sm text-muted-foreground">
+                          <span className="font-medium">{token.symbol}</span>
+                          <span className="text-sm text-gray-400">
                             {token.name}
                           </span>
                           {token.chain && (
-                            <span className="rounded border-b border-lime-300 bg-lime-300/30 px-1 text-xs">
+                            <span className="rounded bg-[#181F25] px-1.5 py-0.5 text-xs text-gray-300">
                               {token.chain}
                             </span>
                           )}
-                          <span>
+                        </div>
+                        <div className="flex items-center gap-4">
+                          <span
+                            className={`text-sm ${
+                              (token.percentChange1h ?? 0) >= 0
+                                ? "text-green-500"
+                                : "text-red-500"
+                            }`}
+                          >
                             {token.percentChange1h?.toFixed(2) ?? "N/A"}%
                           </span>
+                          <Toggle
+                            checked={trackedTokens.has(token.id)}
+                            onChange={() => handleToggleToken(token)}
+                            className="bg-[#181F25] data-[state=checked]:bg-lime-300"
+                          />
                         </div>
-                        <Toggle
-                          checked={isTracked}
-                          onChange={(e) => handleToggle(e.target.checked)}
-                        />
                       </div>
                     </CommandItem>
-                  )
-                })}
-              </CommandGroup>
-            )}
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
+                  ))}
+                </CommandGroup>
+              )}
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover>
+    </div>
   )
 }
-
-// Export the TokenSearch component
-export default TokenSearch

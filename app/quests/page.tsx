@@ -1,7 +1,6 @@
 import type { Metadata } from "next"
 
-import QuestHero from "@/components/Quests/questHero"
-import QuestsGrid from "@/components/Quests/questsGrid"
+import QuestModal from "@/components/Quests/QuestModal"
 
 export const metadata: Metadata = {
   title: "Nexis Network Dashboard",
@@ -11,8 +10,7 @@ export const metadata: Metadata = {
 export default function Dashboard() {
   return (
     <div className="space-y-20">
-      <QuestHero />
-      <QuestsGrid />
+      <QuestModal />
     </div>
   )
 }

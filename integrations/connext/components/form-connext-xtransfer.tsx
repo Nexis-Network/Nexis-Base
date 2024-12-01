@@ -282,7 +282,7 @@ export function FormConnextXTransfer({
       return (
         <button
           disabled
-          className="3xl:text-xl mt-3 flex w-full items-center justify-start rounded bg-red-400 p-4 text-sm font-medium text-white dark:bg-red-500"
+          className="3xl:text-xl mt-3 flex w-full items-center justify-start rounded bg-red-400 p-4 text-sm font-medium text-[#F2F4F3] dark:bg-red-500"
         >
           Insufficient balance :
         </button>
@@ -311,7 +311,7 @@ export function FormConnextXTransfer({
 
     return (
       <button
-        className="mt-5 w-full rounded bg-blue-600 p-4 text-white"
+        className="mt-5 w-full rounded bg-blue-600 p-4 text-[#F2F4F3]"
         disabled={txLoading}
         onClick={buttonAction}
       >
@@ -557,7 +557,7 @@ export function FormConnextXTransfer({
           </Select>
         </div>
         <input
-          className="3xl:text-2xl w-36 rounded border-0 bg-[#0a0a0a] py-1.5 text-right font-semibold focus:ring-0 sm:w-48 sm:text-lg"
+          className="3xl:text-2xl w-36 rounded border-0 bg-[#07090b] py-1.5 text-right font-semibold focus:ring-0 sm:w-48 sm:text-lg"
           placeholder="0.00"
           type="text"
           value={amount}
@@ -664,7 +664,7 @@ export function FormConnextXTransfer({
       <IsWalletDisconnected>
         <WalletConnectCustom
           className="mt-5 w-full rounded bg-blue-600 p-4"
-          classNameConnect="w-full bg-blue-600 text-white"
+          classNameConnect="w-full bg-blue-600 text-[#F2F4F3]"
         />
       </IsWalletDisconnected>
     </motion.div>

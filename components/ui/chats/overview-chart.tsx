@@ -1,69 +1,70 @@
-import cn from '@/utils/cn';
-import { LineChart, Line, ResponsiveContainer } from 'recharts';
-import { useLayout } from '@/lib/hooks/use-layout';
-import { LAYOUT_OPTIONS } from '@/lib/constants';
+import cn from "@/utils/cn"
+import { Line, LineChart, ResponsiveContainer } from "recharts"
+
+import { LAYOUT_OPTIONS } from "@/lib/constants"
+import { useLayout } from "@/lib/hooks/use-layout"
 
 const data = [
   {
-    name: 'Page A',
+    name: "Page A",
     uv: 1200,
     pv: 800,
   },
   {
-    name: 'Page B',
+    name: "Page B",
     uv: 2600,
     pv: 100,
   },
   {
-    name: 'Page C',
+    name: "Page C",
     uv: 1900,
     pv: 1600,
   },
   {
-    name: 'Page D',
+    name: "Page D",
     uv: 2280,
     pv: 1508,
   },
   {
-    name: 'Page E',
+    name: "Page E",
     uv: 1290,
     pv: 3500,
   },
   {
-    name: 'Page F',
+    name: "Page F",
     uv: 1690,
     pv: 3000,
   },
   {
-    name: 'Page G',
+    name: "Page G",
     uv: 2590,
     pv: 4500,
   },
-];
+]
 
 interface Props {
-  chartWrapperClass?: string;
+  chartWrapperClass?: string
 }
 
 export default function OverviewChart({ chartWrapperClass }: Props) {
-  const { layout } = useLayout();
+  const { layout } = useLayout()
 
   return (
     <div
       className={cn(
-        'rounded-lg bg-light-dark p-6 text-white shadow-card sm:p-8',
+        "rounded-lg bg-light-dark p-6 text-[#F2F4F3] shadow-card sm:p-8",
         {
-          'w-full lg:w-[49%]': layout === LAYOUT_OPTIONS.RETRO,
-        },
+          "w-full lg:w-[49%]": layout === LAYOUT_OPTIONS.RETRO,
+        }
       )}
     >
-      <h3 className="text-xl font-medium tracking-tighter text-white sm:text-3xl">
+      <h3 className="text-xl font-medium tracking-tighter text-[#F2F4F3] sm:text-3xl">
         74.8%
       </h3>
       <p className="mt-2 mb-1 text-xs font-medium text-gray-400 sm:text-sm">
         Compare to $1,812 last week
       </p>
-      <div className={cn('h-60 w-full', chartWrapperClass)}>
+      <div className={cn("h-60 w-full", chartWrapperClass)}>
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data}>
             <Line
@@ -84,5 +85,5 @@ export default function OverviewChart({ chartWrapperClass }: Props) {
         </ResponsiveContainer>
       </div>
     </div>
-  );
+  )
 }

@@ -114,25 +114,25 @@ export function IntervalInput() {
               </label>
               <div className="mt-2 flex items-center space-x-5">
                 <input
-                  className="input !rounded-2xl dark:!bg-zinc-700 dark:!text-white"
+                  className="input !rounded-2xl dark:!bg-zinc-700 dark:!text-[#F2F4F3]"
                   placeholder="0 days"
                   {...register("timeInterval.days")}
                 ></input>
                 <span>+</span>
                 <input
-                  className="input !rounded-2xl dark:!bg-zinc-700 dark:!text-white"
+                  className="input !rounded-2xl dark:!bg-zinc-700 dark:!text-[#F2F4F3]"
                   placeholder="0 hours"
                   {...register("timeInterval.hours")}
                 ></input>
                 <span>+</span>
                 <input
-                  className="input !rounded-2xl dark:!bg-zinc-700 dark:!text-white"
+                  className="input !rounded-2xl dark:!bg-zinc-700 dark:!text-[#F2F4F3]"
                   placeholder="0 min"
                   {...register("timeInterval.minutes")}
                 ></input>
                 <span>+</span>
                 <input
-                  className="input !rounded-2xl dark:!bg-zinc-700 dark:!text-white"
+                  className="input !rounded-2xl dark:!bg-zinc-700 dark:!text-[#F2F4F3]"
                   placeholder="0 sec"
                   {...register("timeInterval.seconds")}
                 ></input>
@@ -145,7 +145,7 @@ export function IntervalInput() {
               <input
                 {...register("startTime")}
                 className={cn(
-                  "input mt-2 !rounded-2xl dark:!bg-zinc-700 dark:!text-white",
+                  "input mt-2 !rounded-2xl dark:!bg-zinc-700 dark:!text-[#F2F4F3]",
                   startImmediately ? "opacity-70" : ""
                 )}
                 disabled={startImmediately}

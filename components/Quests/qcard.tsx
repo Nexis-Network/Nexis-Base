@@ -51,8 +51,8 @@ const Qcard: React.FC<CardProps> = ({ quest }) => {
 
   return (
     <StyledWrapper>
-      <div className="qcard bg-[#0a0a0a]">
-        <div className="top-section bg-[#0a0a0a]">
+      <div className="qcard bg-[#07090b]">
+        <div className="top-section bg-[#07090b]">
           <div className="border border-none" />
           <div className="icons">
             <div className="logo">
@@ -125,8 +125,8 @@ const StyledWrapper = styled.div`
   .qcard {
     width: 230px;
     border-radius: 20px;
-    border: 1px solid #242424;
-    background: #0a0a0a;
+    border: 1px solid #181f25;
+    background: #07090b;
     padding: 5px;
     overflow: hidden;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 20px 0px;
@@ -168,10 +168,10 @@ const StyledWrapper = styled.div`
     border-bottom-right-radius: 10px;
     height: 30px;
     width: 130px;
-    background: #0a0a0a;
+    background: #07090b;
     position: relative;
     transform: skew(-40deg);
-    box-shadow: -10px -10px 0 0 #0a0a0a;
+    box-shadow: -10px -10px 0 0 #07090b;
   }
 
   .qcard .top-section .border::before {
@@ -183,7 +183,7 @@ const StyledWrapper = styled.div`
     right: -15px;
     background: rgba(255, 255, 255, 0);
     border-top-left-radius: 10px;
-    box-shadow: -5px -5px 0 2px #0a0a0a;
+    box-shadow: -5px -5px 0 2px #07090b;
   }
 
   .qcard .top-section::before {

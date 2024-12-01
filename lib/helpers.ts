@@ -1,15 +1,24 @@
-import { User, WalletType } from "./types";
-import { ClassValue, clsx } from "clsx";
+declare global {
+  interface Window {
+    ethereum?: Ethereum;
+  }
+}
+
+import type { User, WalletType } from "./types";
+import type { ClassValue } from "clsx";
+import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { NEXT_PUBLIC_SEASON_2_CLAIM_LAUNCH_TIME, NEXT_PUBLIC_SEASON_2_LAUNCH_TIME, NEXT_PUBLIC_SEASON_2_TWITTER_LAUNCH_TIME } from "./config";
-import { Address } from "viem";
+import type { Address } from "viem";
+
+interface Ethereum {
+  isMetaMask?: boolean;
+  request: (args: { method: string; params?: unknown[] }) => Promise<unknown>;
+  // Add more methods and properties as needed
+}
 
 export const eclipseAddress = (address: string): string => {
-  return (
-    address.substring(0, 6) +
-    "..." +
-    address.substring(address.length - 4, address.length)
-  );
+  return `${address.substring(0, 6)}...${address.substring(address.length - 4)}`;
 };
 
 export const hex = "0x";
@@ -83,9 +92,9 @@ export function isFloat(value: unknown) {
 
 export const currentDate = new Date();
 
-export const season2LaunchDate = new Date(parseInt(NEXT_PUBLIC_SEASON_2_LAUNCH_TIME));
-export const season2TwitterLaunchDate = new Date(parseInt(NEXT_PUBLIC_SEASON_2_TWITTER_LAUNCH_TIME));
-export const season2ClaimLaunchDate = new Date(parseInt(NEXT_PUBLIC_SEASON_2_CLAIM_LAUNCH_TIME));
+export const season2LaunchDate = new Date(Number.parseInt(NEXT_PUBLIC_SEASON_2_LAUNCH_TIME));
+export const season2TwitterLaunchDate = new Date(Number.parseInt(NEXT_PUBLIC_SEASON_2_TWITTER_LAUNCH_TIME));
+export const season2ClaimLaunchDate = new Date(Number.parseInt(NEXT_PUBLIC_SEASON_2_CLAIM_LAUNCH_TIME));
 
 export const signUpSteps = {
   WALLET: 1,
@@ -93,7 +102,7 @@ export const signUpSteps = {
   MANDATORY: 1
 }
 
-export const isVoltagePoolBannedUser = (walletAddress: Address) => {
+export const isNexisPoolBannedUser = (walletAddress: Address) => {
   const bannedUsers = [
     "0x5788e790adb0913fd8e837a7c509cb05ea8141e4",
     "0xe3fe2a011bb0a9da4d50d94d49123a4872c27fd1",
@@ -112,26 +121,30 @@ export const isUserEligibleByTime = (userCreatedAt: Date) => {
 
 export const season1Tier = (points: number) => {
   if (points >= 1_000_000 && points <= 40_000_000) {
-    return 1
-  } else if (points >= 500_000 && points <= 999_999) {
-    return 2
-  } else if (points >= 100_000 && points <= 499_999) {
-    return 3
-  } else if (points >= 10_000 && points <= 99_999) {
-    return 4
-  } else if (points >= 1_000 && points <= 9_999) {
-    return 5
-  } else if (points >= 101 && points <= 999) {
-    return 6
-  } else if (points >= 51 && points <= 100) {
-    return 7
-  } else {
-    return -1
+    return 1;
   }
+  if (points >= 500_000 && points <= 999_999) {
+    return 2;
+  }
+  if (points >= 100_000 && points <= 499_999) {
+    return 3;
+  }
+  if (points >= 10_000 && points <= 99_999) {
+    return 4;
+  }
+  if (points >= 1_000 && points <= 9_999) {
+    return 5;
+  }
+  if (points >= 101 && points <= 999) {
+    return 6;
+  }
+  if (points >= 51 && points <= 100) {
+    return 7;
+  }
+  return -1;
 }
-
 export const isEligibleToClaimSeason1Reward = (user: User): boolean => {
-  if (isVoltagePoolBannedUser(user.walletAddress)) {
+  if (isNexisPoolBannedUser(user.walletAddress as `0x${string}`)) {
     return false;
   }
 

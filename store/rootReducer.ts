@@ -1,8 +1,8 @@
 import {
-  AnyAction,
-  CombinedState,
+  type AnyAction,
+  type CombinedState,
   combineReducers,
-  Reducer,
+  type Reducer,
 } from "@reduxjs/toolkit";
 import balanceReducer from "./balanceSlice";
 import navbarReducer from "./navbarSlice";

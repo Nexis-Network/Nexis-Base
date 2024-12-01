@@ -54,7 +54,7 @@ function RadioGroupOption({ value }: RadioOptionProps) {
       {({ checked }) => (
         <span
           className={`relative flex h-8 cursor-pointer items-center justify-center rounded-lg px-3 text-sm uppercase tracking-wider ${
-            checked ? "text-white" : "text-brand dark:text-gray-400"
+            checked ? "text-[#F2F4F3]" : "text-brand dark:text-gray-400"
           }`}
         >
           {checked && (
@@ -111,9 +111,9 @@ export default function SingleComparisonChart() {
 
   return (
     <div
-      className={`h-full rounded-br-lg rounded-tr-lg p-4 dark:bg-[#0a0a0a] sm:p-8 ${
+      className={`h-full rounded-br-lg rounded-tr-lg p-4 dark:bg-[#07090b] sm:p-8 ${
         layout === LAYOUT_OPTIONS.RETRO
-          ? "dark:2xl:bg-[#0a0a0a]"
+          ? "dark:2xl:bg-[#07090b]"
           : "dark:2xl:bg-light-dark"
       }`}
     >
@@ -124,7 +124,7 @@ export default function SingleComparisonChart() {
               <span className="flex flex-row items-center gap-2.5">
                 <Bitcoin className="h-auto w-7 lg:w-9" />
               </span>
-              <span className="flex items-end text-xl font-medium capitalize text-brand dark:text-white">
+              <span className="flex items-end text-xl font-medium capitalize text-brand dark:text-[#F2F4F3]">
                 {isMounted && (
                   <AnchorLink
                     href={{
@@ -141,13 +141,13 @@ export default function SingleComparisonChart() {
               <span className="text-sm text-gray-400">(BTC/USD)</span>
             </span>
             <span className="flex flex-wrap items-center gap-[5px]">
-              <span className="rounded-lg bg-gray-100 px-3 py-2 text-sm font-medium leading-none text-brand dark:!bg-gray-700 dark:text-white">
+              <span className="rounded-lg bg-gray-100 px-3 py-2 text-sm font-medium leading-none text-brand dark:!bg-gray-700 dark:text-[#F2F4F3]">
                 RANK #5
               </span>
               <span className="w-[65px]">
                 <Listbox value={selected} onChange={setSelected}>
-                  <div className="relative rounded-lg bg-gray-100 px-3 py-1.5 text-sm font-medium text-brand dark:bg-gray-700 dark:text-white rtl:text-left">
-                    <ListboxButton className="rounded-lg bg-gray-100 text-sm font-medium text-brand dark:bg-gray-700 dark:text-white">
+                  <div className="relative rounded-lg bg-gray-100 px-3 py-1.5 text-sm font-medium text-brand dark:bg-gray-700 dark:text-[#F2F4F3] rtl:text-left">
+                    <ListboxButton className="rounded-lg bg-gray-100 text-sm font-medium text-brand dark:bg-gray-700 dark:text-[#F2F4F3]">
                       <span className="block truncate">{selected.name}</span>
                       <span className="absolute inset-y-0 right-0 flex items-center pr-2">
                         <ChevronDown
@@ -162,15 +162,15 @@ export default function SingleComparisonChart() {
                       leaveFrom="opacity-100"
                       leaveTo="opacity-0"
                     >
-                      <ListboxOptions className="absolute left-0 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-large focus:outline-none dark:!bg-gray-700 sm:text-sm">
+                      <ListboxOptions className="absolute left-0 mt-1 max-h-60 w-full overflow-auto rounded-md bg-[#F2F4F3] py-1 text-base shadow-large focus:outline-none dark:!bg-gray-700 sm:text-sm">
                         {currency.map((item) => (
                           <ListboxOption
                             key={item.id}
                             className={({ active }) =>
                               `relative cursor-pointer select-none px-4 py-2 ${
                                 active
-                                  ? "bg-gray-100 text-brand dark:bg-slate-600 dark:text-white"
-                                  : "text-gray-900 dark:text-white"
+                                  ? "bg-gray-100 text-brand dark:bg-slate-600 dark:text-[#F2F4F3]"
+                                  : "text-gray-900 dark:text-[#F2F4F3]"
                               }`
                             }
                             value={item}
@@ -201,14 +201,14 @@ export default function SingleComparisonChart() {
                         ? ""
                         : routes.home + layout) + routes.coinDetails,
                   }}
-                  className="cursor-pointer rounded-lg bg-gray-100 px-3 py-1.5 text-sm font-medium text-brand dark:!bg-gray-700 dark:text-white"
+                  className="cursor-pointer rounded-lg bg-gray-100 px-3 py-1.5 text-sm font-medium text-brand dark:!bg-gray-700 dark:text-[#F2F4F3]"
                 >
-                  <ExternalLink className="dark:text-white" />
+                  <ExternalLink className="dark:text-[#F2F4F3]" />
                 </AnchorLink>
               )}
             </span>
           </div>
-          <div className="mt-5 flex items-end gap-3 text-base font-medium text-gray-900 dark:text-white sm:text-xl lg:flex-wrap 2xl:flex-nowrap">
+          <div className="mt-5 flex items-end gap-3 text-base font-medium text-gray-900 dark:text-[#F2F4F3] sm:text-xl lg:flex-wrap 2xl:flex-nowrap">
             <span className="text-2xl font-semibold xl:text-3xl">{price}</span>
             <span
               className={cn(
@@ -300,7 +300,7 @@ export default function SingleComparisonChart() {
                 </div>
               </Tippy>
             </div>
-            <h4 className="text-base font-medium text-black dark:text-white lg:text-xl">
+            <h4 className="text-base font-medium text-black dark:text-[#F2F4F3] lg:text-xl">
               $348.0B
             </h4>
             <span className="block text-xs text-gray-600 dark:text-gray-400 lg:text-sm">
@@ -322,7 +322,7 @@ export default function SingleComparisonChart() {
                 </div>
               </Tippy>
             </div>
-            <h4 className="text-base font-medium text-black dark:text-white lg:text-xl">
+            <h4 className="text-base font-medium text-black dark:text-[#F2F4F3] lg:text-xl">
               $23.5B
             </h4>
             <span className="flex items-center text-xs text-green-500 lg:text-sm">
@@ -344,7 +344,7 @@ export default function SingleComparisonChart() {
                 </div>
               </Tippy>
             </div>
-            <h4 className="text-base font-medium text-black dark:text-white lg:text-xl">
+            <h4 className="text-base font-medium text-black dark:text-[#F2F4F3] lg:text-xl">
               19.1M BTC
             </h4>
             <span className="block text-xs text-gray-600 dark:text-gray-400 lg:text-sm">
@@ -366,7 +366,7 @@ export default function SingleComparisonChart() {
                 </div>
               </Tippy>
             </div>
-            <h4 className="text-base font-medium text-black dark:text-white lg:text-xl">
+            <h4 className="text-base font-medium text-black dark:text-[#F2F4F3] lg:text-xl">
               126 Days
             </h4>
           </div>
@@ -385,7 +385,7 @@ export default function SingleComparisonChart() {
                 </div>
               </Tippy>
             </div>
-            <h4 className="text-base font-medium text-black dark:text-white lg:text-xl">
+            <h4 className="text-base font-medium text-black dark:text-[#F2F4F3] lg:text-xl">
               0.02972
             </h4>
           </div>
@@ -404,7 +404,7 @@ export default function SingleComparisonChart() {
                 </div>
               </Tippy>
             </div>
-            <h4 className="text-base font-medium text-black dark:text-white lg:text-xl">
+            <h4 className="text-base font-medium text-black dark:text-[#F2F4F3] lg:text-xl">
               #1
             </h4>
           </div>
@@ -423,7 +423,7 @@ export default function SingleComparisonChart() {
                 </div>
               </Tippy>
             </div>
-            <h4 className="text-base font-medium text-black dark:text-white lg:text-xl">
+            <h4 className="text-base font-medium text-black dark:text-[#F2F4F3] lg:text-xl">
               $68,789.63
             </h4>
           </div>

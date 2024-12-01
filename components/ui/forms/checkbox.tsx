@@ -23,7 +23,7 @@ const inputClasses = {
   },
   variant: {
     outline: {
-      base: "bg-[#0a0a0a] border border-gray-300 checked:!bg-gray-1000 focus:ring-gray-900/30 checked:!border-gray-1000",
+      base: "bg-[#07090b] border border-gray-300 checked:!bg-gray-1000 focus:ring-gray-900/30 checked:!border-gray-1000",
       color: {
         DEFAULT: "hover:enabled:border-gray-1000",
         primary: "hover:enabled:border-primary",
@@ -73,7 +73,7 @@ const inputClasses = {
 }
 
 const iconClasses = {
-  base: "peer-checked:opacity-100 absolute opacity-0 text-white top-0 left-0",
+  base: "peer-checked:opacity-100 absolute opacity-0 text-[#F2F4F3] top-0 left-0",
   color: {
     DEFAULT: "text-gray-1000",
     primary: "text-primary-dark",

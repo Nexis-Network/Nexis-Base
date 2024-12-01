@@ -52,20 +52,20 @@ export default function NZTStats() {
           <div className="flex items-center justify-between gap-4">
             <div>
               {/* biome-ignore lint/a11y/useButtonType: <explanation> */}
-              <button className="rounded-full border-x border-zinc-800 bg-white px-4 py-2 text-sm text-black hover:bg-white/30">
+              <button className="rounded-full border-x border-[#181F25]/70 bg-[#F2F4F3] px-4 py-2 text-sm text-black hover:bg-[#F2F4F3]/30">
                 Delegate NZT
               </button>
             </div>
             <div>
               {/* biome-ignore lint/a11y/useButtonType: <explanation> */}
-              <button className="rounded-full border-x border-zinc-800 bg-white px-4 py-2 text-sm text-black hover:bg-white/30">
+              <button className="rounded-full border-x border-[#181F25]/70 bg-[#F2F4F3] px-4 py-2 text-sm text-black hover:bg-[#F2F4F3]/30">
                 Withdraw NZT
               </button>
             </div>
           </div>
         </div>
         <div
-          className="my-2 grid w-full grid-cols-6 justify-items-center gap-2 border-y border-zinc-800"
+          className="my-2 grid w-full grid-cols-6 justify-items-center gap-2 border-y border-[#181F25]/70"
           style={{
             backgroundColor: "rgb(0, 0, 0)",
             color: "rgb(248, 248, 251)",
@@ -78,7 +78,7 @@ export default function NZTStats() {
           }}
         >
           {Object.entries(stats).map(([key, value]) => (
-            <Card key={key} className="border-none bg-[#0a0a0a] shadow-none">
+            <Card key={key} className="border-none bg-[#07090b] shadow-none">
               <StatItem
                 title={key.split(/(?=[A-Z])/).join(" ")}
                 value={value}

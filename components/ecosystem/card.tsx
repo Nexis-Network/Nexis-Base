@@ -85,8 +85,8 @@ const StyledWrapper = styled.div`
   .card {
     width: 230px;
     border-radius: 20px;
-    border: 1px solid #242424;
-    background: #0a0a0a;
+    border: 1px solid #181f25;
+    background: #07090b;
     padding: 5px;
     overflow: hidden;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 20px 0px;

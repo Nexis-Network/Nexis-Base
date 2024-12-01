@@ -58,7 +58,7 @@ export function RenameTask({
                       : "Name needs to be min 3 characters long",
                 },
               })}
-              className="input max-w-md !rounded-2xl dark:!bg-zinc-700 dark:!text-white"
+              className="input max-w-md !rounded-2xl dark:!bg-zinc-700 dark:!text-[#F2F4F3]"
               defaultValue={name}
             />
             <Button

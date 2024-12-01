@@ -53,7 +53,7 @@ export function ActiveTasks() {
           <div className="h-20 w-full animate-pulse rounded-lg bg-muted/80"></div>
         ) : (
           <>
-            <div className="flex justify-between text-sm dark:text-white dark:text-opacity-30">
+            <div className="flex justify-between text-sm dark:text-[#F2F4F3] dark:text-opacity-30">
               <div className="flex gap-4 lg:gap-10">
                 <span>#</span>
                 <span className="pl-3">

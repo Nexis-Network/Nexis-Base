@@ -124,3 +124,23 @@ export const quest_tasks = {
     category: "onchain",
   },
 } as const
+
+export interface Quest {
+  id: string
+  title: string
+  heading?: string
+  description: string
+  point: number
+  pointModal?: number
+  isDisabled: boolean
+  isDisabledTwo?: boolean
+  isFunction: boolean
+  isFunctionTwo?: boolean
+  endpoint?: string
+  endpointTwo?: string
+  link?: string
+  linkTwo?: string
+  button?: string
+  buttonTwo?: string
+  isCompleted: boolean
+}

@@ -1,12 +1,12 @@
-'use client';
+"use client"
 
-import { useState } from 'react';
-import { format } from 'date-fns';
-import { AreaChart, Area, Tooltip, ResponsiveContainer, XAxis } from 'recharts';
-import { LiquidityData } from '@/data/static/liquidity';
+import { useState } from "react"
+import { LiquidityData } from "@/data/static/liquidity"
+import { format } from "date-fns"
+import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis } from "recharts"
 
 function CustomAxis({ x, y, payload }: any) {
-  const date = format(new Date(payload.value * 1000), 'd');
+  const date = format(new Date(payload.value * 1000), "d")
   return (
     <g
       transform={`translate(${x},${y})`}
@@ -16,29 +16,29 @@ function CustomAxis({ x, y, payload }: any) {
         {date}
       </text>
     </g>
-  );
+  )
 }
 
 const numberAbbr = (number: any) => {
-  if (number < 1e3) return number;
-  if (number >= 1e3 && number < 1e6) return +(number / 1e3).toFixed(1) + 'K';
-  if (number >= 1e6 && number < 1e9) return +(number / 1e6).toFixed(1) + 'M';
-  if (number >= 1e9 && number < 1e12) return +(number / 1e9).toFixed(1) + 'B';
-  if (number >= 1e12) return +(number / 1e12).toFixed(1) + 'T';
-};
+  if (number < 1e3) return number
+  if (number >= 1e3 && number < 1e6) return +(number / 1e3).toFixed(1) + "K"
+  if (number >= 1e6 && number < 1e9) return +(number / 1e6).toFixed(1) + "M"
+  if (number >= 1e9 && number < 1e12) return +(number / 1e9).toFixed(1) + "B"
+  if (number >= 1e12) return +(number / 1e12).toFixed(1) + "T"
+}
 
 export default function LiquidityChart() {
-  let [date, setDate] = useState(1624147200);
-  let [liquidity, setLiquidity] = useState('547792029');
-  const formattedDate = format(new Date(date * 1000), 'MMMM d, yyyy');
-  const dailyLiquidity = numberAbbr(liquidity);
+  let [date, setDate] = useState(1624147200)
+  let [liquidity, setLiquidity] = useState("547792029")
+  const formattedDate = format(new Date(date * 1000), "MMMM d, yyyy")
+  const dailyLiquidity = numberAbbr(liquidity)
 
   return (
-    <div className="rounded-lg bg-white p-6 shadow-card dark:bg-light-dark sm:p-8">
+    <div className="rounded-lg bg-[#F2F4F3] p-6 shadow-card dark:bg-light-dark sm:p-8">
       <h3 className="mb-1.5 text-sm uppercase tracking-wider text-gray-600 dark:text-gray-400 sm:mb-2 sm:text-base">
         Liquidity
       </h3>
-      <div className="mb-1 text-base font-medium text-gray-900 dark:text-white sm:text-xl">
+      <div className="mb-1 text-base font-medium text-gray-900 dark:text-[#F2F4F3] sm:text-xl">
         {dailyLiquidity}
       </div>
       <div className="text-xs text-gray-600 dark:text-gray-400 sm:text-sm">
@@ -57,12 +57,12 @@ export default function LiquidityChart() {
             onMouseMove={(data) => {
               if (data.isTooltipActive) {
                 setDate(
-                  data.activePayload && data.activePayload[0].payload.date,
-                );
+                  data.activePayload && data.activePayload[0].payload.date
+                )
                 setLiquidity(
                   data.activePayload &&
-                    data.activePayload[0].payload.dailyVolumeUSD,
-                );
+                    data.activePayload[0].payload.dailyVolumeUSD
+                )
               }
             }}
           >
@@ -86,7 +86,7 @@ export default function LiquidityChart() {
               interval={0}
               tickMargin={5}
             />
-            <Tooltip content={<></>} cursor={{ stroke: '#7645D9' }} />
+            <Tooltip content={<></>} cursor={{ stroke: "#7645D9" }} />
             <Area
               type="linear"
               dataKey="dailyVolumeUSD"
@@ -98,5 +98,5 @@ export default function LiquidityChart() {
         </ResponsiveContainer>
       </div>
     </div>
-  );
+  )
 }

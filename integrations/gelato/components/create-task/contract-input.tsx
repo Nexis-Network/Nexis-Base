@@ -64,7 +64,7 @@ export function ContractInput({
           : "Resolver contract address"}
       </label>
       <input
-        className="input mt-2 !rounded-2xl dark:!bg-zinc-700 dark:!text-white"
+        className="input mt-2 !rounded-2xl dark:!bg-zinc-700 dark:!text-[#F2F4F3]"
         placeholder="0x..."
         {...register(contractFieldName, {
           required: "Contract address is required",
@@ -126,7 +126,7 @@ export function ContractInput({
                   isAbi: (value) => isValidAbi(value) || "Invalid Abi",
                 },
               })}
-              className="input mt-2 h-36 !rounded-2xl dark:!bg-zinc-700 dark:!text-white"
+              className="input mt-2 h-36 !rounded-2xl dark:!bg-zinc-700 dark:!text-[#F2F4F3]"
               id="abi_input"
               placeholder='[{"inputs":[{"internalType":"address","name...'
             ></textarea>

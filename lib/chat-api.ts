@@ -1,4 +1,4 @@
-import { Message } from '@/types/chat';
+import type { Message } from '@/types/chat';
 
 export async function fetchMessages(): Promise<Message[]> {
   const response = await fetch('/api/messages');

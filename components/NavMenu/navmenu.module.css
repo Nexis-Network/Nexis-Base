@@ -85,7 +85,6 @@ color: #fff;
 --tw-contain-layout: ;
 --tw-contain-paint: ;
 --tw-contain-style: ;
-box-sizing: border-box;
 margin: 0;
 font-weight: 400;
 font-family: "Roboto Mono", monospace;
@@ -102,6 +101,133 @@ padding-left: 10%;
 text-transform: uppercase;
 border-bottom: none;
 margin-top: 106px;
+
+
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100px;
+  height: 50px;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  width: 100px;
+  height: 5px;
+  background: white;
+  animation: stretch 2s ease-in-out 0s infinite;
+}
+
+.icon:before {
+  content: '';
+  position: absolute;
+  top: -25px;
+  left: 0px;
+  width: 100px;
+  height: 5px;
+  background: white;
+  animation: stretch 2s ease-in-out 1s infinite;
+}
+
+.icon:after {
+  content: '';
+  position: absolute;
+  top: 25px;
+  left: 0px;
+  width: 100px;
+  height: 5px;
+  background: white;
+  animation: stretch 2s ease-in-out 1.5s infinite;
+}
+
+@keyframes stretch {
+  0% {
+    width: 100px;
+    
+  }
+  
+  50% {
+    width: 50px;
+  }
+
+  100% {
+    width: 100px;
+  }
+}
+
+.xed {
+  position: absolute;
+  top: 50%;
+  width: 100px;
+  height: 5px;
+  background: white;
+  animation: xed-middle 1s ease-in-out forwards;
+}
+
+.xed:before {
+  content: '';
+  position: absolute;
+  top: -25px;
+  left: 0px;
+  width: 100px;
+  height: 5px;
+  background: white;
+  animation: xed-top 1s ease-in-out forwards;
+}
+
+.xed:after {
+  content: '';
+  position: absolute;
+  opacity: 1;
+  top: 25px;
+  left: 0px;
+  width: 100px;
+  height: 5px;
+  background: white;
+  animation: xed-bottom 1s ease-in-out forwards;
+}
+
+@keyframes xed-top {
+  0% {
+    width: 100px;
+  }
+  
+  100% {
+    width: 68px;
+    left: 25px;
+    transform-origin: top left;
+    transform: rotate(45deg);
+  }
+}
+
+@keyframes xed-bottom {
+  0% {
+    width: 100px;
+  }
+  
+  100% {
+    width: 68px;
+    top: 23px;
+    left: 23px;
+    transform-origin: top left;
+    transform: rotate(-45deg);
+  }
+}
+
+@keyframes xed-middle {
+  0% {
+    width: 100px;
+  }
+  
+  100% {
+    width: 0px;
+    background: transparent;
+  }
+}
 
 .scrollbar:before {
   content: "";
@@ -126,35 +252,57 @@ margin-top: 106px;
 .scrollbar {
   display: inline-flex;
   font-family: "Roboto Mono", monospace;
-  font-size: 12px;
+  font-size: 10px;
   animation: scroll-animation 20s linear infinite;
   gap: 6px;
   position: relative;
 }
 
 .menuText {
-    font-weight: 400;
-    font-family: "Roboto Mono", monospace;
-    font-size: 12px;
-    line-height: 16px;
-    display: flex;
-    gap: 8px;
-    color: rgb(117, 117, 117);
-    text-transform: uppercase;
+  font-size: 11px;
+  color: #5E5E5E;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .2), 0 2px 4px rgba(0, 0, 0, .1);
+  transition: all .24s cubic-bezier(0.25,0.46,0.45,0.94);
+  position: relative;
+  padding-bottom: 2px;
+  gap: 4px;
 }
 
-.menuText:hover {
-    font-weight: 400;
-    font-family: "Roboto Mono", monospace;
-    font-size: 12px;
-    line-height: 16px;
-    display: flex;
-    gap: 8px;
-    color: #F2F2F2;
-    text-transform: uppercase;
-    border-bottom: 1px solid #b5ff1e;
-    transition: border-bottom 0.2s ease-in-out;
-    box-shadow: 0 0 2px 0 rgba(181, 255, 30, 0.5);
+.navItemHover,
+.subnavItemHover {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  border: none !important;
+  color: #f4f4f4;
+}
+
+.navItemHover::after,
+.subnavItemHover::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  transition: all 0.2s ease;
+  border: none !important;
+  opacity: 0;
+}
+
+.navItemHover:hover::after,
+.subnavItemHover:hover::after,
+.navItemHover[data-active="true"]::after,
+.subnavItemHover[data-active="true"]::after {
+  width: 100%;
+  opacity: 1;
+}
+
+.navItemHover:hover,
+.subnavItemHover:hover,
+.navItemHover[data-active="true"],
+.subnavItemHover[data-active="true"] {
+  border: 1px solid #CFFF3D !important;
 }
 
 .scrollbanner {
@@ -173,37 +321,6 @@ margin-top: 106px;
     margin-top: 106px;
     text-transform: uppercase;
     border-bottom: none;
-}
-
-.navItemHover {
-  position: relative;
-  z-index: 1;
-  display: flex;
-}
-
-.subnavItemHover {
-  position: relative;
-  z-index: 1;
-  display: flex;
-}
-
-.navItemHover::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 20px;
-  margin-top: 10px;
-  background-color: white;
-  transition: width 0.3s ease;
-  z-index: -1;
-  align-items: center;
-  justify-content: center;
-}
-
-.navItemHover:hover::before {
-  width: 100%;
 }
 
 /* Add keyframes for the scrolling animation */

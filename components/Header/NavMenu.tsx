@@ -17,13 +17,13 @@ interface NavItemProps {
 
 const NavItem: React.FC<NavItemProps> = ({ label, className, isLast }) => (
   <div
-    className={`group relative my-auto w-24 self-stretch text-center tracking-wide hover:text-white
+    className={`group relative my-auto w-24 self-stretch text-center tracking-wide hover:text-[#F2F4F3]
       ${isLast ? "" : ""} ${className ?? ""}`}
   >
     <span className="relative z-10">{label}</span>
     <div
-      className="duration-[3000ms] absolute bottom-0 left-0 w-full origin-left scale-x-0 bg-white transition-transform 
-                    ease-out hover:text-white group-hover:scale-x-100"
+      className="duration-[3000ms] absolute bottom-0 left-0 w-full origin-left scale-x-0 bg-[#F2F4F3] transition-transform 
+                    ease-out hover:text-[#F2F4F3] group-hover:scale-x-100"
     />
   </div>
 )
@@ -60,7 +60,7 @@ export const NavMenu: React.FC = () => {
   return (
     <div className="z-10 flex w-full min-w-full items-start justify-between px-2 md:px-2">
       <Logo />
-      <nav className="flex items-center bg-[#0a0a0a] px-4 transition-all duration-300 ease-in-out md:px-8">
+      <nav className="flex items-center bg-[#07090b] px-4 transition-all duration-300 ease-in-out md:px-8">
         <div className="flex items-center">
           {!isMobileView && (
             <div className="hidden w-full items-center space-x-6 text-sm sm:flex" />
@@ -76,9 +76,9 @@ export const NavMenu: React.FC = () => {
               onClick={toggleMobileMenu}
               className="flex flex-col space-y-2"
             >
-              <span className="block h-0.5 w-6 bg-white" />
-              <span className="block h-0.5 w-6 bg-white" />
-              <span className="block h-0.5 w-6 bg-white" />
+              <span className="block h-0.5 w-6 bg-[#F2F4F3]" />
+              <span className="block h-0.5 w-6 bg-[#F2F4F3]" />
+              <span className="block h-0.5 w-6 bg-[#F2F4F3]" />
             </button>
           )}
         </div>

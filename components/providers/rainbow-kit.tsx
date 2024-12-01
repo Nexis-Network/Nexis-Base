@@ -16,11 +16,17 @@ import {
   rainbowWallet,
   walletConnectWallet,
 } from "@rainbow-me/rainbowkit/wallets"
-import { createConfig, WagmiConfig } from "wagmi"
+import { configureChains, createConfig, WagmiConfig } from "wagmi"
+import { arbitrum, mainnet, optimism, polygon } from "wagmi/chains"
+import { publicProvider } from "wagmi/providers/public"
 
-import { chains, publicClient, webSocketPublicClient } from "@/config/networks"
 import { siteConfig } from "@/config/site"
 import { useColorMode } from "@/lib/state/color-mode"
+
+const { chains, publicClient, webSocketPublicClient } = configureChains(
+  [mainnet, polygon, optimism, arbitrum],
+  [publicProvider()]
+)
 
 const connectors = connectorsForWallets([
   {
@@ -44,6 +50,7 @@ const wagmiConfig = createConfig({
 
 export function RainbowKit({ children }: { children: ReactNode }) {
   const [colorMode] = useColorMode()
+
   return (
     <WagmiConfig config={wagmiConfig}>
       <RainbowKitProvider

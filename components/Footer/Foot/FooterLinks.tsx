@@ -23,7 +23,7 @@ export const FooterLinks: FC = () => {
         <a
           key={link}
           href={`/${link.toLowerCase()}`}
-          className="hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
+          className="hover:text-[#F2F4F3] focus:outline-none focus:ring-2 focus:ring-[#F2F4F3]"
         >
           {link}
         </a>

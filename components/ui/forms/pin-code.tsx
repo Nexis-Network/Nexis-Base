@@ -11,7 +11,7 @@ const containerClasses = {
 }
 
 const inputClasses = {
-  base: "block peer text-center bg-[#0a0a0a] mr-2 focus:placeholder:opacity-0 focus:outline-none transition duration-200 disabled:bg-gray-50 disabled:placeholder:text-gray-400 disabled:cursor-not-allowed disabled:border-gray-200",
+  base: "block peer text-center bg-[#07090b] mr-2 focus:placeholder:opacity-0 focus:outline-none transition duration-200 disabled:bg-gray-50 disabled:placeholder:text-gray-400 disabled:cursor-not-allowed disabled:border-gray-200",
   error:
     "border-red hover:enabled:!border-red focus:enabled:!border-red focus:!ring-red",
   size: {
@@ -65,7 +65,7 @@ const inputClasses = {
       },
     },
     outline: {
-      base: "bg-[#0a0a0a] focus:ring-[0.6px] border border-gray-300 placeholder:text-gray-500",
+      base: "bg-[#07090b] focus:ring-[0.6px] border border-gray-300 placeholder:text-gray-500",
       color: {
         DEFAULT:
           "not-read-only:hover:enabled:border-gray-1000 not-read-only:focus:enabled:border-gray-1000 focus:ring-gray-1000",

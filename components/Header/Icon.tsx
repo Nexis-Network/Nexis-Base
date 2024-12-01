@@ -16,7 +16,7 @@ const Icon: React.FC<IconProps> = ({ icon, className }) => {
       style={{
         width: calculatedWidth,
         height: calculatedHeight,
-        border: "2px solid #242424",
+        border: "2px solid #181F25",
         borderRadius: "50%",
         overflow: "hidden",
         position: "relative",
@@ -55,7 +55,7 @@ const Icon: React.FC<IconProps> = ({ icon, className }) => {
             width="515"
             height="515"
             rx="257.5"
-            stroke="#242424"
+            stroke="#181F25"
             strokeWidth="3"
             shapeRendering="crispEdges"
           />

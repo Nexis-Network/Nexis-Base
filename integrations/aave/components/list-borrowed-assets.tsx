@@ -31,7 +31,7 @@ export const ListBorrowedAssets = () => {
       {filteredUserReserves && filteredUserReserves.length > 0 ? (
         <>
           <div className="flex items-center">
-            <div className="mr-2 rounded border bg-white px-4 py-2 dark:border-slate-600 dark:bg-gray-800">
+            <div className="mr-2 rounded border bg-[#F2F4F3] px-4 py-2 dark:border-slate-600 dark:bg-gray-800">
               <h3 className="text-xs font-bold">
                 <span className="text-slate-500 dark:text-slate-300">
                   {" "}
@@ -40,7 +40,7 @@ export const ListBorrowedAssets = () => {
                 {totalDebtInUsd.toFixed(2)}
               </h3>
             </div>
-            <div className="mr-2 rounded border bg-white px-4 py-2 dark:border-slate-600 dark:bg-gray-800">
+            <div className="mr-2 rounded border bg-[#F2F4F3] px-4 py-2 dark:border-slate-600 dark:bg-gray-800">
               <h3 className="text-xs font-bold">
                 <span className="text-slate-500 dark:text-slate-300">APY</span>{" "}
                 {averageBorrowApy.toFixed(2)}{" "}

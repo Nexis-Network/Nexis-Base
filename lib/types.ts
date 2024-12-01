@@ -1,5 +1,5 @@
-import { StaticImageData } from "next/image";
-import { Address } from "viem";
+import type { StaticImageData } from "next/image";
+import type { Address } from "viem";
 
 export type MenuItem = {
   title: string;
@@ -26,23 +26,22 @@ export interface CompletedQuest {
 export type CompletedQuests = CompletedQuest[];
 
 export interface User {
-  id: string,
-  walletAddress: Address,
-  twitterAccountId: string,
-  points: number,
-  referralCode: string,
-  leaderboardPosition: number
+  id: string;
+  walletAddress: string;
+  twitterAccountId: string;
+  points: number;
+  referralCode: string;
+  leaderboardPosition: number;
   pointsLastUpdatedAt: string;
   createdAt: string;
-  completedQuests: CompletedQuests;
-  walletAgeInDays?: number;
+  completedQuests: string[];
+  walletAgeInDays: number;
   seasonOnePoints: number;
-  nextRewardDistributionTime: string;
   totalNZT: string;
   unlockedNZT: string;
   vestedNZT: string;
-  estDailyUnlocked: string;
-  vestingPeriod: string;
+  estDailyUnlocked: number;
+  vestingPeriod: number;
   delegatedNZT: string;
   nodeLicenses: string;
 }
@@ -114,8 +113,11 @@ export interface WalletMetadata {
   vestedNZT: string;
   estDailyUnlocked: string;
   vestingPeriod: string;
-  delegatedNZT: string;
+  delegatedNZTAmount: string;
   nodeLicenses: string;
+  nextRewardDistributionTime: string;
+  ownsNZT: boolean;
+  isDelegated: boolean;
 }
 
 export interface UserWalletData {

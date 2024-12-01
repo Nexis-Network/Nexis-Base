@@ -1,4 +1,4 @@
-const BASE_URL = `https://benchmarks.pyth.network/v1`;
+const BASE_URL = "https://benchmarks.pyth.network/v1";
 
 export type Benchmark = {
   s: string;

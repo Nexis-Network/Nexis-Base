@@ -51,7 +51,7 @@ export default function VestingDrawer() {
       <SheetTrigger asChild>
         <button
           type="button"
-          className="relative z-10 w-full rounded-none border-l border-[#242424] bg-[#0a0a0a] py-4 font-mono text-white/80 transition-colors duration-300 hover:bg-[#0a0a0a] hover:text-white"
+          className="relative z-10 w-full rounded-none border-l border-[#181F25]/70 bg-[#07090b] py-4 font-mono text-[#F2F4F3]/80 transition-colors duration-300 hover:bg-[#07090b] hover:text-[#F2F4F3]"
         >
           WITHDRAW
         </button>

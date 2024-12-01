@@ -1,7 +1,7 @@
 import axios from "axios";
 import { NEXT_PUBLIC_AIRDROP_API_BASE_URL, NEXT_PUBLIC_COIN_GECKO_API_KEY, NEXT_PUBLIC_HUBSPOT_AIRDROP_SUBSCRIBERS_FORM_ID, NEXT_PUBLIC_HUBSPOT_PORTAL_ID } from './config'
-import { CreateUser, Leaderboard, User } from "./types";
-import { Address } from "viem";
+import type { CreateUser, Leaderboard, User } from "./types";
+import type { Address } from "viem";
 
 export const fetchTokenPrice = async (tokenId: string) => {
   const response = await axios.get(

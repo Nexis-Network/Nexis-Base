@@ -1,77 +1,95 @@
-import type React from "react"
+import { useEffect, useState } from "react"
 import Image from "next/image"
+import {
+  ArbitrumCircleColorful,
+  BaseCircleColorful,
+  EthereumCircleColorful,
+  UsdcCircleColorful,
+  UsdtCircleColorful,
+} from "@ant-design/web3-icons"
 
-// Import other icon components if available
-// For example:
-// import BnbIcon from '../ui/chains/BnbIcon';
-// import PolygonIcon from '../ui/chains/PolygonIcon';
-// ...
-
-import defaultTokens from "../../tokens/defaultTokens.json"
-import BitcoinIcon from "../ui/chains/BitcoinIcon"
-import EthereumIcon from "../ui/chains/EthereumIcon"
-import NexisIcon from "../ui/chains/NexisIcon"
-import UsdcIcon from "../ui/chains/UsdcIcon"
-import UsdtIcon from "../ui/chains/UsdtIcon"
+import { cn } from "@/lib/utils"
 
 interface TokenIconProps {
   address: string
-  className?: string
+  logoURI?: string
   size?: number
+  className?: string
 }
 
-const TokenIcon: React.FC<TokenIconProps> = ({
+type SpecialTokenMap = {
+  [key: string]: JSX.Element
+}
+
+export default function TokenIcon({
   address,
-  className = "justify-center w-full h-full",
-  size = 18,
-}) => {
-  const lowerAddress = address.toLowerCase()
+  logoURI,
+  size = 32,
+  className,
+}: TokenIconProps) {
+  const [error, setError] = useState(false)
 
-  // Mapping of addresses to custom icon components
-  const customIcons: { [address: string]: JSX.Element } = {
-    "0x0000000000000000000000000000000000000000": (
-      <EthereumIcon width={size} height={size} className={className} />
-    ), // Native Ether
-    "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2": (
-      <EthereumIcon width={size} height={size} className={className} />
-    ), // Wrapped Ether (WETH)
-    "0xdac17f958d2ee523a2206206994597c13d831ec7": (
-      <UsdtIcon width={size} height={size} className={className} />
-    ), // USDT
-    "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48": (
-      <UsdcIcon width={size} height={size} className={className} />
-    ), // USDC
-    "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599": (
-      <BitcoinIcon width={size} height={size} className={className} />
-    ), // Wrapped BTC
-    // Add other custom icons here using their contract addresses
-    // '0x...': <BnbIcon width={size} height={size} className={className} />,
-    // '0x...': <PolygonIcon width={size} height={size} className={className} />,
+  // Reset error state when component mounts
+  useEffect(() => {
+    setError(false)
+  }, [])
+
+  // Function to get token logo URL
+  const getTokenLogoURL = (address: string) => {
+    return `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`
   }
 
-  if (customIcons[lowerAddress]) {
-    return customIcons[lowerAddress]
-  }
-
-  // Find token in defaultTokens.json
-  const token = defaultTokens.find(
-    (t) => t.address.toLowerCase() === lowerAddress
+  // Function to render chain icon
+  const ChainIcon = () => (
+    <div className="absolute bottom-0 right-0 size-[32px] rounded-full bg-[#627EEA] ring-[0.5px] ring-black" />
   )
 
-  if (token?.logoURI) {
+  // Special cases for specific tokens
+  const specialTokens: SpecialTokenMap = {
+    // ETH on Ethereum
+    "0x0000000000000000000000000000000000000000": (
+      <EthereumCircleColorful style={{ width: "32px", height: "32px" }} />
+    ),
+    // WETH on Ethereum
+    "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": (
+      <EthereumCircleColorful style={{ width: "32px", height: "32px" }} />
+    ),
+    // USDT
+    "0xdAC17F958D2ee523a2206206994597C13D831ec7": (
+      <UsdtCircleColorful style={{ width: "32px", height: "32px" }} />
+    ),
+    // USDC
+    "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": (
+      <UsdcCircleColorful style={{ width: "32px", height: "32px" }} />
+    ),
+  }
+
+  // Check if this is a special token
+  const specialToken = specialTokens[address]
+  if (specialToken) {
+    return specialToken
+  }
+
+  if (error || !logoURI) {
     return (
       <Image
-        src={token?.logoURI}
-        alt={token?.name}
-        width={size}
-        height={size}
-        className={className}
+        src="/eth.svg"
+        alt="ETH"
+        width={32}
+        height={32}
+        className="rounded-full"
       />
     )
   }
 
-  // Default to Ethereum icon if token not found
-  return <NexisIcon width={size} height={size} className={className} />
+  return (
+    <Image
+      src={logoURI || getTokenLogoURL(address)}
+      alt={`Token ${address}`}
+      width={32}
+      height={32}
+      className="rounded-full"
+      onError={() => setError(true)}
+    />
+  )
 }
-
-export default TokenIcon

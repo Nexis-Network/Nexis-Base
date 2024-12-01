@@ -14,13 +14,13 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
         outline:
-          "border border-input bg-[#0a0a0a] shadow-sm hover:bg-accent hover:text-accent-foreground",
+          "border border-input bg-[#07090b] shadow-sm hover:bg-accent hover:text-accent-foreground",
         secondary:
           "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        blue: "bg-blue-600 text-white shadow hover:bg-blue-600/90",
-        emerald: "bg-emerald-600 text-white shadow hover:bg-emerald-600/90",
+        blue: "bg-blue-600 text-[#F2F4F3] shadow hover:bg-blue-600/90",
+        emerald: "bg-emerald-600 text-[#F2F4F3] shadow hover:bg-emerald-600/90",
         expandIcon:
           "group relative text-primary-foreground bg-primary hover:bg-primary/90",
         ringHover:

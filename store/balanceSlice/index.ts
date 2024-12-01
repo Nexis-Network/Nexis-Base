@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { AppState } from "../rootReducer";
+import type { AppState } from "../rootReducer";
 import { fetchTokenPrice } from "@/lib/api";
 
 export interface BalanceStateType {
@@ -12,16 +12,10 @@ const INIT_STATE: BalanceStateType = {
   isUsdPriceLoading: false,
 };
 
-export const fetchUsdPrice = createAsyncThunk(
+export const fetchUsdPrice = createAsyncThunk<number, { tokenId: string; controller: AbortController }>(
   "BALANCE/FETCH_USD_PRICE",
-  async ({
-    tokenId,
-    controller
-  }: {
-    tokenId: string;
-    controller: AbortController
-  }) => {
-    return new Promise<any>(async (resolve, reject) => {
+  ({ tokenId, controller }) => {
+    return new Promise<number>((resolve, reject) => {
       fetchTokenPrice(tokenId)
         .then((price) => {
           resolve(price);

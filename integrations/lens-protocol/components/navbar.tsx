@@ -31,7 +31,7 @@ export const Navbar = () => {
             }}
           >
             <label
-              className="sr-only mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="sr-only mb-2 text-sm font-medium text-gray-900 dark:text-[#F2F4F3]"
               htmlFor="default-search"
             >
               Search
@@ -55,7 +55,7 @@ export const Navbar = () => {
                 </svg>
               </div>
               <input
-                className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-neutral-600 dark:bg-neutral-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-neutral-600 dark:bg-neutral-700 dark:text-[#F2F4F3] dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                 id="default-search"
                 placeholder="Search..."
                 type="search"

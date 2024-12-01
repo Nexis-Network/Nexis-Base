@@ -60,7 +60,7 @@ export function FunctionInput({
           {abiFunctions?.map((item, ind) => (
             <SelectItem
               key={ind}
-              className="cursor-pointer duration-200 hover:!bg-[#0a0a0a]/10"
+              className="cursor-pointer duration-200 hover:!bg-[#07090b]/10"
               value={item.name}
             >
               <div className="flex items-center py-3">

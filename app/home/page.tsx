@@ -1,8 +1,12 @@
 import type { Metadata } from "next"
+import { cookies } from "next/headers"
+import { createClient } from "viem"
 
 import BlogCardCarousel from "@/components/blog/blogCarousel"
+import { Faqs } from "@/components/faq/faqs"
 import Portfolio from "@/components/portfolio/portfolio"
-import NZTStats from "@/components/staking/staking"
+import tokens from "@/components/portfolio/tokens"
+import { Referrals } from "@/components/referrals/Referrals"
 import { WalletContainer } from "@/components/Wallet-v2/WalletContainer"
 
 export const metadata: Metadata = {
@@ -10,13 +14,18 @@ export const metadata: Metadata = {
   description: "Nexis Network - The Future of Web3 and Artificial Intelligence",
 }
 
-export default function Dashboard() {
+export default function Home() {
   return (
-    <div className="mx-[10px] my-5 rounded-lg border border-zinc-800 pt-4">
-      <div className="border-collapse space-y-10">
-        <WalletContainer />
-        <Portfolio />
-        <BlogCardCarousel />
+    <div>
+      <div className="mx-[5px] mt-5 border-collapse rounded-t-lg border border-[#181F25]/70 pt-4">
+        <div className="border-collapse space-y-2">
+          <WalletContainer />
+          <Portfolio />
+          <div className="border-x border-[#181F25]/70 py-1" />
+          <Referrals />
+          <BlogCardCarousel />
+          <Faqs />
+        </div>
       </div>
     </div>
   )

@@ -40,7 +40,7 @@ export const Logo: React.FC = () => {
         alt=""
       />
       <div className="my-auto flex items-center gap-0.5 self-stretch">
-        <div className="my-auto flex h-10 w-7 shrink-0 self-stretch rounded-md bg-white/0 shadow-sm" />
+        <div className="my-auto flex h-10 w-7 shrink-0 self-stretch rounded-md bg-[#F2F4F3]/0 shadow-sm" />
       </div>
     </div>
   )

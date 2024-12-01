@@ -36,7 +36,7 @@ const ScrollBanner: React.FC = () => {
   ]
 
   return (
-    <div className="scrollbanner scrollbar relative h-[30px] w-full overflow-hidden border-b border-[#242424] bg-[#0a0a0a] font-mono text-xs">
+    <div className="scrollbanner scrollbar relative h-[30px] w-full overflow-hidden border-b border-[#181F25]/70 bg-[#07090b] font-mono text-xs">
       <motion.div
         className="absolute inset-y-0 left-0 flex whitespace-nowrap"
         animate={{
@@ -58,7 +58,7 @@ const ScrollBanner: React.FC = () => {
                 {item.title}
               </p>
               <p className="scrollbanner mx-2 uppercase text-[#757575]">-</p>
-              <p className="scrollbanner uppercase leading-4 text-white">
+              <p className="scrollbanner uppercase leading-4 text-[#F2F4F3]">
                 {item.description}
               </p>
             </div>

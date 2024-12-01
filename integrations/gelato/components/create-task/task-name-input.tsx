@@ -13,7 +13,7 @@ export function TaskNameInput() {
       <div>
         <input
           {...register("name")}
-          className="input !rounded-2xl dark:bg-zinc-700 dark:text-white"
+          className="input !rounded-2xl dark:bg-zinc-700 dark:text-[#F2F4F3]"
           placeholder="Task name"
         />
       </div>

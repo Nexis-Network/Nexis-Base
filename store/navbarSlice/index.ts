@@ -1,5 +1,5 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { AppState } from "../rootReducer";
+import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
+import type { AppState } from "../rootReducer";
 
 export interface NavbarStateType {
   selected: string;

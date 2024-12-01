@@ -1,10 +1,11 @@
-import React from 'react';
-import Skeleton from '@/components/ui/skeleton/skeleton';
+import React from "react"
+
+import Skeleton from "@/components/ui/skeleton/skeleton"
 
 function LivePricingFeedSkeleton() {
   return (
     <div className="flex w-full gap-5">
-      <div className="flex w-full items-center gap-4 rounded-lg bg-white p-5 shadow-[0_8px_16px_rgba(17,24,39,0.05)] dark:bg-light-dark lg:flex-row">
+      <div className="flex w-full items-center gap-4 rounded-lg bg-[#F2F4F3] p-5 shadow-[0_8px_16px_rgba(17,24,39,0.05)] dark:bg-light-dark lg:flex-row">
         <div className="flex w-full items-center gap-4">
           <div className="flex w-full flex-col gap-4">
             <div className="flex w-full items-center gap-3">
@@ -25,7 +26,7 @@ function LivePricingFeedSkeleton() {
           </div>
         </div>
       </div>
-      <div className="hidden w-full items-center gap-4 rounded-lg bg-white p-5 shadow-[0_8px_16px_rgba(17,24,39,0.05)] dark:bg-light-dark md:flex lg:flex-row">
+      <div className="hidden w-full items-center gap-4 rounded-lg bg-[#F2F4F3] p-5 shadow-[0_8px_16px_rgba(17,24,39,0.05)] dark:bg-light-dark md:flex lg:flex-row">
         <div className="flex w-full flex-col gap-4">
           <div className="flex w-full items-center gap-3">
             <Skeleton
@@ -44,7 +45,7 @@ function LivePricingFeedSkeleton() {
           </div>
         </div>
       </div>
-      <div className="hidden w-full items-center gap-4 rounded-lg bg-white p-5 shadow-[0_8px_16px_rgba(17,24,39,0.05)] dark:bg-light-dark lg:flex lg:flex-row">
+      <div className="hidden w-full items-center gap-4 rounded-lg bg-[#F2F4F3] p-5 shadow-[0_8px_16px_rgba(17,24,39,0.05)] dark:bg-light-dark lg:flex lg:flex-row">
         <div className="flex w-full flex-col gap-4">
           <div className="flex w-full items-center gap-3">
             <Skeleton
@@ -63,7 +64,7 @@ function LivePricingFeedSkeleton() {
           </div>
         </div>
       </div>
-      <div className="hidden w-full items-center gap-4 rounded-lg bg-white p-5 shadow-[0_8px_16px_rgba(17,24,39,0.05)] dark:bg-light-dark lg:flex-row 2xl:flex">
+      <div className="hidden w-full items-center gap-4 rounded-lg bg-[#F2F4F3] p-5 shadow-[0_8px_16px_rgba(17,24,39,0.05)] dark:bg-light-dark lg:flex-row 2xl:flex">
         <div className="flex w-full flex-col gap-4">
           <div className="flex w-full items-center gap-3">
             <Skeleton
@@ -83,7 +84,7 @@ function LivePricingFeedSkeleton() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default LivePricingFeedSkeleton;
+export default LivePricingFeedSkeleton

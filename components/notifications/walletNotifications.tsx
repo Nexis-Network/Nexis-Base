@@ -8,6 +8,8 @@ import { ConnectButton } from "@rainbow-me/rainbowkit"
 import Moralis from "moralis"
 import { useAccount } from "wagmi"
 
+import { BellIcon } from "./BellIcon"
+
 interface Notification {
   hash: string
   from: string
@@ -71,10 +73,10 @@ export function WalletNotifications() {
     <div className="relative inline-block text-left">
       <Menu>
         <Menu.Button className="relative flex items-center focus:outline-none">
-          <Bell size={18} />
-          <span className="absolute bottom-0 right-0 flex h-2 w-2">
-            <span className="absolute inline-flex size-full animate-ping rounded-full bg-lime-300 opacity-75" />
-            <span className="relative inline-flex size-2 rounded-full bg-lime-300" />
+          <BellIcon />
+          <span className="absolute bottom-0 right-0 flex size-2">
+            <span className="absolute inline-flex size-full animate-ping rounded-full bg-[#38f658] opacity-75" />
+            <span className="relative inline-flex size-2 rounded-full bg-[#51ff68]" />
           </span>
         </Menu.Button>
 
@@ -86,7 +88,7 @@ export function WalletNotifications() {
           leaveFrom="transform scale-100 opacity-100"
           leaveTo="transform scale-95 opacity-0"
         >
-          <Menu.Items className="absolute right-0 mt-2 max-h-96 w-96 origin-top-right divide-y divide-zinc-700 overflow-y-auto rounded-md border border-zinc-800 bg-black/90 text-[#f4f4f4] shadow-lg outline-none">
+          <Menu.Items className="absolute right-0 mt-2 max-h-96 w-96 origin-top-right divide-y divide-zinc-700 overflow-y-auto rounded-md border border-[#181F25]/70 bg-black/90 text-[#f4f4f4] shadow-lg outline-none">
             {isConnected ? (
               notifications.length > 0 ? (
                 notifications.map((notification) => (
@@ -122,8 +124,8 @@ export function WalletNotifications() {
                 </div>
               )
             ) : (
-              <div className="px-4 py-2 text-sm text-[#f4f4f4]">
-                <ConnectButton label="Connect Wallet" />
+              <div className="justify-center px-4 py-2 align-middle text-sm text-[#f4f4f4]">
+                <h1>Please connect your wallet to view notifications</h1>
               </div>
             )}
           </Menu.Items>

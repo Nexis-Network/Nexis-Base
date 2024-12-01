@@ -51,8 +51,10 @@ const QuestsGrid = () => {
       <div className="mb-6 flex justify-start space-x-4">
         <button
           type="button"
-          className={`rounded-3xl border border-[#242424] px-8 py-2 hover:border-white/50 ${
-            activeFilter === "all" ? "bg-white/30 text-white" : "bg-[#0a0a0a]"
+          className={`rounded-3xl border border-[#181F25]/70 px-8 py-2 hover:border-[#181F25]/50 ${
+            activeFilter === "all"
+              ? "bg-[##07090b]/30 text-[#F2F4F3]"
+              : "bg-[#07090b]"
           }`}
           onClick={() => handleFilterChange("all")}
         >
@@ -60,10 +62,10 @@ const QuestsGrid = () => {
         </button>
         <button
           type="button"
-          className={`rounded-3xl border border-[#242424] px-4 py-2 hover:border-white/50 ${
+          className={`rounded-3xl border border-[#181F25]/70 px-4 py-2 hover:border-[#181F25]/50 ${
             activeFilter === "onboarding"
-              ? "bg-white/30 text-white"
-              : "bg-[#0a0a0a]"
+              ? "bg-[#F2F4F3]/30 text-[#F2F4F3]"
+              : "bg-[#07090b]"
           }`}
           onClick={() => handleFilterChange("onboarding")}
         >
@@ -71,10 +73,10 @@ const QuestsGrid = () => {
         </button>
         <button
           type="button"
-          className={`rounded-3xl border border-[#242424] px-4 py-2 hover:border-white/50 ${
+          className={`rounded-3xl border border-[#181F25]/70 px-4 py-2 hover:border-[#181F25]/50 ${
             activeFilter === "social"
-              ? "bg-white/30 text-white"
-              : "bg-[#0a0a0a]"
+              ? "bg-[#F2F4F3]/30 text-[#F2F4F3]"
+              : "bg-[#07090b]"
           }`}
           onClick={() => handleFilterChange("social")}
         >
@@ -82,10 +84,10 @@ const QuestsGrid = () => {
         </button>
         <button
           type="button"
-          className={`rounded-3xl border border-[#242424] px-4 py-2 hover:border-white/50 ${
+          className={`rounded-3xl border border-[#181F25]/70 px-4 py-2 hover:border-[#181F25]/50 ${
             activeFilter === "on-chain"
-              ? "bg-white/30 text-white"
-              : "bg-[#0a0a0a]"
+              ? "bg-[#F2F4F3]/30 text-[#F2F4F3]"
+              : "bg-[#07090b]"
           }`}
           onClick={() => handleFilterChange("on-chain")}
         >
@@ -93,10 +95,10 @@ const QuestsGrid = () => {
         </button>
         <button
           type="button"
-          className={`rounded-3xl border border-[#242424] px-4 py-2 hover:border-white/50 ${
+          className={`rounded-3xl border border-[#181F25]/70 px-4 py-2 hover:border-[#181F25]/50 ${
             activeFilter === "ecosystem"
-              ? "bg-white/30 text-white"
-              : "bg-[#0a0a0a]"
+              ? "bg-[#F2F4F3]/30 text-[#F2F4F3]"
+              : "bg-[#07090b]"
           }`}
           onClick={() => handleFilterChange("ecosystem")}
         >
@@ -104,10 +106,10 @@ const QuestsGrid = () => {
         </button>
         <button
           type="button"
-          className={`rounded-3xl border border-[#242424] px-4 py-2 hover:border-white/50 ${
+          className={`rounded-3xl border border-[#181F25]/70 px-4 py-2 hover:border-[#181F25]/50 ${
             activeFilter === "developer"
-              ? "bg-white/30 text-white"
-              : "bg-[#0a0a0a]"
+              ? "bg-[#F2F4F3]/30 text-[#F2F4F3]"
+              : "bg-[#07090b]"
           }`}
           onClick={() => handleFilterChange("developer")}
         >

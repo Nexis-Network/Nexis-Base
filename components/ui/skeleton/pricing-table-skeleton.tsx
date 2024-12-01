@@ -1,10 +1,11 @@
-import React from 'react';
-import Skeleton from '@/components/ui/skeleton/skeleton';
+import React from "react"
+
+import Skeleton from "@/components/ui/skeleton/skeleton"
 
 function PricingTableSkeleton() {
   return (
     <div className="pt-10">
-      <div className="mt-6 w-full rounded-lg bg-white p-5 shadow-[0_8px_16px_rgba(17,24,39,0.05)] dark:bg-light-dark lg:flex-row">
+      <div className="mt-6 w-full rounded-lg bg-[#F2F4F3] p-5 shadow-[0_8px_16px_rgba(17,24,39,0.05)] dark:bg-light-dark lg:flex-row">
         <div className="flex items-center justify-between">
           <Skeleton className="!h-4 !w-56" animation />
           <Skeleton
@@ -164,7 +165,7 @@ function PricingTableSkeleton() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default PricingTableSkeleton;
+export default PricingTableSkeleton

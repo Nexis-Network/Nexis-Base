@@ -79,8 +79,14 @@ module.exports = {
         sm: 'calc(var(--radius) - 4px)'
       },
       fontFamily: {
-        sans: ["var(--font-inter)", ...fontFamily.sans],
-        mono: ['Roboto Mono"', ...defaultTheme.fontFamily.mono]
+        sans: [
+          'var(--font-inter)',
+          ...fontFamily.sans
+        ],
+        mono: [
+          'Roboto Mono"',
+          ...defaultTheme.fontFamily.mono
+        ]
       },
       keyframes: {
         shimmer: {
@@ -206,13 +212,29 @@ module.exports = {
         spotlight: {
           '0%': {
             opacity: 0,
-            transform: 'translate(-72%, -62%) scale(0.5)',
+            transform: 'translate(-72%, -62%) scale(0.5)'
           },
           '100%': {
             opacity: 1,
-            transform: 'translate(-50%,-40%) scale(1)',
-          },
+            transform: 'translate(-50%,-40%) scale(1)'
+          }
         },
+        marquee: {
+          from: {
+            transform: 'translateX(0)'
+          },
+          to: {
+            transform: 'translateX(calc(-100% - var(--gap)))'
+          }
+        },
+        'marquee-vertical': {
+          from: {
+            transform: 'translateY(0)'
+          },
+          to: {
+            transform: 'translateY(calc(-100% - var(--gap)))'
+          }
+        }
       },
       animation: {
         shimmer: 'shimmer 2s linear infinite',
@@ -229,6 +251,8 @@ module.exports = {
         'border-bl': 'border-bl 2s ease-in-out infinite',
         'border-br': 'border-br 2s ease-in-out infinite',
         spotlight: 'spotlight 2s ease .75s 1 forwards',
+        marquee: 'marquee var(--duration) infinite linear',
+        'marquee-vertical': 'marquee-vertical var(--duration) linear infinite'
       },
       screens: {
         xs: '400px'
@@ -239,13 +263,16 @@ module.exports = {
       backgroundColor: {
         clicking: 'hsl(82 84.5% 67.1%)',
         hovering: 'hsl(82 84.5% 67.1%)'
-      }
+      },
+      dropShadow: {
+        'custom': '0 4px 12px rgba(0, 0, 0, 0.3)'
+      },
+      boxShadow: {
+        'glow': '0 0 8px #3aad74',
+      },
     }
   },
   plugins: [
-    require("tailwindcss-animate"),
-    plugin(({ addVariant }) => {
-      addVariant('group-hover-animate', ':merge(.group):hover &')
-    }),
+    require("tailwindcss-animate")
   ],
 }

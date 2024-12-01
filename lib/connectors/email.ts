@@ -1,8 +1,10 @@
-import { ChainNotConfiguredError, createConnector, normalizeChainId } from "wagmi";
+import { ChainNotConfiguredError } from "wagmi";
 import type { IWeb3Auth } from "@web3auth/base";
 import * as pkg from "@web3auth/base";
 import type { IWeb3AuthModal } from "@web3auth/modal";
-import { Chain, getAddress, SwitchChainError, UserRejectedRequestError } from "viem";
+import type { Chain } from "viem";
+import { getAddress, SwitchChainError, UserRejectedRequestError } from "viem";
+import { Connector } from "wagmi";
 
 import type { Provider, Web3AuthConnectorParams } from "@web3auth/web3auth-wagmi-connector";
 
@@ -17,7 +19,7 @@ export function Web3AuthEmailConnector(parameters: Web3AuthConnectorParams, id: 
 
   const { web3AuthInstance, loginParams, modalConfig } = parameters;
 
-  return createConnector<Provider>((config) => ({
+  return Connector<Provider>((config): { id: string; name: string; type: string; connect: (params?: { chainId?: string }) => Promise<{ accounts: string[]; chainId: string }>; getAccounts: () => Promise<string[]>; getChainId: () => Promise<string>; getProvider: () => Promise<Provider>; isAuthorized: () => Promise<boolean>; switchChain: (params: { chainId: string }) => Promise<Chain>; disconnect: () => Promise<void>; onAccountsChanged: (accounts: string[]) => void; onChainChanged: (chain: string) => void; onDisconnect: () => void; }>((config) => ({
     id,
     name: "Web3Auth",
     type: "Web3Auth",

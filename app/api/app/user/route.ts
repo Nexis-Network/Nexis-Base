@@ -15,12 +15,11 @@ export async function GET(req: Request) {
       }),
       { status: 200, headers: { "Content-Type": "application/json" } }
     )
-  } else {
-    return new Response(
-      JSON.stringify({
-        isLoggedIn: false,
-      }),
-      { status: 200, headers: { "Content-Type": "application/json" } }
-    )
   }
+  return new Response(
+    JSON.stringify({
+      isLoggedIn: false,
+    }),
+    { status: 200, headers: { "Content-Type": "application/json" } }
+  )
 }

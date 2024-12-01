@@ -35,7 +35,7 @@ const StyledWrapper = styled.div`
   }
   .item-hints .hint-dot {
     z-index: 3;
-    border: 1px solid #ffe4e4;
+    border: 1px solid #181f25;
     border-radius: 50%;
     width: 60px;
     height: 60px;

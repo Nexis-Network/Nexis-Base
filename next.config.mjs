@@ -17,6 +17,9 @@ const nextConfig = {
       'raw.githubusercontent.com',
       'assets.coingecko.com',
       's2.coinmarketcap.com',
+      'cdn.moralis.io',
+      'nexis.network',
+      'logo.moralis.io',
     ],
     remotePatterns: [
       {

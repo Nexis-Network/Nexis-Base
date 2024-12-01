@@ -42,7 +42,7 @@
 //   console.log(files);
 
 //   return (
-//     <div className="rounded-lg border border-solid border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-light-dark sm:p-6">
+//     <div className="rounded-lg border border-solid border-gray-200 bg-[#F2F4F3] p-4 dark:border-gray-700 dark:bg-light-dark sm:p-6">
 //       <div
 //         {...getRootProps({
 //           className:

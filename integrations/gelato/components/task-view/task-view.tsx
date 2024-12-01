@@ -121,7 +121,7 @@ export function TaskView({ taskId }: TasKViewProps) {
               )}
             </div>
             <div>
-              <span className="pointer-events-none rounded-2xl bg-[#0a0a0a]/50 px-2 py-1 pr-3 text-xs font-normal">
+              <span className="pointer-events-none rounded-2xl bg-[#07090b]/50 px-2 py-1 pr-3 text-xs font-normal">
                 <i
                   className={`mr-0.5 ${
                     task.status == "ongoing" ? "text-green-500" : "text-red-500"

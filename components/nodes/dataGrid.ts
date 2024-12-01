@@ -19,7 +19,7 @@ export const dataGridCustomizations: DataGridProComponents<Theme> & DataGridComp
       root: ({ theme }) => ({
         '--DataGrid-overlayHeight': '300px',
         overflow: 'clip',
-        borderColor: '#242424',
+        borderColor: '#181F25',
         backgroundColor: '#18181b',
         color: '#fafafa',
         [`& .${gridClasses.columnHeader}`]: {
@@ -49,7 +49,7 @@ export const dataGridCustomizations: DataGridProComponents<Theme> & DataGridComp
       }),
       cell: ({ theme }) => ({
         color: '#fafafa',
-        borderTopColor: '#242424',
+        borderTopColor: '#181F25',
       }),
       menu: ({ theme }) => ({
         borderRadius: theme.shape.borderRadius,
@@ -72,15 +72,15 @@ export const dataGridCustomizations: DataGridProComponents<Theme> & DataGridComp
 
       row: ({ theme }: { theme: Theme }) => ({
         '&:last-of-type': {
-          borderBottom: `1px solid #242424`,
+          borderBottom: `1px solid #181F25`,
         },
         '&:hover': {
-          backgroundColor: '#242424',
+          backgroundColor: '#181F25',
         },
         '&.Mui-selected': {
-          backgroundColor: '#242424',
+          backgroundColor: '#181F25',
           '&:hover': {
-            backgroundColor: '#242424',
+            backgroundColor: '#181F25',
           },
         },
       }),

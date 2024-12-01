@@ -104,7 +104,7 @@ export function TransactionHistory() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.3 }}
-                className="grid h-[44px] w-full shrink-0 grid-cols-7 items-center gap-4 border-b border-[#25262B] bg-[#0A0A0A] px-[30px] text-[13px] font-normal text-[#959699]"
+                className="grid h-[44px] w-full shrink-0 grid-cols-7 items-center gap-4 border-b border-[#25262B] bg-[#07090b] px-[30px] text-[13px] font-normal text-[#959699]"
               >
                 <p>
                   {isTransactionWithHash(tx)
@@ -169,14 +169,14 @@ export function TransactionHistory() {
             <button
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page === 1}
-              className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:opacity-50"
+              className="rounded bg-blue-500 px-4 py-2 text-[#F2F4F3] hover:bg-blue-600 disabled:opacity-50"
             >
               Previous
             </button>
             <button
               onClick={() => setPage((p) => p + 1)}
               disabled={!hasMore}
-              className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:opacity-50"
+              className="rounded bg-blue-500 px-4 py-2 text-[#F2F4F3] hover:bg-blue-600 disabled:opacity-50"
             >
               Next
             </button>

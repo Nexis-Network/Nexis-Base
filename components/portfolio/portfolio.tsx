@@ -3,7 +3,12 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Avatar } from "@geist-ui/core"
+import {
+  ArbitrumCircleColorful,
+  EthereumCircleColorful,
+  UsdcCircleColorful,
+  UsdtCircleColorful,
+} from "@ant-design/web3-icons"
 import { EvmChain } from "@moralisweb3/common-evm-utils"
 import Moralis from "moralis"
 import { useAccount } from "wagmi"
@@ -16,6 +21,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { Progress } from "@/components/ui/progress"
+import { Skeleton } from "@/components/ui/skeleton"
 import {
   Table,
   TableBody,
@@ -25,21 +32,44 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
+import { NFTGallery } from "../NFTGallery"
 import EthereumIcon from "../ui/chains/EthereumIcon"
 import HyperText from "../ui/hyper-text"
 import Web3DashboardTable from "../WalletDetails"
 import Styles from "./portfolio.module.css"
-import TokenSearch from "./search"
+import { TokenSearch } from "./search"
 import TokenIcon from "./tokenIcon"
+import TokensCarousel from "./tokens"
 
 // Token addresses (Ethereum mainnet)
-const TOKEN_ADDRESSES = {
+const DEFAULT_TOKENS = {
+  ETH: "0x0000000000000000000000000000000000000000",
   WETH: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
   USDT: "0xdAC17F958D2ee523a2206206994597C13D831ec7",
   USDC: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-  ESE: "0x908dDb096BFb3AcB19e2280aAD858186ea4935C4",
-  SHIBA: "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
+}
+
+interface Token {
+  token: {
+    name: string
+    symbol: string
+    contractAddress: string
+    decimals: number
+    logoURI?: string
+    logo?: string | React.ReactNode
+  }
+  amount: string
+  price: number
+  priceChange24h: number
+  value: number
+  network: string
 }
 
 // Define the Nft interface
@@ -55,45 +85,35 @@ interface Nft {
   // Include any other properties you need from the NFT object
 }
 
-// Ensure the Token interface includes all necessary properties
-interface Token {
-  token: {
-    name: string
-    symbol: string
-    contractAddress: string
-    logo: JSX.Element
-  }
-  amount: string
-  price: number
-  priceChange24h: number
-  value: number
-  portfolioPercentage: number
-}
-
-// Define the TokenResult interface
-interface TokenResult {
-  name?: string
-  symbol?: string
-  address?: string
-  image?: JSX.Element | null
-}
-
 export default function Portfolio() {
   const [activeTab, setActiveTab] = useState("tokens")
   const [tokens, setTokens] = useState<Token[]>([])
-  const [trackedTokens, setTrackedTokens] = useState<Token[]>([])
   const [nfts, setNfts] = useState<Nft[]>([])
   const { address, isConnected } = useAccount()
+  const [totalPortfolioValue, setTotalPortfolioValue] = useState<number>(0)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     if (isConnected && address) {
       const fetchData = async () => {
-        await fetchTokens(address)
-        await fetchNFTs(address)
+        setIsLoading(true)
+        try {
+          await fetchTokens(address)
+          await fetchNFTs(address)
+        } finally {
+          setIsLoading(false)
+        }
       }
       void fetchData()
     }
   }, [isConnected, address])
+
+  useEffect(() => {
+    if (tokens.length > 0) {
+      const total = tokens.reduce((sum, token) => sum + token.value, 0)
+      setTotalPortfolioValue(total)
+    }
+  }, [tokens])
 
   const fetchTokens = async (address: string) => {
     if (!Moralis.Core.isStarted) {
@@ -101,107 +121,183 @@ export default function Portfolio() {
     }
 
     const chain = EvmChain.ETHEREUM
-    const tokenAddresses = Object.values(TOKEN_ADDRESSES)
 
-    // Fetch balances for all token addresses
-    const response = await Moralis.EvmApi.token.getWalletTokenBalances({
-      address,
-      chain,
-      tokenAddresses,
-    })
+    try {
+      // Get WETH price data first for ETH
+      const wethPriceData = await Moralis.EvmApi.token.getTokenPrice({
+        address: DEFAULT_TOKENS.WETH,
+        chain,
+      })
 
-    const tokenData = (
-      await Promise.all(
+      // Fetch ETH balance and create ETH token data
+      const ethBalance = await Moralis.EvmApi.balance.getNativeBalance({
+        address,
+        chain,
+      })
+
+      const ethAmount = Number(ethBalance.result.balance.ether)
+      const ethData: Token = {
+        token: {
+          name: "Ethereum",
+          symbol: "ETH",
+          contractAddress: DEFAULT_TOKENS.ETH,
+          decimals: 18,
+          logo: <TokenIcon address={DEFAULT_TOKENS.ETH} />,
+        },
+        amount: ethAmount.toString(),
+        price: wethPriceData.result.usdPrice,
+        priceChange24h: Number(wethPriceData.result["24hrPercentChange"]),
+        value: ethAmount * wethPriceData.result.usdPrice,
+        network: "Ethereum",
+      }
+
+      // Fetch balances for default tokens
+      const tokenAddresses = [
+        DEFAULT_TOKENS.WETH,
+        DEFAULT_TOKENS.USDT,
+        DEFAULT_TOKENS.USDC,
+      ]
+      const response = await Moralis.EvmApi.token.getWalletTokenBalances({
+        address,
+        chain,
+        tokenAddresses,
+      })
+
+      const tokenData = await Promise.all(
         response.result.map(async (token) => {
           if (token.token !== null) {
-            const priceData = await Moralis.EvmApi.token.getTokenPrice({
-              address: token.token.contractAddress,
-              chain,
-            })
+            try {
+              const [metadataResponse, priceData] = await Promise.all([
+                Moralis.EvmApi.token.getTokenMetadata({
+                  addresses: [token.token.contractAddress],
+                  chain,
+                }),
+                Moralis.EvmApi.token.getTokenPrice({
+                  address: token.token.contractAddress,
+                  chain,
+                }),
+              ])
 
-            return {
-              token: {
-                name: token.token.name,
-                symbol: token.token.symbol,
-                contractAddress: token.token.contractAddress.checksum,
-                logo: (
-                  <TokenIcon address={token.token.contractAddress.checksum} />
-                ),
-              },
-              amount: token.amount.toString(),
-              price: priceData.result.usdPrice,
-              priceChange24h: Number(priceData.result["24hrPercentChange"]),
-              value:
-                Number(token.amount.toString()) * priceData.result.usdPrice,
-              portfolioPercentage: 0, // Placeholder, calculate later
-            } as Token
+              const metadata = metadataResponse.result[0]
+              const decimals = Number(token.token.decimals)
+              const amount = Number(token.amount) / 10 ** decimals
+
+              return {
+                token: {
+                  name: metadata.token.name,
+                  symbol: metadata.token.symbol,
+                  contractAddress: token.token.contractAddress.checksum,
+                  decimals: decimals,
+                  logoURI:
+                    metadata.token.logo ||
+                    metadata.token.thumbnail ||
+                    undefined,
+                  logo: (
+                    <TokenIcon
+                      address={token.token.contractAddress.checksum}
+                      logoURI={
+                        metadata.token.logo ||
+                        metadata.token.thumbnail ||
+                        undefined
+                      }
+                    />
+                  ),
+                },
+                amount: amount.toString(),
+                price: priceData.result.usdPrice,
+                priceChange24h: Number(priceData.result["24hrPercentChange"]),
+                value: amount * priceData.result.usdPrice,
+                network: "Ethereum",
+              } as Token
+            } catch (error) {
+              console.error(
+                "Error fetching data for token:",
+                token.token.contractAddress.checksum,
+                error
+              )
+              return null
+            }
           }
           return null
         })
       )
-    ).filter((token): token is Token => token !== null)
 
-    // Calculate portfolio percentage
-    const totalValue = tokenData.reduce((acc, token) => acc + token.value, 0)
-    for (const token of tokenData) {
-      token.portfolioPercentage = (token.value / totalValue) * 100
-    }
-
-    // Add tokens with zero balance for remaining TOKEN_ADDRESSES
-    const existingAddresses = tokenData.map((t) =>
-      t.token.contractAddress.toLowerCase()
-    )
-    const remainingTokens = Object.entries(TOKEN_ADDRESSES)
-      .filter(
-        ([_, address]) => !existingAddresses.includes(address.toLowerCase())
+      // Filter out null values and combine with ETH data
+      const validTokens = tokenData.filter(
+        (token): token is Token => token !== null
       )
-      .map(([name, address]) => ({
-        token: {
-          name,
-          symbol: name,
-          contractAddress: address,
-          logo: <TokenIcon address={address} />,
-        },
-        amount: "0",
-        price: 0,
-        priceChange24h: 0,
-        value: 0,
-        portfolioPercentage: 0,
-      }))
 
-    // Add ETH data
-    const ethBalance = await Moralis.EvmApi.balance.getNativeBalance({
-      address,
-      chain,
-    })
+      // Create default tokens with zero balance if they don't exist in the wallet
+      const existingAddresses = validTokens.map((t) =>
+        t.token.contractAddress.toLowerCase()
+      )
+      const defaultTokensWithZero = Object.entries(DEFAULT_TOKENS)
+        .filter(
+          ([_, address]) =>
+            address !== DEFAULT_TOKENS.ETH && // Skip ETH as it's already handled
+            !existingAddresses.includes(address.toLowerCase())
+        )
+        .map(async ([name, address]) => {
+          try {
+            const [metadataResponse, priceData] = await Promise.all([
+              Moralis.EvmApi.token.getTokenMetadata({
+                addresses: [address],
+                chain,
+              }),
+              Moralis.EvmApi.token.getTokenPrice({
+                address,
+                chain,
+              }),
+            ])
 
-    const ethPriceData = await Moralis.EvmApi.token.getTokenPrice({
-      address: TOKEN_ADDRESSES.WETH,
-      chain,
-    })
+            const metadata = metadataResponse.result[0]
+            return {
+              token: {
+                name: metadata.token.name,
+                symbol: metadata.token.symbol,
+                contractAddress: address,
+                decimals: metadata.token.decimals,
+                logoURI:
+                  metadata.token.logo || metadata.token.thumbnail || undefined,
+                logo: (
+                  <TokenIcon
+                    address={address}
+                    logoURI={
+                      metadata.token.logo ||
+                      metadata.token.thumbnail ||
+                      undefined
+                    }
+                  />
+                ),
+              },
+              amount: "0",
+              price: priceData.result.usdPrice,
+              priceChange24h: Number(priceData.result["24hrPercentChange"]),
+              value: 0,
+              network: "Ethereum",
+            } as Token
+          } catch (error) {
+            console.error(
+              "Error fetching data for default token:",
+              address,
+              error
+            )
+            return null
+          }
+        })
 
-    const ethData: Token = {
-      token: {
-        name: "Ethereum",
-        symbol: "ETH",
-        contractAddress: "0x0000000000000000000000000000000000000000",
-        logo: (
-          <TokenIcon address="0x0000000000000000000000000000000000000000" />
-        ),
-      },
-      amount: ethBalance.result.balance.ether,
-      price: ethPriceData.result.usdPrice,
-      priceChange24h: Number(ethPriceData.result["24hrPercentChange"]),
-      value:
-        Number(ethBalance.result.balance.ether) * ethPriceData.result.usdPrice,
-      portfolioPercentage: 0, // Placeholder, calculate later
+      const zeroBalanceTokens = (
+        await Promise.all(defaultTokensWithZero)
+      ).filter((token): token is Token => token !== null)
+
+      // Combine all tokens and sort by value
+      const allTokens = [ethData, ...validTokens, ...zeroBalanceTokens].sort(
+        (a, b) => b.value - a.value
+      )
+      setTokens(allTokens)
+    } catch (error) {
+      console.error("Error fetching token data:", error)
     }
-
-    // Calculate portfolio percentage for ETH
-    const totalPortfolioValue = totalValue + ethData.value
-    ethData.portfolioPercentage = (ethData.value / totalPortfolioValue) * 100
-
-    setTokens([ethData, ...tokenData, ...remainingTokens])
   }
 
   const fetchNFTs = async (address: string) => {
@@ -242,233 +338,186 @@ export default function Portfolio() {
     setNfts(nftData)
   }
 
-  const handleAddToken = (tokenResult: TokenResult) => {
-    const token: Token = {
-      token: {
-        name: tokenResult.name ?? "",
-        symbol: tokenResult.symbol ?? "",
-        contractAddress: tokenResult.address ?? "",
-        logo: tokenResult.image ?? null,
-      },
-      amount: "0", // Default amount
-      price: 0, // Default price
-      priceChange24h: 0, // Default price change
-      value: 0, // Default value
-    }
-
-    setTrackedTokens((prevTokens) => {
-      if (
-        !prevTokens.find(
-          (t) => t.token.contractAddress === token.token.contractAddress
-        )
-      ) {
-        return [...prevTokens, token]
-      }
-      return prevTokens
-    })
-  }
-
-  const handleRemoveToken = (tokenResult: TokenResult) => {
-    setTrackedTokens((prevTokens) =>
-      prevTokens.filter((t) => t.token.contractAddress !== tokenResult.address)
-    )
-  }
-
   return (
-    <div className="mx-0 py-0">
+    <div className="mx-0 border-b border-[#181F25]/70 py-0">
       <Card
-        className={`${Styles.container} rounded-none border-t border-zinc-800`}
+        className={`${Styles.container} rounded-none border-t border-[#181F25]/70`}
       >
-        <TokenSearch
-          onAddToken={handleAddToken}
-          onRemoveToken={handleRemoveToken}
-          trackedTokens={trackedTokens}
-        />
+        <TokenSearch />
         <CardContent className="mx-0 p-0 px-2">
-          <Tabs
-            className={Styles.tabs}
-            value={activeTab}
-            onValueChange={setActiveTab}
-          >
-            <div className="mx-0 mb-4 flex w-full items-center justify-between border-b border-zinc-800 px-4">
+          <Tabs className={Styles.tabs} value="tokens">
+            <div className="mx-0 mb-4 flex w-full items-center justify-between border-b border-[#181F25]/70 px-0">
               <div className="align-center my-0 py-0">
-                <h2 className={Styles.DescriptionText}>
-                  {"/// WALLET HOLDINGS"}
-                </h2>
-              </div>
-              <TabsList className="align-center my-0 bg-[#0a0a0a] py-0">
-                <div className="grid min-w-full grid-cols-3 bg-[#0a0a0a]">
-                  <div className="group relative size-full bg-[#0a0a0a] align-bottom">
-                    <TabsTrigger
-                      className="relative z-10 w-full border-collapse rounded-none bg-[#0a0a0a] px-8 py-4 font-mono text-white/80 transition-colors duration-300 hover:text-white data-[state=active]:border-b-2 data-[state=active]:border-b-lime-300"
-                      value="tokens"
-                    >
-                      <div className="mr-2 flex bg-[#0a0a0a]">
-                        <svg
-                          width="5"
-                          height="4"
-                          viewBox="0 0 5 4"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <title>dot</title>
-                          <rect
-                            width="3.6"
-                            height="3.6"
-                            transform="translate(0.590637 0.0977173)"
-                            fill="white"
-                            className="pr-2 align-middle"
-                          />
-                        </svg>
-                      </div>
-                      <HyperText className={Styles.tabsTrigger} text="TOKENS" />
-                    </TabsTrigger>
-                    <div className="pointer-events-none absolute inset-0 z-0 h-full py-2 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                  </div>
-                  <div className="group relative size-full bg-[#0a0a0a] align-bottom">
-                    <TabsTrigger
-                      className="relative z-10 w-full border-collapse rounded-none border-l border-zinc-800 bg-[#0a0a0a] px-8 py-4 font-mono text-white/80 transition-colors duration-300 hover:text-white data-[state=active]:border-b-2 data-[state=active]:border-b-lime-300"
-                      value="nfts"
-                    >
-                      <div className="mr-2 flex bg-[#0a0a0a]">
-                        <svg
-                          width="5"
-                          height="4"
-                          viewBox="0 0 5 4"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <title>dot</title>
-                          <rect
-                            width="3.6"
-                            height="3.6"
-                            transform="translate(0.590637 0.0977173)"
-                            fill="white"
-                            className="pr-2 align-middle"
-                          />
-                        </svg>
-                      </div>
-                      <HyperText className={Styles.tabsTrigger} text="NFTs" />
-                    </TabsTrigger>
-                    <div className="pointer-events-none absolute inset-0 z-0 h-full py-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                  </div>
-                  <div className="group relative size-full bg-[#0a0a0a] align-bottom">
-                    <TabsTrigger
-                      className="relative z-10 w-full border-collapse rounded-none border-l border-zinc-800 bg-[#0a0a0a] px-8 py-4 font-mono text-white/80 transition-colors duration-300 hover:text-white data-[state=active]:border-b-2 data-[state=active]:border-b-lime-300"
-                      value="vesting"
-                    >
-                      <div className="mr-2 flex bg-[#0a0a0a]">
-                        <svg
-                          width="5"
-                          height="4"
-                          viewBox="0 0 5 4"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <title>dot</title>
-                          <rect
-                            width="3.6"
-                            height="3.6"
-                            transform="translate(0.590637 0.0977173)"
-                            fill="white"
-                            className="pr-2 align-middle"
-                          />
-                        </svg>
-                      </div>
-                      <HyperText
-                        className={Styles.tabsTrigger}
-                        text="VESTING"
-                      />
-                    </TabsTrigger>
-                    <div className="pointer-events-none absolute inset-0 z-0 h-full py-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                <div className="w-full p-0 font-mono text-[#F2F4F3]">
+                  <div className="p-2">
+                    <span className="text-base">{"/// WALLET DETAILS"}</span>
                   </div>
                 </div>
-              </TabsList>
-            </div>
-
-            <TabsContent value="tokens">
-              <Table className="w-full px-6">
-                <TableHeader>
-                  <TableRow className="my-2">
-                    <TableHead>Logo</TableHead>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Balance</TableHead>
-                    <TableHead>Price</TableHead>
-                    <TableHead>24h Change</TableHead>
-                    <TableHead>Value</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody className="px-20 py-0">
-                  {trackedTokens.map((token) => (
-                    <TableRow key={token.token.contractAddress}>
-                      <TableCell>
-                        <div className="align-center relative size-6 content-center">
-                          <div className="absolute inset-0 size-6 overflow-hidden rounded-full">
-                            {token.token.logo}
-                          </div>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        {token.token.name}{" "}
-                        <span className="text-sm">({token.token.symbol})</span>
-                      </TableCell>
-                      <TableCell>
-                        {Number.parseFloat(token.amount ?? "0").toFixed(4)}
-                      </TableCell>
-                      <TableCell>${(token.price ?? 0).toFixed(2)}</TableCell>
-                      <TableCell
-                        className={
-                          (token.priceChange24h ?? 0) >= 0
-                            ? "text-lime-500"
-                            : "text-red-500"
-                        }
-                      >
-                        {(token.priceChange24h ?? 0).toFixed(2)}%
-                      </TableCell>
-                      <TableCell>${(token.value ?? 0).toFixed(2)}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TabsContent>
-            <TabsContent value="nfts">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Image</TableHead>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Floor Price</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {nfts.map((nft) => (
-                    <TableRow key={`${nft.tokenAddress}-${nft.tokenId}`}>
-                      <TableCell>
-                        <Avatar>
-                          <AvatarImage
-                            src={nft.metadata?.image}
-                            alt={nft.metadata?.name}
-                          />
-                          <AvatarFallback>
-                            {nft.metadata?.name?.charAt(0)}
-                          </AvatarFallback>
-                        </Avatar>
-                      </TableCell>
-                      <TableCell>
-                        {nft.metadata?.name ||
-                          `${nft.name ?? ""} ${nft.tokenId}`}
-                      </TableCell>
-                      <TableCell>{nft.floorPrice} ETH</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TabsContent>
-            <TabsContent value="vesting">
-              <div>
-                <Web3DashboardTable />
               </div>
-            </TabsContent>
+            </div>
+            <div className="w-full">
+              {isLoading ? (
+                <div className="m-4 flex w-full flex-col gap-4">
+                  {Array.from({ length: 5 }, (_, i) => (
+                    <div
+                      key={`skeleton-row-${crypto.randomUUID()}`}
+                      className="grid w-full grid-cols-8 items-center justify-start gap-8"
+                    >
+                      <div className="flex justify-start">
+                        <Skeleton className="size-6 rounded-full" />
+                      </div>
+                      <div>
+                        <Skeleton className="h-4 w-full" />
+                      </div>
+                      <div>
+                        <Skeleton className="h-4 w-full" />
+                      </div>
+                      <div>
+                        <Skeleton className="h-4 w-full" />
+                      </div>
+                      <div>
+                        <Skeleton className="h-4 w-full" />
+                      </div>
+                      <div>
+                        <Skeleton className="h-4 w-full" />
+                      </div>
+                      <div>
+                        <Skeleton className="h-4 w-full" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : !isConnected ? (
+                <div className="flex w-full justify-center p-8 text-muted-foreground">
+                  Connect your wallet to view your portfolio
+                </div>
+              ) : tokens.length === 0 ? (
+                <div className="flex w-full justify-center p-8 text-muted-foreground">
+                  No tokens found in connected wallet
+                </div>
+              ) : (
+                <Table className="w-full">
+                  <TableHeader>
+                    <TableRow className="bg-[#07090b] hover:bg-transparent">
+                      <TableHead className="min-w-[40px]">Asset</TableHead>
+                      <TableHead>Name</TableHead>
+                      <TableHead>Network</TableHead>
+                      <TableHead className="text-right">Balance</TableHead>
+                      <TableHead className="text-right">Price</TableHead>
+                      <TableHead className="text-right">24h</TableHead>
+                      <TableHead className="text-right">Value</TableHead>
+                      <TableHead className="w-[200px] pl-8 text-right">
+                        Portfolio %
+                      </TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {tokens.map((token) => {
+                      const portfolioPercentage =
+                        totalPortfolioValue > 0
+                          ? (token.value / totalPortfolioValue) * 100
+                          : 0
+
+                      return (
+                        <TableRow
+                          key={`${token.network}-${token.token.contractAddress}`}
+                          className="hover:bg-zinc-900/50"
+                        >
+                          <TableCell>
+                            <TokenIcon
+                              address={token.token.contractAddress}
+                              logoURI={token.token.logoURI}
+                            />
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex flex-col">
+                              <span className="font-medium">
+                                {token.token.name}
+                              </span>
+                              <span className="text-sm text-muted-foreground">
+                                {token.token.symbol}
+                              </span>
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            <span className="inline-flex items-center rounded-md bg-zinc-900 px-2 py-1 text-xs font-medium">
+                              {token.network}
+                            </span>
+                          </TableCell>
+                          <TableCell className="text-right">
+                            <span className="font-medium">
+                              {Number(token.amount).toLocaleString(undefined, {
+                                maximumFractionDigits: 6,
+                              })}
+                            </span>
+                          </TableCell>
+                          <TableCell className="text-right">
+                            <span className="font-medium">
+                              $
+                              {token.price.toLocaleString(undefined, {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                              })}
+                            </span>
+                          </TableCell>
+                          <TableCell className="text-right">
+                            <span
+                              className={
+                                (token.priceChange24h || 0) >= 0
+                                  ? "text-green-500"
+                                  : "text-red-500"
+                              }
+                            >
+                              {(token.priceChange24h || 0).toLocaleString(
+                                undefined,
+                                {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2,
+                                  signDisplay: "always",
+                                }
+                              )}
+                              %
+                            </span>
+                          </TableCell>
+                          <TableCell className="text-right">
+                            <span className="font-medium">
+                              $
+                              {token.value.toLocaleString(undefined, {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                              })}
+                            </span>
+                          </TableCell>
+                          <TableCell className="w-[200px] pl-8 text-right">
+                            <TooltipProvider>
+                              <Tooltip>
+                                <TooltipTrigger className="w-full">
+                                  <div className="flex items-center gap-2">
+                                    <Progress
+                                      value={portfolioPercentage}
+                                      className="h-2"
+                                    />
+                                    <span className="w-12 text-xs">
+                                      {portfolioPercentage.toFixed(1)}%
+                                    </span>
+                                  </div>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  <p>
+                                    {portfolioPercentage.toFixed(2)}% of
+                                    portfolio
+                                  </p>
+                                </TooltipContent>
+                              </Tooltip>
+                            </TooltipProvider>
+                          </TableCell>
+                        </TableRow>
+                      )
+                    })}
+                  </TableBody>
+                </Table>
+              )}
+            </div>
           </Tabs>
         </CardContent>
       </Card>

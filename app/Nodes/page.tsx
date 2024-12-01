@@ -1,84 +1,106 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Progress } from "@/components/ui/progress"
 
-export default function Dashboard() {
-  const [nodeStatus, setNodeStatus] = useState("Active")
-  const [delegatedTokens, setDelegatedTokens] = useState(1000)
-  const [totalRewards, setTotalRewards] = useState(50)
-  const [uptime, setUptime] = useState(99.9)
+// Mock validators data
+const VALIDATORS = [
+  {
+    publicKey: "NZT7nJrxqodF3z9YvKnxwUbJ5zJK1FrjBY2WeHf89w2",
+    name: "Nexis Foundation",
+    commission: 10,
+    activeStake: 450000,
+    apy: 12.5,
+    score: 98,
+  },
+  {
+    publicKey: "NZT9xKpJkn6JqumUMw4FHvqxhvjxGvED7HAJGMkd2w1",
+    name: "Nexis Labs",
+    commission: 8,
+    activeStake: 380000,
+    apy: 11.8,
+    score: 95,
+  },
+  {
+    publicKey: "NZT5xKpJkn6JqumUMw4FHvqxhvjxGvED7HAJGMkd2w3",
+    name: "Nexis Staking Pool",
+    commission: 7,
+    activeStake: 520000,
+    apy: 13.2,
+    score: 97,
+  },
+] as const
 
-  useEffect(() => {
-    // Simulating real-time updates
-    const interval = setInterval(() => {
-      setDelegatedTokens((prev) => prev + Math.floor(Math.random() * 10))
-      setTotalRewards((prev) => prev + Math.random())
-      setUptime((prev) => Math.min(100, prev + Math.random() * 0.1))
-    }, 5000)
-
-    return () => clearInterval(interval)
-  }, [])
-
+export default function NodesPage() {
   return (
-    <div className="mx-20 my-10">
-      <div className="space-y-6">
-        <h1 className="text-3xl font-bold">Dashboard</h1>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Node Status</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{nodeStatus}</div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
-                Delegated Tokens
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">
-                {delegatedTokens.toLocaleString()}
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
-                Total Rewards
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">
-                {totalRewards.toFixed(2)}
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Uptime</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{uptime.toFixed(2)}%</div>
-              <Progress value={uptime} className="mt-2" />
-            </CardContent>
-          </Card>
+    <div className="container mx-auto px-4 py-8">
+      <div className="mb-8 space-y-4">
+        <h1 className="bg-gradient-to-r from-primary to-[#DC1FFF] bg-clip-text text-4xl font-bold text-transparent">
+          Nexis Staking
+        </h1>
+        <p className="text-muted-foreground">
+          Stake your NZT tokens with validators to earn rewards and secure the
+          network
+        </p>
+      </div>
+
+      {/* Stats Overview */}
+      <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <div className="rounded-lg border bg-card p-6">
+          <p className="text-sm text-muted-foreground">Total Staked</p>
+          <p className="text-2xl font-bold">1.35M NZT</p>
         </div>
-        <Card>
-          <CardHeader>
-            <CardTitle>Quick Actions</CardTitle>
-          </CardHeader>
-          <CardContent className="flex gap-4">
-            <Button>Delegate More</Button>
-            <Button variant="outline">Claim Rewards</Button>
-          </CardContent>
-        </Card>
+        <div className="rounded-lg border bg-card p-6">
+          <p className="text-sm text-muted-foreground">Average APY</p>
+          <p className="text-2xl font-bold">12.5%</p>
+        </div>
+        <div className="rounded-lg border bg-card p-6">
+          <p className="text-sm text-muted-foreground">Active Validators</p>
+          <p className="text-2xl font-bold">{VALIDATORS.length}</p>
+        </div>
+      </div>
+
+      {/* Validators Grid */}
+      <div className="grid gap-6">
+        {VALIDATORS.map((validator) => (
+          <div
+            key={validator.publicKey}
+            className="rounded-lg border bg-card p-6 transition-all hover:border-primary/50"
+          >
+            <div className="flex items-center justify-between">
+              <div className="space-y-4">
+                <div>
+                  <h3 className="text-lg font-semibold">{validator.name}</h3>
+                  <p className="font-mono text-sm text-muted-foreground">
+                    {validator.publicKey}
+                  </p>
+                </div>
+                <div className="grid grid-cols-4 gap-8 text-sm">
+                  <div>
+                    <p className="text-muted-foreground">Commission</p>
+                    <p>{validator.commission}%</p>
+                  </div>
+                  <div>
+                    <p className="text-muted-foreground">Active Stake</p>
+                    <p>{validator.activeStake.toLocaleString()} NZT</p>
+                  </div>
+                  <div>
+                    <p className="text-muted-foreground">APY</p>
+                    <p className="text-primary">{validator.apy}%</p>
+                  </div>
+                  <div>
+                    <p className="text-muted-foreground">Score</p>
+                    <p>{validator.score}/100</p>
+                  </div>
+                </div>
+              </div>
+              <Link href={`/nodes/${validator.publicKey}`}>
+                <Button size="lg">Stake</Button>
+              </Link>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   )

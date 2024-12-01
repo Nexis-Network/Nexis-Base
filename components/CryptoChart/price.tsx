@@ -3,7 +3,7 @@
 import { use, useMemo } from "react"
 import { Triangle } from "lucide-react"
 
-import { Benchmark } from "@/lib/pyth"
+import type { Benchmark } from "@/lib/pyth"
 import { cn } from "@/lib/utils"
 
 interface LastPriceProps {

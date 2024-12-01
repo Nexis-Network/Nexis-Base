@@ -87,7 +87,7 @@ export function ExecutionValues({
               {item.name && (
                 <>
                   <input
-                    className="input mt-2 !rounded-2xl dark:bg-zinc-700 dark:text-white"
+                    className="input mt-2 !rounded-2xl dark:bg-zinc-700 dark:text-[#F2F4F3]"
                     placeholder="value"
                     {...register(`${inputFieldName}.${item.name}`, {
                       validate: {

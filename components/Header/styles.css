@@ -28,7 +28,7 @@
     animation-duration: 0.2s;
     background-color: yellow;
     color: black;
-    border: 1px solid yellow;
+    border: 1px solid #181F25;
 
     .text-decoration {
       animation-name: blink;

@@ -97,7 +97,7 @@ export function SubscribeButton({
     </button>
   ) : (
     <button
-      className="rounded-md border-2 border-pink-600 bg-pink-600 px-3 py-1 text-sm font-semibold text-white shadow focus:outline-none md:px-3 md:py-2"
+      className="rounded-md border-2 border-pink-600 bg-pink-600 px-3 py-1 text-sm font-semibold text-[#F2F4F3] shadow focus:outline-none md:px-3 md:py-2"
       disabled={buttonIsLoading}
       onClick={() => toggleSubscribe()}
     >

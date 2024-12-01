@@ -1,6 +1,6 @@
 export interface Token {
   portfolioPercentage: number;
-  token: any;
+  token: Token;
   price: number;
   priceChange24h: number;
   token_address: string;
